@@ -7,7 +7,7 @@ use PDO;
 
 class MusicRepository extends \Repository {
     public function getAllMusics() {
-        $query = "SELECT * FROM musics";
+        $query = "SELECT * FROM music";
         $stmt = $this->db->query($query);
 
         $musics = [];
@@ -20,7 +20,7 @@ class MusicRepository extends \Repository {
     }
 
     public function getMusicById($musicId) {
-        $query = "SELECT * FROM musics WHERE music_id = :music_id";
+        $query = "SELECT * FROM music WHERE music_id = :music_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":music_id", $musicId, PDO::PARAM_INT);
         $stmt->execute();
