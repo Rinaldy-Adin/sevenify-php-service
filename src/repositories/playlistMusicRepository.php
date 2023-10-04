@@ -1,10 +1,11 @@
 <?php
 
 namespace repositories;
+require_once ROOT_DIR . 'repositories/repository.php';
+
 use PDO;
 
-
-class PlaylistMusicRepository extends \Repository {
+class PlaylistMusicRepository extends Repository {
     public function getMusicIdsByPlaylistId($playlistId) {
         $query = "SELECT music_id FROM playlist_music WHERE playlist_id = :playlist_id";
         $stmt = $this->db->prepare($query);

@@ -1,11 +1,15 @@
 <?php
 
 namespace repositories;
+
+require_once ROOT_DIR . 'repositories/repository.php';
+require_once ROOT_DIR . 'models/playlistModel.php';
+
 use models\PlaylistModel;
 use PDO;
 
 
-class PlaylistRepository extends \Repository {
+class PlaylistRepository extends Repository {
     public function getAllPlaylists() {
         $query = "SELECT * FROM playlists";
         $stmt = $this->db->query($query);
