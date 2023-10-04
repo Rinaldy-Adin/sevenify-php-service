@@ -17,9 +17,10 @@ class App
 {
     private static ?PDO $db = null;
 
-    static function getDB() : PDO {
+    static function getDB(): PDO
+    {
         if (!static::$db) {
-            $connectionString = 'mysql:host='. $_ENV['MYSQL_HOST'] . ';port=3306;dbname=' . $_ENV['MYSQL_DATABASE'];
+            $connectionString = 'mysql:host=' . $_ENV['MYSQL_HOST'] . ';port=3306;dbname=' . $_ENV['MYSQL_DATABASE'];
             static::$db = new PDO($connectionString, $_ENV['MYSQL_USERNAME'], $_ENV['MYSQL_PASSWORD'], [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
@@ -41,7 +42,7 @@ class App
             $method = strtolower($_SERVER['REQUEST_METHOD']);
             echo $router->resolve($request_uri, $method);
         } else {
-            $router = new PageRouter('/404');
+            $router = new PageRouter('/404', ['/login', '/register']);
             $request_uri = $_SERVER['REQUEST_URI'];
 
             echo $router->resolve($request_uri);
