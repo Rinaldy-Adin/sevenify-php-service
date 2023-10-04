@@ -7,12 +7,20 @@ require_once ROOT_DIR . 'exceptions/NotFoundException.php';
 require_once ROOT_DIR . 'exceptions/NotFoundException.php';
 require_once ROOT_DIR . 'rest/apiroutes.php';
 
+use PDO;
 use router\APIRouter;
 use router\PageRouter;
 use rest\APIRoutes;
 
 class App
 {
+    public static PDO $db;
+
+    function __construct() {
+        $connectionString = 'mysql:host='. $_ENV['MYSQL_HOST'] . ';port=3306;dbname=' . $_ENV['MYSQL_DATABASE'];
+        $this->db = new PDO($connectionString, $_ENV['MYSQL_USERNAME'], $_ENV['MYSQL_PASSWORD']);
+    }
+
     function run()
     {
         if (strlen($_SERVER['REQUEST_URI']) > 4 && substr($_SERVER['REQUEST_URI'], 0, 5) == '/api/') {
