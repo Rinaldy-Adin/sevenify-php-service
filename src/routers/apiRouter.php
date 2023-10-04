@@ -10,7 +10,7 @@ class APIRouter
 {
     protected array $routes;
 
-    public function register(string $route, string $method, object $controller) : void
+    public function register(string $route, string $method, string $controller) : void
     {
         $this->routes[$route][$method] = $controller;
     }
@@ -21,7 +21,7 @@ class APIRouter
         $controller = $this->routes[$route][$method] ?? null;
 
         if (!$controller) {
-            throw new NotFoundException();
+            throw new NotFoundException($URL);
         }
 
         if (class_exists($controller)) {
@@ -32,6 +32,6 @@ class APIRouter
             }
         }
 
-        throw new NotFoundException();
+        throw new NotFoundException($URL);
     }
 }

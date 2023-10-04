@@ -3,6 +3,7 @@
 namespace app;
 
 require_once ROOT_DIR . 'routers/pageRouter.php';
+require_once ROOT_DIR . 'routers/apiRouter.php';
 require_once ROOT_DIR . 'exceptions/NotFoundException.php';
 require_once ROOT_DIR . 'exceptions/NotFoundException.php';
 require_once ROOT_DIR . 'rest/apiroutes.php';
@@ -31,7 +32,7 @@ class App
             }
 
             $request_uri = $_SERVER['REQUEST_URI'];
-            $method = strtolower($_SERVER['REQEST_METHOD']);
+            $method = strtolower($_SERVER['REQUEST_METHOD']);
             echo $router->resolve($request_uri, $method);
         } else {
             $router = new PageRouter('/404');

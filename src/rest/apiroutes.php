@@ -2,9 +2,9 @@
 
 namespace rest;
 
-require_once ROOT_DIR . 'controllers/music/getMusicController.php';
+require_once ROOT_DIR . 'controllers/test.php';
 
-use controllers\music\getMusicController\GetMusicController;
+use controllers\Test;
 
 class APIRoutes {
     public static array $apiroutes = [
