@@ -10,6 +10,7 @@ use services\AuthService;
 
 class LoginController {
     function post() : string {
+        // TODO: String length validation
         $username = $_POST["username"];
         $password = $_POST["password"];
 

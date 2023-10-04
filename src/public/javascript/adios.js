@@ -41,4 +41,18 @@ class Adios {
     async post(url, data) {
         return await this.makeRequest(url, 'POST', data);
     }
+
+    objectToXWWWFormUrlencoded(obj) {
+        const params = [];
+    
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                const encodedKey = encodeURIComponent(key);
+                const encodedValue = encodeURIComponent(obj[key]);
+                params.push(`${encodedKey}=${encodedValue}`);
+            }
+        }
+    
+        return params.join('&');
+    }
 }
