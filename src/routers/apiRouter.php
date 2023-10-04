@@ -10,43 +10,25 @@ class APIRouter
 {
     protected array $routes;
 
-    private function register(string $route, string $method, callable $action)
+    public function register(string $route, string $method, object $controller) : void
     {
-        $this->routes[$route][$method] = $action;
+        $this->routes[$route][$method] = $controller;
     }
 
-    public function get(string $route, callable $action)
-    {
-        $this->register($route, 'get', $action);
-    }
-
-    public function post(string $route, callable $action)
-    {
-        $this->register($route, 'post', $action);
-    }
-
-    public function resolve(string $URL, string $method)
+    public function resolve(string $URL, string $method) : string
     {
         $route = explode('?', $URL)[0];
-        $action = $this->routes[$route][$method] ?? null;
+        $controller = $this->routes[$route][$method] ?? null;
 
-        if (!$action) {
+        if (!$controller) {
             throw new NotFoundException();
         }
 
-        if (!is_array($action)) {
-            return call_user_func($action);
-        }
+        if (class_exists($controller)) {
+            $controller = new $controller;
 
-        if (is_array($action)) {
-            [$class, $classMethod] = $action;
-
-            if (class_exists($class)) {
-                $class = new $class;
-
-                if (method_exists($class, $classMethod)) {
-                    return call_user_func_array([$class, $classMethod], []);
-                }
+            if (method_exists($controller, $method)) {
+                return call_user_func_array([$controller, $method], []);
             }
         }
 

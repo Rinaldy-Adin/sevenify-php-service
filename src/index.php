@@ -7,10 +7,3 @@ require_once ROOT_DIR . 'app/app.php';
 use app\App;
 
 (new App)->run();
-
-// use router\APIRouter;
-
-// $router = new APIRouter();
-
-// $router
-//     ->get("/", [pages\Index::class, 'render']);

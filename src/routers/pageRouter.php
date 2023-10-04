@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace router;
 
-define('PAGE_DIR', ROOT_DIR . 'views/pages');
-
-use exceptions\NotFoundException;
+define('PAGE_DIR', ROOT_DIR . 'public/views/pages');
 
 class PageRouter
 {
@@ -17,7 +15,7 @@ class PageRouter
         $this->errorRoute = $errorRoute;
     }
 
-    public function resolve(string $URL)
+    public function resolve(string $URL): string
     {
         $route = explode('?', $URL)[0];
         $viewPath = "$route";
@@ -44,6 +42,7 @@ class PageRouter
                     return $content;
                 } else {
                     header("HTTP/1.0 404 Not Found");
+                    return '';
                 }
             }
         }
