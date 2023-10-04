@@ -1,6 +1,8 @@
 <?php
 
 namespace models;
+require_once ROOT_DIR . 'models/model.php';
+
 use Model;
 
 class AlbumModel extends Model {

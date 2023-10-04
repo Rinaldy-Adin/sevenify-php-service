@@ -1,35 +1,36 @@
 <?php
 
 namespace repositories;
+require_once ROOT_DIR . 'repositories/repository.php';
+require_once ROOT_DIR . 'models/musicModel.php';
 
-use models\UserModel;
+use models\MusicModel;
 use PDO;
 
-class MusicRepository extends \Repository {
-    public function getAllUsers() {
-        $query = "SELECT * FROM users";
-        $stmt = $this->db->query($query);
-
-        $users = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $user = new UserModel($row['user_id'], $row['user_name'], $row['user_password'], $row['role']);
-            $users[] = $user;
-        }
-
-        return $users;
-    }
-
-    public function getUserById($userId) {
-        $query = "SELECT * FROM users WHERE user_id = :user_id";
+class MusicRepository extends Repository {
+    public function getMusicByUserId($userId)
+    {
+        $query = "SELECT * FROM music WHERE music_owner = :userId";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(":user_id", $userId, PDO::PARAM_INT);
+        $stmt->bindParam(":userId", $userId);
         $stmt->execute();
+        $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($row) {
-            return new UserModel($row['user_id'], $row['user_name'], $row['user_password'], $row['role']);
-        } else {
-            return null;
+        // Convert music records to Music model objects
+        $musicObjects = [];
+        foreach ($musicRecords as $musicRecord) {
+            $music = new MusicModel(
+                $musicRecord['music_id'],
+                $musicRecord['music_name'],
+                $musicRecord['music_owner'],
+                $musicRecord['music_duration'],
+                $musicRecord['music_audio_path'],
+                $musicRecord['music_genre'],
+                $musicRecord['album_id']
+            );
+            $musicObjects[] = $music;
         }
+
+        return $musicObjects;
     }
 }
