@@ -8,14 +8,16 @@ define('PAGE_DIR', ROOT_DIR . 'public/views/pages');
 
 class PageRouter
 {
-    public ?string $errorRoute;
+    public string $errorRoute;
+    public array $unauthenticatedRoutes;
 
-    function __construct(?string $errorRoute = NULL)
+    function __construct(string $errorRoute, array $unauthenticatedRoutes)
     {
         $this->errorRoute = $errorRoute;
+        $this->unauthenticatedRoutes = $unauthenticatedRoutes;
     }
 
-    public function resolve(string $URL): string
+    private function getViewPath(string $URL): string
     {
         $route = explode('?', $URL)[0];
         $viewPath = "$route";
@@ -31,27 +33,36 @@ class PageRouter
             if (!empty($withoutSlug) && file_exists($fullPathWithoutSlug . '/anyslug.php')) {
                 $fullViewPath = $fullPathWithoutSlug . '/anyslug.php';
             } else {
-                if ($this->errorRoute) {
-                    $fullViewPath = PAGE_DIR . $this->errorRoute . '.php';
-
-                    ob_start();
-                    require $fullViewPath;
-                    $content = ob_get_contents();
-                    ob_end_clean();
-
-                    return $content;
-                } else {
-                    header("HTTP/1.0 404 Not Found");
-                    return '';
-                }
+                return PAGE_DIR . $this->errorRoute . '.php';;
             }
         }
 
-        ob_start();
-        require $fullViewPath;
-        $content = ob_get_contents();
-        ob_end_clean();
+        if (!isset($_SESSION["user_id"]) && !in_array($route, $this->unauthenticatedRoutes)) {
+            header("Location: " . $this->unauthenticatedRoutes[0]);
+            return '';
+        }
 
-        return $content;
+        if (isset($_SESSION["user_id"]) && in_array($route, $this->unauthenticatedRoutes)) {
+            header("Location: /");
+            return '';
+        }
+
+        return $fullViewPath;
+    }
+
+    public function resolve(string $URL): string
+    {
+        $fullViewPath = $this->getViewPath($URL);
+
+        if ($fullViewPath != '') {
+            ob_start();
+            require $fullViewPath;
+            $content = ob_get_contents();
+            ob_end_clean();
+
+            return $content;
+        }
+
+        return '';
     }
 }

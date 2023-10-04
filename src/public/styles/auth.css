@@ -1,0 +1,100 @@
+body {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.auth-container {
+    display: flex;
+    margin-top: 100px;
+    width: 460px;
+    min-height: 510px;
+    padding: 32px 24px 96px 24px;
+    flex-direction: column;
+    align-items: center;
+    gap: 47px;
+    border-radius: 16px;
+    background: #F4F4F4;
+}
+
+.auth-container h1 {
+    color: #000;
+    text-align: center;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -1.08px;
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    align-self: stretch;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    align-self: stretch;
+}
+
+.input-container label {
+    display: block;
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.6px;
+}
+
+.input-container input {
+    display: flex;
+    padding: 10px 8px;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 8px;
+    border: 1px solid #CBCBCB;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.42px;
+    outline-color: #E69332;
+}
+
+#submit {
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    border-radius: 8px;
+    border: 0;
+    background: #E69332;
+    outline-color: #E69332;
+
+    color: #FFF;
+    text-align: center;
+    font-family: Open Sans;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.2px;
+}
+
+#submit:hover {
+    background-color: #D98B2F;
+    cursor: pointer;
+}

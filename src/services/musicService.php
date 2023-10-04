@@ -1,6 +1,6 @@
 <?php
 
-namespace service;
+namespace services;
 use models\MusicModel;
 
 class MusicService {

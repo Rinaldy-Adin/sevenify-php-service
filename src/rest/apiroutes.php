@@ -2,12 +2,16 @@
 
 namespace rest;
 
-require_once ROOT_DIR . 'controllers/test.php';
+require_once ROOT_DIR . 'controllers/auth/loginController.php';
+require_once ROOT_DIR . 'controllers/auth/registerController.php';
 
-use controllers\Test;
+use controllers\auth\LoginController;
+use controllers\auth\RegisterController;
 
-class APIRoutes {
+class APIRoutes
+{
     public static array $apiroutes = [
-        ['/api/music', 'get', GetMusicController::class]
+        ['/api/login', 'post', LoginController::class],
+        ['/api/register', 'post', RegisterController::class]
     ];
 }
