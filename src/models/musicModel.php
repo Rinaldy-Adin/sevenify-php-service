@@ -29,4 +29,15 @@ class MusicModel extends Model {
         $this->music_genre = $music_genre;
         $this->album_id = $album_id;
     }
+
+    public function arrToMusicModel($arr){
+        $this->music_id = $arr['music_id'];
+        $this->music_name = $arr['music_name'];
+        $this->music_owner = $arr['music_owner'];
+        $this->music_duration = $arr['music_duration'];
+        $this->music_audio_path = $arr['music_audio_path'];
+        $this->music_genre = $arr['music_genre'];
+        $this->album_id = $arr['album_id'];
+        return $this;
+    }
 }
