@@ -1,11 +1,13 @@
 <?php
 
 namespace repositories;
+require_once ROOT_DIR . 'repositories/repository.php';
+require_once ROOT_DIR . 'models/albumModel.php';
 
 use models\AlbumModel;
 use PDO;
 
-class AlbumRepository extends \Repository {
+class AlbumRepository extends Repository {
     public function getAllAlbums() {
         $query = "SELECT * FROM albums";
         $stmt = $this->db->query($query);
