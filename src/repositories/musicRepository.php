@@ -12,7 +12,7 @@ use PDOException;
 
 class MusicRepository extends Repository
 {
-    public function getByMusicId(int $musicId): MusicModel
+    public function getByMusicId(int $musicId): ?MusicModel
     {
         $query = "SELECT * FROM music WHERE music_id = :musicId";
         $stmt = $this->db->prepare($query);
@@ -20,12 +20,56 @@ class MusicRepository extends Repository
         $stmt->execute();
         $musicRecord = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return new MusicModel(
-            $musicRecord['music_id'],
-            $musicRecord['music_name'],
-            $musicRecord['music_owner'],
-            $musicRecord['music_genre']
-        );
+        if ($musicRecord) {
+            return new MusicModel(
+                $musicRecord['music_id'],
+                $musicRecord['music_name'],
+                $musicRecord['music_owner'],
+                $musicRecord['music_genre']
+            );
+        } else {
+            return null;
+        }
+    }
+
+    public function getAudioPathByMusicId(int $musicId): ?string
+    {
+        $user = $this->getByMusicId($musicId);
+
+        if (!$user) {
+            return null;
+        }
+
+        $files = glob(STORAGE_DIR . "music/*");
+
+        if (count($files) > 0)
+            foreach ($files as $file) {
+                $info = pathinfo($file);
+                if ($info['filename'] == strval($musicId))
+                    return realpath($file);
+            }
+
+        return null;
+    }
+
+    public function getCoverPathByMusicId(int $musicId): ?string
+    {
+        $user = $this->getByMusicId($musicId);
+
+        if (!$user) {
+            return null;
+        }
+
+        $files = glob(STORAGE_DIR . "covers/music/*");
+
+        if (count($files) > 0)
+            foreach ($files as $file) {
+                $info = pathinfo($file);
+                if ($info['filename'] == strval($musicId))
+                    return realpath($file);
+            }
+
+        return null;
     }
 
     public function getByUserId(int $userId): array

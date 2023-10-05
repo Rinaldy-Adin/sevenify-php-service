@@ -3,8 +3,6 @@
 
 namespace repositories;
 
-define("STORAGE_DIR", ROOT_DIR . '/../storage');
-
 use app\App;
 
 class Repository
