@@ -18,7 +18,7 @@ class MusicRepository extends Repository
 
         $musics = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $music = new MusicModel($row['music_id'], $row['music_name'], $row['music_owner'], $row['mosuc_duration'], $row['music_audio_path'], $row['music_genre'], $row['album_id']);
+            $music = new MusicModel($row['music_id'], $row['music_name'], $row['music_owner'], $row['music_genre']);
             $musics[] = $music;
         }
 
@@ -32,7 +32,7 @@ class MusicRepository extends Repository
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($row) {
-            return new MusicModel($row['music_id'], $row['music_name'], $row['music_owner'], $row['mosuc_duration'], $row['music_audio_path'], $row['music_genre'], $row['album_id']);
+            return new MusicModel($row['music_id'], $row['music_name'], $row['music_owner'], $row['music_genre']);
         } else {
             return null; // Music not found
         }
