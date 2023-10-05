@@ -1,0 +1,56 @@
+/* Style untuk elemen music-item */
+.music-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: rgba(247.03, 255, 198.05, 0);
+    position: relative;
+}
+
+/* Style untuk elemen music-cover */
+.music-cover {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+/* Style untuk gambar cover musik */
+.music-cover img {
+    width: 100%;
+    height: auto;
+}
+
+/* Style untuk elemen music-details */
+.music-details {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+/* Style untuk elemen music-title */
+.music-title {
+    color: black;
+    font-size: 24px;
+    font-family: Open Sans;
+    font-weight: 400;
+    letter-spacing: 1.68px;
+    word-wrap: break-word;
+}
+
+/* Style untuk elemen pemilik musik (owner) */
+.owner {
+    margin-right: 10px;
+}
+
+/* Style untuk elemen play-button */
+.play-button {
+    margin-left: auto;
+    width: 45px;
+    height: 45px;
+}
+
+/* Style untuk gambar Play Button */
+.play-button img {
+    width: 100%;
+    height: 100%;
+}
