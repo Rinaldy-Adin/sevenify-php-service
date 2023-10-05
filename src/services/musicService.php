@@ -19,9 +19,19 @@ class MusicService
         $this->musicRepo = new MusicRepository();
     }
 
-    function getByMusicId(string $musicId): MusicModel
+    function getByMusicId(string $musicId): ?MusicModel
     {
         return $this->musicRepo->getByMusicId($musicId);
+    }
+
+    function getAudioPathByMusicId(string $musicId): ?string
+    {
+        return $this->musicRepo->getAudioPathByMusicId($musicId);
+    }
+
+    function getCoverPathByMusicId(string $musicId): ?string
+    {
+        return $this->musicRepo->getCoverPathByMusicId($musicId);
     }
 
     function createMusic(int $user_id, string $title, string $genre, array $musicFile, ?array $coverFile): ?MusicModel

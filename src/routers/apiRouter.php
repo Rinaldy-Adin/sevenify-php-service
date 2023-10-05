@@ -21,6 +21,13 @@ class APIRouter
         $controller = $this->routes[$route][$method] ?? null;
 
         if (!$controller) {
+            $route = explode('/', $route);
+            array_pop($route);
+            $route = implode('/', $route) . '/*';
+            $controller = $this->routes[$route][$method] ?? null;
+        }
+
+        if (!$controller) {
             http_response_code(404);
             throw new NotFoundException($URL);
         }

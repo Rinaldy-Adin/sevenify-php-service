@@ -1,6 +1,7 @@
 <?php
 
 define("ROOT_DIR", __DIR__ . '/');
+define("STORAGE_DIR", ROOT_DIR . '../storage/');
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 

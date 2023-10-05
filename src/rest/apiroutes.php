@@ -5,10 +5,18 @@ namespace rest;
 require_once ROOT_DIR . 'controllers/auth/loginController.php';
 require_once ROOT_DIR . 'controllers/auth/registerController.php';
 require_once ROOT_DIR . 'controllers/music/createMusicController.php';
+require_once ROOT_DIR . 'controllers/music/getMusicController.php';
+require_once ROOT_DIR . 'controllers/music/getAudioController.php';
+require_once ROOT_DIR . 'controllers/music/getMusicCoverController.php';
+require_once ROOT_DIR . 'controllers/user/getUserController.php';
 
 use controllers\auth\LoginController;
 use controllers\auth\RegisterController;
 use controllers\music\CreateMusicController;
+use controllers\music\GetAudioController;
+use controllers\music\GetMusicController;
+use controllers\music\GetMusicCoverController;
+use controllers\music\GetUserController;
 
 // TODO: move this to /router
 
@@ -17,6 +25,10 @@ class APIRoutes
     public static array $apiroutes = [
         ['/api/login', 'post', LoginController::class],
         ['/api/register', 'post', RegisterController::class],
-        ['/api/music', 'post', CreateMusicController::class]
+        ['/api/music', 'post', CreateMusicController::class],
+        ['/api/music/*', 'get', GetMusicController::class],
+        ['/api/audio/*', 'get', GetAudioController::class],
+        ['/api/music-cover/*', 'get', GetMusicCoverController::class],
+        ['/api/user/*', 'get', GetUserController::class],
     ];
 }
