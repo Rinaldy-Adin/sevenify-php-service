@@ -1,3 +1,13 @@
+<?php
+require_once ROOT_DIR . 'models/musicModel.php';
+require_once ROOT_DIR . 'public/views/components/musicItem.php';
+
+use models\MusicModel;
+
+$music = new MusicModel(1, "Dua-dua", "Igditaf", "Pop");
+$showMusic = musicItem($music);
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -17,9 +27,12 @@
 
     <section id="section-music">
         <h2>Your Musics</h2>
+        <?php
+            echo $showMusic;
+        ?>
     </section>
 
-    <script src="src\public\javascript\homepage.js"></script>
+    <!-- <script src="src\public\javascript\homepage.js"></script> -->
 </body>
 
 </html>
