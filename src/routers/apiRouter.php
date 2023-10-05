@@ -10,17 +10,18 @@ class APIRouter
 {
     protected array $routes;
 
-    public function register(string $route, string $method, string $controller) : void
+    public function register(string $route, string $method, string $controller): void
     {
         $this->routes[$route][$method] = $controller;
     }
 
-    public function resolve(string $URL, string $method) : string
+    public function resolve(string $URL, string $method): string
     {
         $route = explode('?', $URL)[0];
         $controller = $this->routes[$route][$method] ?? null;
 
         if (!$controller) {
+            http_response_code(404);
             throw new NotFoundException($URL);
         }
 
@@ -32,6 +33,7 @@ class APIRouter
             }
         }
 
+        http_response_code(404);
         throw new NotFoundException($URL);
     }
 }

@@ -1,13 +1,17 @@
 <?php
 
 namespace repositories;
+
 require_once ROOT_DIR . 'repositories/repository.php';
 require_once ROOT_DIR . 'models/musicModel.php';
 
+use Exception;
 use models\MusicModel;
 use PDO;
+use PDOException;
 
-class MusicRepository extends Repository {
+class MusicRepository extends Repository
+{
     public function getAllMusics() {
         $query = "SELECT * FROM music";
         $stmt = $this->db->query($query);
@@ -33,7 +37,23 @@ class MusicRepository extends Repository {
             return null; // Music not found
         }
     }
-    public function getMusicByUserId($userId)
+    public function getByMusicId(int $musicId): MusicModel
+    {
+        $query = "SELECT * FROM music WHERE music_id = :musicId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":musicId", $musicId);
+        $stmt->execute();
+        $musicRecord = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return new MusicModel(
+            $musicRecord['music_id'],
+            $musicRecord['music_name'],
+            $musicRecord['music_owner'],
+            $musicRecord['music_genre']
+        );
+    }
+
+    public function getByUserId(int $userId): array
     {
         $query = "SELECT * FROM music WHERE music_owner = :userId";
         $stmt = $this->db->prepare($query);
@@ -48,10 +68,7 @@ class MusicRepository extends Repository {
                 $musicRecord['music_id'],
                 $musicRecord['music_name'],
                 $musicRecord['music_owner'],
-                $musicRecord['music_duration'],
-                $musicRecord['music_audio_path'],
-                $musicRecord['music_genre'],
-                $musicRecord['album_id']
+                $musicRecord['music_genre']
             );
             $musicObjects[] = $music;
         }
@@ -91,5 +108,58 @@ class MusicRepository extends Repository {
         $stmt->execute();
 
         return $stmt->rowCount();
+    }
+
+    public function createMusic(string $music_name, string $music_owner, string $music_genre, array $musicFile, ?array $coverFile): ?MusicModel
+    {
+        $query = "INSERT INTO music (music_name, music_owner, music_genre)
+              VALUES (:musicName, :musicOwner, :musicGenre)";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":musicName", $music_name);
+        $stmt->bindParam(":musicOwner", $music_owner);
+        $stmt->bindParam(":musicGenre", $music_genre);
+
+        $this->db->beginTransaction();
+        try {
+            $stmt->execute();
+            $musicId = $this->db->lastInsertId();
+
+            $this->saveMusicFile($musicFile, $musicId);
+            if ($coverFile) {
+                $this->saveCoverFile($coverFile, $musicId);
+            }
+
+            $this->db->commit();
+
+            return $this->getByMusicId($musicId);
+        } catch (Exception $e) {
+            $this->db->rollBack();
+            error_log("Music creation error: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    private function saveMusicFile(array $musicFile, int $musicId)
+    {
+        $ext_partition = explode('.', $musicFile['name']);
+        $ext = $ext_partition[count($ext_partition) - 1];
+        $ok = move_uploaded_file($musicFile["tmp_name"], STORAGE_DIR . '/music/' . $musicId . '.' . $ext);
+
+        if (!$ok) {
+            throw new \RuntimeException('Error saving music file');
+        }
+    }
+
+    private function saveCoverFile(array $coverFile, int $musicId)
+    {
+        $ext_partition = explode('.', $coverFile['name']);
+        $ext = $ext_partition[count($ext_partition) - 1];
+        $ok = move_uploaded_file($coverFile["tmp_name"], STORAGE_DIR . '/covers/music/' . $musicId . '.' . $ext);
+
+        if (!$ok) {
+            // echo $coverFile['error'];
+            throw new \RuntimeException('Error saving cover file');
+        }
     }
 }

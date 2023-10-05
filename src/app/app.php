@@ -15,11 +15,18 @@ use rest\APIRoutes;
 
 class App
 {
-    public static PDO $db;
+    private static ?PDO $db = null;
 
-    function __construct() {
-        $connectionString = 'mysql:host='. $_ENV['MYSQL_HOST'] . ';port=3306;dbname=' . $_ENV['MYSQL_DATABASE'];
-        $this->db = new PDO($connectionString, $_ENV['MYSQL_USERNAME'], $_ENV['MYSQL_PASSWORD']);
+    static function getDB(): PDO
+    {
+        if (!static::$db) {
+            $connectionString = 'mysql:host=' . $_ENV['MYSQL_HOST'] . ';port=3306;dbname=' . $_ENV['MYSQL_DATABASE'];
+            static::$db = new PDO($connectionString, $_ENV['MYSQL_USERNAME'], $_ENV['MYSQL_PASSWORD'], [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]);
+        }
+
+        return static::$db;
     }
 
     function run()
@@ -35,7 +42,7 @@ class App
             $method = strtolower($_SERVER['REQUEST_METHOD']);
             echo $router->resolve($request_uri, $method);
         } else {
-            $router = new PageRouter('/404');
+            $router = new PageRouter('/404', ['/login', '/register']);
             $request_uri = $_SERVER['REQUEST_URI'];
 
             echo $router->resolve($request_uri);
