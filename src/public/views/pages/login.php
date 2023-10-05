@@ -19,7 +19,6 @@
             <div class="input-container">
                 <label>Password</label>
                 <input id="password" name="password" type="password" placeholder="Enter your password">
-
             </div>
             <input id="submit" type="submit" value="Log in">
         </form>
