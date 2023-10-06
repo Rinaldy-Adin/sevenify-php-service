@@ -33,6 +33,7 @@ class MusicService
 
     function countMusicBy($where=[]){
         return $this->musicRepo->countMusicBy($where);
+    }
     function getByMusicId(string $musicId): ?MusicModel
     {
         return $this->musicRepo->getByMusicId($musicId);
@@ -55,3 +56,4 @@ class MusicService
         return $music;
     }
 }
+?>
