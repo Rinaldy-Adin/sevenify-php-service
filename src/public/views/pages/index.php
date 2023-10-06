@@ -1,11 +1,13 @@
 <?php
 require_once ROOT_DIR . 'models/musicModel.php';
 require_once ROOT_DIR . 'public/views/components/musicItem.php';
+require_once ROOT_DIR . 'repositories/musicRepository.php';
 
 use models\MusicModel;
+use repositories\MusicRepository;
 
-$music = new MusicModel(1, "Dua-dua", "Igditaf", "Pop");
-$showMusic = musicItem($music);
+$musicRepository = new MusicRepository(); // Buat objek MusicRepository
+
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +17,7 @@ $showMusic = musicItem($music);
     <meta charset="UTF-8">
     <link rel="stylesheet" href="public/styles/global.css">
     <link rel="stylesheet" href="public/styles/music-bar.css">
+    <link rel="stylesheet" href="public/styles/music-item.css">
     <title>Sevenify</title>
 </head>
 
@@ -22,7 +25,7 @@ $showMusic = musicItem($music);
     <h1>hi</h1>
 
     <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
-    
+
     <section id="section-album">
         <h2>Your Albums</h2>
     </section>
@@ -34,7 +37,12 @@ $showMusic = musicItem($music);
     <section id="section-music">
         <h2>Your Musics</h2>
         <?php
-            echo $showMusic;
+            $music = $musicRepository->getByMusicId(23);
+            if ($music) {
+                echo musicItem($music);
+            } else {
+                echo "Music not found.";
+            }
         ?>
     </section>
 

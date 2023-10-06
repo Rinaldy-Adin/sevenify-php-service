@@ -166,6 +166,8 @@ class MusicRepository extends Repository
         $ok = move_uploaded_file($musicFile["tmp_name"], STORAGE_DIR . '/music/' . $musicId . '.' . $ext);
 
         if (!$ok) {
+            error_log('Error log music: ' . $musicFile['error']);
+            echo $musicFile['error'];
             throw new \RuntimeException('Error saving music file');
         }
     }
@@ -177,7 +179,8 @@ class MusicRepository extends Repository
         $ok = move_uploaded_file($coverFile["tmp_name"], STORAGE_DIR . '/covers/music/' . $musicId . '.' . $ext);
 
         if (!$ok) {
-            // echo $coverFile['error'];
+            error_log('Error log cover: ' . $coverFile['error']);
+            echo $coverFile['error'];
             throw new \RuntimeException('Error saving cover file');
         }
     }

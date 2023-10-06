@@ -1,24 +1,28 @@
 <?php
 
 require_once ROOT_DIR . '/models/musicModel.php';
+require_once ROOT_DIR . '/repositories/musicRepository.php';
 
 use models\MusicModel;
+use repositories\MusicRepository;
 
 function musicItem($music){
     $music_id = $music->music_id;
     $music_name = $music->music_name;
     $music_owner = $music->music_owner;
     $music_genre = $music->music_genre;
+    $musicRepo = new MusicRepository();
+    $music_cover = $musicRepo->getCoverPathByMusicId($music_id);
 
     $html = <<< "EOT"
     <script src="/public/javascript/music-item.js"></script>
-
+    <script src="/public/javascript/music-bar.js"></script>
     <div class="music-item">
-        <div class="play-button">
+        <div class="play-button" onclick="playMusic($music_id)">
             <img src="/public/assets/media/PlayButton.png" alt="Play">
         </div>
         <div class="music-cover">
-            <img src="/public/assets/media/contohcovermusic.jpg" alt="Cover Image">
+            <img src="/api/music-cover/$music_id" alt="Cover Image">
         </div>
         <div class="music-details">
             <span class="owner">$music_owner :</span>

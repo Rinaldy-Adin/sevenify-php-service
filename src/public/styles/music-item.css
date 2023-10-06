@@ -38,6 +38,7 @@
 .play-button {
     width: 45px;
     height: 45px;
+    margin-left: 10px;
     margin-right: 10px;
     background-color: transparent;
     border: none;
@@ -51,7 +52,7 @@
 
 .option-button {
     position: relative;
-
+    margin-right: 10px;
 }
 
 .option-icon button {
@@ -112,17 +113,17 @@
     }
 
     .option-button {
-        width: 20px;
+        width: 30px;
         height: auto;
     }
 
     .option-icon button {
-        width: 20px;
+        width: 30px;
         height: auto;
     }
 
     .option-icon img {
-        width: 20px;
+        width: 30px;
         height: auto;
     }
 }
