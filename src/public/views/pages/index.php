@@ -13,7 +13,7 @@ $showMusic = musicItem($music);
 
 <head>
     <title>Welcome to Sevenify</title>
-    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <link rel="stylesheet" type="text/css" href="/public/styles/musicItem.css">
 </head>
 
 <body>

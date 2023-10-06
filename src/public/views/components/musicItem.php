@@ -11,7 +11,6 @@ function musicItem($music){
     $music_genre = $music->music_genre;
 
     $html = <<< "EOT"
-    <link rel="stylesheet" type="text/css" href="/public/styles/musicItem.css">
     <script src="/public/javascript/music-item.js"></script>
 
     <div class="music-item">
