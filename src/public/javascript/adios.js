@@ -1,5 +1,5 @@
 class Adios {
-    makeRequest(url, method, data = null, contentType = null) {
+    makeRequest(url, method, data = null, contentType = null, blob = false) {
         return new Promise(function (resolve, reject) {
             let xhr = new XMLHttpRequest();
 
@@ -25,6 +25,10 @@ class Adios {
                 });
             };
 
+            if (blob) {
+                xhr.responseType = 'blob';
+            }
+
             if (!data) {
                 xhr.send();
             } else {
@@ -37,8 +41,8 @@ class Adios {
         });
     }
 
-    async get(url) {
-        return await this.makeRequest(url, 'GET');
+    async get(url, blob = false) {
+        return await this.makeRequest(url, 'GET', null, null, blob);
     }
 
     async post(url, data) {
@@ -51,7 +55,7 @@ class Adios {
 
     objectToXWWWFormUrlencoded(obj) {
         const params = [];
-    
+
         for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
                 const encodedKey = encodeURIComponent(key);
@@ -59,7 +63,7 @@ class Adios {
                 params.push(`${encodedKey}=${encodedValue}`);
             }
         }
-    
+
         return params.join('&');
     }
 }

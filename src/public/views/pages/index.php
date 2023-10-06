@@ -9,14 +9,20 @@ $showMusic = musicItem($music);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Welcome to Sevenify</title>
-    <link rel="stylesheet" type="text/css" href="/public/styles/musicItem.css">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="public/styles/global.css">
+    <link rel="stylesheet" href="public/styles/music-bar.css">
+    <title>Sevenify</title>
 </head>
 
 <body>
+    <h1>hi</h1>
+
+    <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
+    
     <section id="section-album">
         <h2>Your Albums</h2>
     </section>
@@ -32,7 +38,10 @@ $showMusic = musicItem($music);
         ?>
     </section>
 
-    <!-- <script src="src\public\javascript\homepage.js"></script> -->
+    <script src="public/javascript/adios.js"></script>
+    <script src="public/javascript/music-bar.js"></script>
+    <script src="/public/javascript/music-item.js"></script>
+
 </body>
 
 </html>
