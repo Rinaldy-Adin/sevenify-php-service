@@ -45,9 +45,13 @@ class MusicService
         return $this->musicRepo->getCoverPathByMusicId($musicId);
     }
 
-    function searchMusic(string $searchValue, int $page): array
+    function searchMusic(string $searchValue, int $page, string $genre, string $uploadPeriod, string $sort): array
     {
-        return $this->musicRepo->searchMusic($searchValue, $page);
+        return $this->musicRepo->searchMusic($searchValue, $page, $genre, $uploadPeriod, $sort);
+    }
+
+    function getAllGenres(): array {
+        return $this->musicRepo->getAllGenres();
     }
 
     function createMusic(int $user_id, string $title, string $genre, array $musicFile, ?array $coverFile): ?MusicModel

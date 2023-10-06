@@ -100,19 +100,21 @@ class MusicRepository extends Repository
 
         return $musicObjects;
     }
-    public function countAllMusic(){
+    public function countAllMusic()
+    {
         $query = "SELECT COUNT(*) FROM music";
         $stmt = $this->db->query($query);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['COUNT(*)'];
     }
-    public function countMusicBy($where=[]){
+    public function countMusicBy($where = [])
+    {
         $query = "SELECT COUNT(*) FROM music";
 
-        if (!empty($where)){
+        if (!empty($where)) {
             $conditions = [];
-            foreach($where as $key => $value){
-                if ($value[2] == 'LIKE'){
+            foreach ($where as $key => $value) {
+                if ($value[2] == 'LIKE') {
                     $conditions[] = '$key LIKE :$key';
                 } else {
                     $conditions[] = '$key = :$key';
@@ -122,8 +124,8 @@ class MusicRepository extends Repository
         }
 
         $stmt = $this->db->prepare($query);
-        foreach ($where as $key => $value){
-            if ($value[2]== 'LIKE'){
+        foreach ($where as $key => $value) {
+            if ($value[2] == 'LIKE') {
                 $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
             } else {
                 $stmt->bindValue(":$key", $value[0], $value[1]);
@@ -135,9 +137,8 @@ class MusicRepository extends Repository
         return $stmt->rowCount();
     }
 
-    public function searchMusic(string $searchValue, int $page): array
+    public function searchMusic(string $searchValue, int $page, string $genre, string $uploadPeriod, string $sort): array
     {
-        // Define dynamic conditions and bindings
         $conditions = [];
         $bindings = [];
 
@@ -147,15 +148,55 @@ class MusicRepository extends Repository
             $bindings[':uploader_search'] = "%$searchValue%";
         }
 
+        if ($genre != "all") {
+            $conditions[] = "music_genre = :genre";
+            $bindings[':genre'] = $genre;
+        }
+
+        switch ($uploadPeriod) {
+            case 'today':
+                $conditions[] = "DATE(music_upload_date) = CURDATE()";
+                break;
+            case 'last-week':
+                $conditions[] = "music_upload_date > (CURDATE() - INTERVAL 1 WEEK)";
+                break;
+            case 'last-month':
+                $conditions[] = "music_upload_date > (CURDATE() - INTERVAL 1 MONTH)";
+                break;
+            case 'last-year':
+                $conditions[] = "music_upload_date > (CURDATE() - INTERVAL 1 YEAR)";
+                break;
+            default:
+                break;
+        }
+
         $sql = "SELECT * FROM music JOIN users ON user_id = music_owner";
 
         if (!empty($conditions)) {
             $sql .= " WHERE " . implode(" AND ", $conditions);
         }
 
+        if ($sort !== '' && strpos($sort, "-") !== false) {
+            [$sortColumn, $sortMethod] = explode('-', $sort);
+            
+            if ($sortColumn == 'date') {
+                $sortColumn = 'music_upload_date';
+            } else {
+                $sortColumn = 'music_genre';
+            }
+
+            if ($sortMethod == "ascending") {
+                $sortMethod = "ASC";
+            } else {
+                $sortMethod = "DESC";
+            }
+
+            $sql .= " ORDER BY $sortColumn $sortMethod ";
+        }
+
         $stmt = $this->db->prepare($sql);
         foreach ($bindings as $placeholder => $value) {
-            $stmt->bindParam($placeholder, $value, PDO::PARAM_STR); 
+            $stmt->bindParam($placeholder, $value, PDO::PARAM_STR);
         }
 
         $stmt->execute();
@@ -184,6 +225,21 @@ class MusicRepository extends Repository
         $pageOffset = ($page - 1) * 5;
 
         return [array_slice($musicObjects, $pageOffset, 5), ceil(count($musicRecords) / 5)];
+    }
+
+    public function getAllGenres(): array
+    {
+        $query = "SELECT DISTINCT music_genre FROM music";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $genres = [];
+        foreach ($records as $key => $record) {
+            $genres[] = $record['music_genre'];
+        }
+
+        return $genres;
     }
 
     public function createMusic(string $music_name, string $music_owner, string $music_genre, array $musicFile, ?array $coverFile): ?MusicModel

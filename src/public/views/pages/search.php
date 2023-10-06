@@ -22,18 +22,18 @@
                     <div class="search-option-container">
                         <div class="search-option">
                             <div class="search-criteria">By Upload Date</div>
-                            <select id="filter-by-upload-dropdown">
+                            <select id="filter-by-date-dropdown">
                                 <option value="all-time" selected>All time</option>
                                 <option value="today">Today</option>
-                                <option value="this-week">Last week</option>
-                                <option value="this-month">This month</option>
-                                <option value="this-year">This year</option>
+                                <option value="last-week">Last week</option>
+                                <option value="last-month">Last month</option>
+                                <option value="last-year">Last year</option>
                             </select>
                         </div>
                         <div class="search-option">
                             <div class="search-criteria">By Genre</div>
                             <select id="filter-by-genre-dropdown">
-                                <option value="all-time" selected>All time</option>
+                                <option value="all" selected>All Genres</option>
                             </select>
                         </div>
                     </div>
@@ -41,47 +41,21 @@
                 <div class="search-options">
                     <h2>Sort Results</h2>
                     <div class="search-option-container">
-                        <div class="search-option clickable">
+                        <div class="search-option">
                             <div class="search-criteria">By Upload Date</div>
-                            <!-- Down caret -->
-                            <div hidden class="icon-container">
-                                <svg id="sort-by-upload-down-caret" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.88 -0.000117278L8 6.10655L14.12 -0.000117278L16 1.87988L8 9.87988L0 1.87988L1.88 -0.000117278Z" fill="currentColor" />
-                                </svg>
-                            </div>
-                            <!-- Dash -->
-                            <div class="icon-container">
-                                <svg id="sort-by-upload-dash" width="16" height="3" viewBox="0 0 16 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M0 2.66667H8H16V0H8H0V2.66667Z" fill="currentColor" />
-                                </svg>
-                            </div>
-                            <!-- Up caret -->
-                            <div hidden class="icon-container">
-                                <svg id="sort-by-upload-up-caret" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.88 9.88L8 3.77333L14.12 9.88L16 8L8 0L0 8L1.88 9.88Z" fill="currentColor" />
-                                </svg>
-                            </div>
+                            <select id="sort-by-date-dropdown">
+                                <option value="unsorted" selected>Unsorted</option>
+                                <option value="descending">Descending</option>
+                                <option value="ascending">Ascending</option>
+                            </select>
                         </div>
-                        <div class="search-option clickable">
-                            <div class="search-criteria">By Genre</div>
-                            <!-- Down caret -->
-                            <div hidden class="icon-container">
-                                <svg id="sort-by-upload-down-caret" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.88 -0.000117278L8 6.10655L14.12 -0.000117278L16 1.87988L8 9.87988L0 1.87988L1.88 -0.000117278Z" fill="currentColor" />
-                                </svg>
-                            </div>
-                            <!-- Dash -->
-                            <div class="icon-container">
-                                <svg id="sort-by-upload-dash" width="16" height="3" viewBox="0 0 16 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M0 2.66667H8H16V0H8H0V2.66667Z" fill="currentColor" />
-                                </svg>
-                            </div>
-                            <!-- Up caret -->
-                            <div hidden class="icon-container">
-                                <svg id="sort-by-upload-up-caret" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.88 9.88L8 3.77333L14.12 9.88L16 8L8 0L0 8L1.88 9.88Z" fill="currentColor" />
-                                </svg>
-                            </div>
+                        <div class="search-option">
+                            <div class="search-criteria">By Genre (Alphabetical)</div>
+                            <select id="sort-by-genre-dropdown">
+                                <option value="unsorted" selected>Unsorted</option>
+                                <option value="descending">Descending</option>
+                                <option value="ascending">Ascending</option>
+                            </select>
                         </div>
                     </div>
                 </div>
