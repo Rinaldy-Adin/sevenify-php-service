@@ -19,8 +19,8 @@
         <div class="music-bar-info">
             <img id="music-bar-cover" class="soft-shadow" src="/public/assets/placeholders/music-placeholder.jpg">
             <div class="music-bar-details">
-                <div id="music-bar-uploader">iluvtheweeekend</div>
-                <div id="music-bar-title">Frank Ocean Remix</div>
+                <div id="music-bar-uploader">&nbsp;</div>
+                <div id="music-bar-title">No song played</div>
             </div>
         </div>
     </div>

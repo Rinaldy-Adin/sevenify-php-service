@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS music (
     music_name VARCHAR(255) NOT NULL,
     music_owner INT NOT NULL,
     music_genre VARCHAR(255),
-    FOREIGN KEY (music_owner) REFERENCES users(user_id)
+    music_upload_date DATE NOT NULL,
+    FOREIGN KEY (music_owner) REFERENCES users(user_id),
 );
 CREATE TABLE IF NOT EXISTS playlist_music (
     music_id INT NOT NULL,

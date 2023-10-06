@@ -45,6 +45,11 @@ class MusicService
         return $this->musicRepo->getCoverPathByMusicId($musicId);
     }
 
+    function searchMusic(string $searchValue, int $page): array
+    {
+        return $this->musicRepo->searchMusic($searchValue, $page);
+    }
+
     function createMusic(int $user_id, string $title, string $genre, array $musicFile, ?array $coverFile): ?MusicModel
     {
         $music = $this->musicRepo->createMusic($title, $user_id, $genre, $musicFile, $coverFile);
