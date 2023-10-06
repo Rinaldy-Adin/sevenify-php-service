@@ -41,8 +41,17 @@ class Adios {
         });
     }
 
-    async get(url, blob = false) {
-        return await this.makeRequest(url, 'GET', null, null, blob);
+    async get(url, params = {}, blob = false) {
+        let paramStr = '';
+        if (Object.keys(params).length !== 0) {
+            paramStr = '?'
+            for (const key in params) {
+                if (paramStr.slice(-1) !== '?')
+                    paramStr += '&';
+                paramStr += `${key}=${params[key]}`;
+            }
+        }
+        return await this.makeRequest(url + paramStr, 'GET', null, null, blob);
     }
 
     async post(url, data) {
@@ -66,4 +75,12 @@ class Adios {
 
         return params.join('&');
     }
+}
+
+function debounce(func, timeout = 300) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
 }

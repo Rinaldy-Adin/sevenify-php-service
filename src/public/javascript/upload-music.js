@@ -13,7 +13,6 @@ async function uploadMusic(event) {
     }
 
     try {
-        console.log('working');
         const resp = await adios.postFormData('/api/music', event.target);
         const data = JSON.parse(resp);
         window.location.href = '/';

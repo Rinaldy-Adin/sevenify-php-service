@@ -23,11 +23,11 @@ async function playMusic(musicId) {
 
         musicUploader.textContent = userData.user_name;
 
-        const coverResp = await adios.get(`/api/music-cover/${musicId}`, true);
+        const coverResp = await adios.get(`/api/music-cover/${musicId}`, {}, true);
 
         musicCover.src = URL.createObjectURL(coverResp);
 
-        const audioResp = await adios.get(`/api/audio/${musicId}`, true);
+        const audioResp = await adios.get(`/api/audio/${musicId}`, {}, true);
         audioPlayer.src = URL.createObjectURL(audioResp);
 
         audioPlayer.play();
