@@ -175,6 +175,10 @@ body {
     font-size: 20px;
     font-weight: 400;
     letter-spacing: 1.4px;
+    max-width: 250px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .result-genre {
