@@ -4,8 +4,6 @@ namespace models;
 
 require_once ROOT_DIR . 'models/model.php';
 
-use Model;
-
 class UserModel extends Model {
     public $user_id;
     public $user_name;

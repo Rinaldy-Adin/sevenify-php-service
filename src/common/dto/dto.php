@@ -1,6 +1,7 @@
 <?php
 
 namespace common\dto;
+use DateTime;
 
 class DTO {
     public function toDTOArray() : array {
@@ -8,9 +9,12 @@ class DTO {
         $dto = [];
 
         foreach ($properties as $name => $value) {
-            $dto[$name] = $value;
+            if ($value instanceof DateTime) {
+                $dto[$name] = $value->format('Y-m-d H:i:s');
+            } else {
+                $dto[$name] = $value;
+            }
         }
-
         return $dto;
     }
 }

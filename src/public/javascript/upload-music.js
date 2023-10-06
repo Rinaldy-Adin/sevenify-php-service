@@ -17,8 +17,12 @@ async function uploadMusic(event) {
         const data = JSON.parse(resp);
         window.location.href = '/';
     } catch (error) {
-        const data = JSON.parse(error.response);
-        alert(data.message);
+        if (error.response) {
+            const data = JSON.parse(error.response);
+            alert(data.message);
+        } else {
+            console.log(error);
+        }
     }
 }
 
