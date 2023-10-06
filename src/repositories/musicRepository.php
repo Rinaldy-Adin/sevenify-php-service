@@ -100,6 +100,40 @@ class MusicRepository extends Repository
 
         return $musicObjects;
     }
+    public function countAllMusic(){
+        $query = "SELECT COUNT(*) FROM music";
+        $stmt = $this->db->query($query);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['COUNT(*)'];
+    }
+    public function countMusicBy($where=[]){
+        $query = "SELECT COUNT(*) FROM music";
+
+        if (!empty($where)){
+            $conditions = [];
+            foreach($where as $key => $value){
+                if ($value[2] == 'LIKE'){
+                    $conditions[] = '$key LIKE :$key';
+                } else {
+                    $conditions[] = '$key = :$key';
+                }
+            }
+            $query .= ' WHERE ' . implode(' AND ', $conditions);
+        }
+
+        $stmt = $this->db->prepare($query);
+        foreach ($where as $key => $value){
+            if ($value[2]== 'LIKE'){
+                $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
+            } else {
+                $stmt->bindValue(":$key", $value[0], $value[1]);
+            }
+        }
+
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
 
     public function searchMusic(string $searchValue, int $page): array
     {
@@ -192,6 +226,8 @@ class MusicRepository extends Repository
         $ok = move_uploaded_file($musicFile["tmp_name"], STORAGE_DIR . '/music/' . $musicId . '.' . $ext);
 
         if (!$ok) {
+            error_log('Error log music: ' . $musicFile['error']);
+            echo $musicFile['error'];
             throw new \RuntimeException('Error saving music file');
         }
     }
@@ -203,7 +239,8 @@ class MusicRepository extends Repository
         $ok = move_uploaded_file($coverFile["tmp_name"], STORAGE_DIR . '/covers/music/' . $musicId . '.' . $ext);
 
         if (!$ok) {
-            // echo $coverFile['error'];
+            error_log('Error log cover: ' . $coverFile['error']);
+            echo $coverFile['error'];
             throw new \RuntimeException('Error saving cover file');
         }
     }

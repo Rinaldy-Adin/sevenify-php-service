@@ -1,0 +1,129 @@
+.music-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: rgba(247.03, 255, 198.05, 0);
+    position: relative;
+}
+
+.music-cover {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.music-cover img {
+    width: 100%;
+    height: auto;
+}
+
+.music-details {
+    flex-grow: 1;
+}
+
+.music-details {
+    color: black;
+    font-size: 30px;
+    font-family: Open Sans;
+    font-weight: 400;
+    letter-spacing: 1.68px;
+    word-wrap: break-word;
+}
+
+.owner {
+    margin-right: 10px;
+}
+
+.play-button {
+    width: 45px;
+    height: 45px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.play-button img {
+    width: 45px;
+    height: auto;
+}
+
+.option-button {
+    position: relative;
+    margin-right: 10px;
+}
+
+.option-icon button {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.option-icon img {
+    width: 24px;
+    height: auto;
+}
+
+.option-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: aliceblue;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: none;
+    flex-direction: column;
+}
+
+.option-menu button {
+    width: 100%;
+    padding: 8px 16px;
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+    .music-details {
+        font-size: 24px;
+    }
+
+    .music-cover {
+        width: 40px;
+        height: auto;
+    }
+
+    .music-cover img {
+        width: 40px;
+        height: auto;
+    }
+
+    .play-button {
+        width: 30px;
+        height: auto;
+    }
+
+    .play-button img {
+        width: 30px;
+        height: auto;
+    }
+
+    .option-button {
+        width: 30px;
+        height: auto;
+    }
+
+    .option-icon button {
+        width: 30px;
+        height: auto;
+    }
+
+    .option-icon img {
+        width: 30px;
+        height: auto;
+    }
+}

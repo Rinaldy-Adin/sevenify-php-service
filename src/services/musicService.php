@@ -18,7 +18,18 @@ class MusicService
     {
         $this->musicRepo = new MusicRepository();
     }
+    
+    function getMusicById($musicId) {
+        return $this->musicRepo->getByMusicId($musicId);
+    }
+    
+    function countAllMusic(){
+        return $this->musicRepo->countAllMusic();
+    }
 
+    function countMusicBy($where=[]){
+        return $this->musicRepo->countMusicBy($where);
+    }
     function getByMusicId(string $musicId): ?MusicModel
     {
         return $this->musicRepo->getByMusicId($musicId);
@@ -46,3 +57,4 @@ class MusicService
         return $music;
     }
 }
+?>
