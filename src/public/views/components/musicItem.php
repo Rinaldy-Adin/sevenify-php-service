@@ -11,22 +11,31 @@ function musicItem($music){
     $music_genre = $music->music_genre;
 
     $html = <<< "EOT"
+    <link rel="stylesheet" type="text/css" href="/public/styles/musicItem.css">
+    <script src="/public/javascript/music-item.js"></script>
+
     <div class="music-item">
+        <div class="play-button">
+            <img src="/public/assets/media/PlayButton.png" alt="Play">
+        </div>
         <div class="music-cover">
-            <img src="../../../public/assets/media/contohcovermusic.jpg" alt="Cover Image">
+            <img src="/public/assets/media/contohcovermusic.jpg" alt="Cover Image">
         </div>
         <div class="music-details">
-            <div class="music-title">
-                <span class="owner">$music_owner :</span>
-                <span class="name">$music_name</span>
-            </div>
-            <div class="play-button">
-                <img src="../../../public/assets/media/PlayButton.png" alt="Play Button">
+            <span class="owner">$music_owner :</span>
+            <span class="name">$music_name</span>
+        </div>
+        <div class="music-option">
+            <button class = "option-button" onclick="toggleOptionsMenu(event)">
+                <img src="/public/assets/media/EditButton.png" alt="Option Menu">
+            </button>
+            <div class="option-menu" id="optionsMenu">
+                <button class="edit-button" alt="Edit music">Edit</button>
+                <button class="delete-button" alt="Delete music">Delete</button>
             </div>
         </div>
     </div>
-    <link rel="stylesheet" type="text/css" href="../../../public/styles/musicItem.css">
-EOT;
+    EOT;
     return $html;
 }
 
