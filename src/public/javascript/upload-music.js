@@ -13,13 +13,16 @@ async function uploadMusic(event) {
     }
 
     try {
-        console.log('working');
         const resp = await adios.postFormData('/api/music', event.target);
         const data = JSON.parse(resp);
         window.location.href = '/';
     } catch (error) {
-        const data = JSON.parse(error.response);
-        alert(data.message);
+        if (error.response) {
+            const data = JSON.parse(error.response);
+            alert(data.message);
+        } else {
+            console.log(error);
+        }
     }
 }
 

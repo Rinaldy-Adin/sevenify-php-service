@@ -4,11 +4,13 @@ namespace repositories;
 
 require_once ROOT_DIR . 'repositories/repository.php';
 require_once ROOT_DIR . 'models/musicModel.php';
+require_once ROOT_DIR . 'common/dto/musicWithArtistNameDTO.php';
 
+use common\dto\MusicWithArtistNameDTO;
+use DateTime;
 use Exception;
 use models\MusicModel;
 use PDO;
-use PDOException;
 
 class MusicRepository extends Repository
 {
@@ -21,11 +23,13 @@ class MusicRepository extends Repository
         $musicRecord = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($musicRecord) {
+            $uploadDate = new DateTime($musicRecord['music_upload_date']);
             return new MusicModel(
                 $musicRecord['music_id'],
                 $musicRecord['music_name'],
                 $musicRecord['music_owner'],
-                $musicRecord['music_genre']
+                $musicRecord['music_genre'],
+                $uploadDate
             );
         } else {
             return null;
@@ -83,11 +87,13 @@ class MusicRepository extends Repository
         // Convert music records to Music model objects
         $musicObjects = [];
         foreach ($musicRecords as $musicRecord) {
+            $uploadDate = new DateTime($musicRecord['music_upload_date']);
             $music = new MusicModel(
                 $musicRecord['music_id'],
                 $musicRecord['music_name'],
                 $musicRecord['music_owner'],
-                $musicRecord['music_genre']
+                $musicRecord['music_genre'],
+                $uploadDate
             );
             $musicObjects[] = $music;
         }
@@ -95,15 +101,69 @@ class MusicRepository extends Repository
         return $musicObjects;
     }
 
+    public function searchMusic(string $searchValue, int $page): array
+    {
+        // Define dynamic conditions and bindings
+        $conditions = [];
+        $bindings = [];
+
+        if (trim($searchValue) !== "") {
+            $conditions[] = "(music_name LIKE :name_search OR user_name LIKE :uploader_search)";
+            $bindings[':name_search'] = "%$searchValue%";
+            $bindings[':uploader_search'] = "%$searchValue%";
+        }
+
+        $sql = "SELECT * FROM music JOIN users ON user_id = music_owner";
+
+        if (!empty($conditions)) {
+            $sql .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        $stmt = $this->db->prepare($sql);
+        foreach ($bindings as $placeholder => $value) {
+            $stmt->bindParam($placeholder, $value, PDO::PARAM_STR); 
+        }
+
+        $stmt->execute();
+        $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = (new UserRepository())->getAllUsers();
+        $userNameMap = [];
+
+        foreach ($users as $user) {
+            $userNameMap[$user->user_id] = $user->user_name;
+        }
+
+        $musicObjects = [];
+        foreach ($musicRecords as $musicRecord) {
+            $uploadDate = new DateTime($musicRecord['music_upload_date']);
+            $music = new MusicWithArtistNameDTO(
+                $musicRecord['music_id'],
+                $musicRecord['music_name'],
+                $userNameMap[$musicRecord['music_owner']],
+                $musicRecord['music_genre'],
+                $uploadDate
+            );
+            $musicObjects[] = $music;
+        }
+
+        $pageOffset = ($page - 1) * 5;
+
+        return [array_slice($musicObjects, $pageOffset, 5), ceil(count($musicRecords) / 5)];
+    }
+
     public function createMusic(string $music_name, string $music_owner, string $music_genre, array $musicFile, ?array $coverFile): ?MusicModel
     {
-        $query = "INSERT INTO music (music_name, music_owner, music_genre)
-              VALUES (:musicName, :musicOwner, :musicGenre)";
+        $query = "INSERT INTO music (music_name, music_owner, music_genre, music_upload_date)
+              VALUES (:musicName, :musicOwner, :musicGenre, :musicUploadDate)";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":musicName", $music_name);
         $stmt->bindParam(":musicOwner", $music_owner);
         $stmt->bindParam(":musicGenre", $music_genre);
+
+        $dateStr = date('Y-m-d');
+        $stmt->bindParam(":musicUploadDate", $dateStr);
 
         $this->db->beginTransaction();
         try {

@@ -1,14 +1,13 @@
 <?php
 
-namespace models;
-
+namespace common\dto;
 use DateTime;
 
-class Model {
-    public function toDTO() : array {
+class DTO {
+    public function toDTOArray() : array {
         $properties = get_object_vars($this);
         $dto = [];
-    
+
         foreach ($properties as $name => $value) {
             if ($value instanceof DateTime) {
                 $dto[$name] = $value->format('Y-m-d H:i:s');
@@ -16,7 +15,6 @@ class Model {
                 $dto[$name] = $value;
             }
         }
-    
         return $dto;
     }
 }
