@@ -18,13 +18,9 @@ class MusicService
     {
         $this->musicRepo = new MusicRepository();
     }
-
-    function getAllMusics() {
-        return $this->musicRepo->getAllMusics();
-    }
-
+    
     function getMusicById($musicId) {
-        return $this->musicRepo->getMusicById($musicId);
+        return $this->musicRepo->getByMusicId($musicId);
     }
     
     function countAllMusic(){
