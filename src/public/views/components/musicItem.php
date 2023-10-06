@@ -15,8 +15,6 @@ function musicItem($music){
     $music_cover = $musicRepo->getCoverPathByMusicId($music_id);
 
     $html = <<< "EOT"
-    <script src="/public/javascript/music-item.js"></script>
-    <script src="/public/javascript/music-bar.js"></script>
     <div class="music-item">
         <div class="play-button" onclick="playMusic($music_id)">
             <img src="/public/assets/media/PlayButton.png" alt="Play">
