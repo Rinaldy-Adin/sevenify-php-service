@@ -54,7 +54,7 @@ async function updateAlbumList(adios, searchResults) {
         */
 
         return `
-            <div class="album-list-item">
+            <div class="album-list-item" onclick="">
                 <img class="album-cover soft-shadow" src="${cover}">
                 <div class="album-info-text">
                     <div class="album-owner">
