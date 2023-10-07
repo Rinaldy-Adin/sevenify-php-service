@@ -19,15 +19,18 @@ class MusicService
         $this->musicRepo = new MusicRepository();
     }
     
-    function getMusicById($musicId) {
-        return $this->musicRepo->getByMusicId($musicId);
+    function getByUserID(int $userId, int $page) : array
+    {
+        return $this->musicRepo->getByUserId($userId, $page);
     }
     
-    function countAllMusic(){
+    function countAllMusic() : ?int
+    {
         return $this->musicRepo->countAllMusic();
     }
 
-    function countMusicBy($where=[]){
+    function countMusicBy($where=[]) : ?int
+    {
         return $this->musicRepo->countMusicBy($where);
     }
     function getByMusicId(string $musicId): ?MusicModel

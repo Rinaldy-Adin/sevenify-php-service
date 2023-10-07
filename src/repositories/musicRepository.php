@@ -76,38 +76,51 @@ class MusicRepository extends Repository
         return null;
     }
 
-    public function getByUserId(int $userId): array
+    public function getByUserId(int $userId, int $page): array
     {
-        $query = "SELECT * FROM music WHERE music_owner = :userId";
+        $conditions[] = "music_owner = :user_id"; 
+        $bindings[':user_id'] = $userId;
+        
+        $query = "SELECT * FROM music JOIN users ON user_id = music_owner WHERE music_owner = :user_id"; // Ubah ":userownerId" menjadi ":user_id"
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(":userId", $userId);
+        $stmt->bindParam(":user_id", $userId); // Ubah ":userownerId" menjadi ":user_id"
         $stmt->execute();
+        
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = (new UserRepository()) -> getAllUsers();
+        $userIDName = [];
+
+        foreach($users as $user){
+            $userIDName[$user->user_id] = $user->user_name;
+        }
 
         // Convert music records to Music model objects
         $musicObjects = [];
         foreach ($musicRecords as $musicRecord) {
             $uploadDate = new DateTime($musicRecord['music_upload_date']);
-            $music = new MusicModel(
+            $music = new MusicWithArtistNameDTO(
                 $musicRecord['music_id'],
                 $musicRecord['music_name'],
-                $musicRecord['music_owner'],
+                $userIDName[$musicRecord['music_owner']],
                 $musicRecord['music_genre'],
                 $uploadDate
             );
             $musicObjects[] = $music;
         }
 
-        return $musicObjects;
+        $pageOffset = ($page - 1) * 5;
+
+        return [array_slice($musicObjects, $pageOffset, 5), ceil(count($musicRecords) / 5)];
     }
-    public function countAllMusic()
+    public function countAllMusic() : int
     {
         $query = "SELECT COUNT(*) FROM music";
         $stmt = $this->db->query($query);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['COUNT(*)'];
     }
-    public function countMusicBy($where = [])
+    public function countMusicBy($where) : int
     {
         $query = "SELECT COUNT(*) FROM music";
 
@@ -115,9 +128,9 @@ class MusicRepository extends Repository
             $conditions = [];
             foreach ($where as $key => $value) {
                 if ($value[2] == 'LIKE') {
-                    $conditions[] = '$key LIKE :$key';
+                    $conditions[] = "$key LIKE :$key";
                 } else {
-                    $conditions[] = '$key = :$key';
+                    $conditions[] = "$key = :$key";
                 }
             }
             $query .= ' WHERE ' . implode(' AND ', $conditions);
@@ -126,15 +139,15 @@ class MusicRepository extends Repository
         $stmt = $this->db->prepare($query);
         foreach ($where as $key => $value) {
             if ($value[2] == 'LIKE') {
-                $stmt->bindValue(":$key", "%$value[0]%", $value[1]);
+                $stmt->bindValue(":$key", "%{$value[0]}%", PDO::PARAM_STR);
             } else {
-                $stmt->bindValue(":$key", $value[0], $value[1]);
+                $stmt->bindValue(":$key", $value[0], PDO::PARAM_STR);
             }
         }
 
         $stmt->execute();
 
-        return $stmt->rowCount();
+        return $stmt->fetchColumn();
     }
 
     public function searchMusic(string $searchValue, int $page, string $genre, string $uploadPeriod, string $sort): array
@@ -300,4 +313,57 @@ class MusicRepository extends Repository
             throw new \RuntimeException('Error saving cover file');
         }
     }
-}
+
+    public function getMusicByPage(int $page, int $itemPerPage, array $where) {
+        // Pastikan bahwa $page selalu positif atau 1 jika negatif
+        $page = max($page, 1);
+        
+        $idxItem = ($page - 1) * $itemPerPage;
+    
+        $query = "SELECT * FROM music";
+    
+        if (!empty($where)) {
+            $conditions = [];
+            foreach ($where as $key => $value) {
+                if ($value[2] == 'LIKE') {
+                    $conditions[] = "$key LIKE :$key";
+                } else {
+                    $conditions[] = "$key = :$key";
+                }
+            }
+            $query .= ' WHERE ' . implode(' AND ', $conditions);
+        }
+    
+        $query .= " LIMIT :offset, :itemPerPage";
+    
+        $stmt = $this->db->prepare($query);
+        foreach ($where as $key => $value) {
+            if ($value[2] == 'LIKE') {
+                $stmt->bindValue(":$key", "%{$value[0]}%", PDO::PARAM_STR);
+            } else {
+                $stmt->bindValue(":$key", $value[0], PDO::PARAM_STR);
+            }
+        }
+    
+        // Bind the parameters for LIMIT
+        $stmt->bindParam(":offset", $idxItem, PDO::PARAM_INT);
+        $stmt->bindParam(":itemPerPage", $itemPerPage, PDO::PARAM_INT);
+    
+        $stmt->execute();
+    
+        $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $musicObjects = [];
+        foreach ($musicRecords as $musicRecord) {
+            $uploadDate = new DateTime($musicRecord['music_upload_date']);
+            $music = new MusicModel(
+                $musicRecord['music_id'],
+                $musicRecord['music_name'],
+                $musicRecord['music_owner'],
+                $musicRecord['music_genre'],
+                $uploadDate
+            );
+            $musicObjects[] = $music;
+        }
+        return $musicObjects;
+    }    
+}    
