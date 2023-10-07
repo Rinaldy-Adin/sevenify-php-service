@@ -2,17 +2,19 @@
 
 require_once ROOT_DIR . '/models/musicModel.php';
 require_once ROOT_DIR . '/repositories/musicRepository.php';
+require_once ROOT_DIR . '/repositories/userRepository.php';
 
 use models\MusicModel;
 use repositories\MusicRepository;
+use repositories\UserRepository;
 
 function musicItem($music){
     $music_id = $music->music_id;
     $music_name = $music->music_name;
     $music_owner = $music->music_owner;
-    $music_genre = $music->music_genre;
-    $musicRepo = new MusicRepository();
-    $music_cover = $musicRepo->getCoverPathByMusicId($music_id);
+    $userRepo = new UserRepository();
+    $owner = $userRepo->getUserById($music_owner);
+    $owner_name = $owner->user_name;
 
     $html = <<< "EOT"
     <div class="music-item">
@@ -23,8 +25,8 @@ function musicItem($music){
             <img src="/api/music-cover/$music_id" alt="Cover Image">
         </div>
         <div class="music-details">
-            <span class="owner">$music_owner :</span>
-            <span class="name">$music_name</span>
+            <span class="owner">$owner_name :</span>
+            <span classA="name">$music_name</span>
         </div>
         <div class="music-option">
             <button class = "option-button" onclick="toggleOptionsMenu(event)">

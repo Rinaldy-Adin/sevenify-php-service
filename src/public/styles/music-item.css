@@ -1,5 +1,15 @@
+body {
+    width: 1000px;
+    min-height: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .music-item {
+    max-width: 1000px;
     width: 100%;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     background: rgba(247.03, 255, 198.05, 0);
@@ -53,6 +63,7 @@
 .option-button {
     position: relative;
     margin-right: 10px;
+    margin-left: auto;
 }
 
 .option-icon button {

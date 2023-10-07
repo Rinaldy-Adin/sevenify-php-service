@@ -1,13 +1,18 @@
 <?php
+require_once ROOT_DIR . 'models/albumModel.php';
 require_once ROOT_DIR . 'models/musicModel.php';
-require_once ROOT_DIR . 'public/views/components/musicItem.php';
 require_once ROOT_DIR . 'repositories/musicRepository.php';
+require_once ROOT_DIR . 'repositories/albumRepository.php';
+require_once ROOT_DIR . 'public/views/components/musicItem.php';
+require_once ROOT_DIR . 'public/views/components/musicList.php';
 
 use models\MusicModel;
 use repositories\MusicRepository;
+use models\AlbumModel;
+use repositories\AlbumRepository;
 
-$musicRepository = new MusicRepository(); // Buat objek MusicRepository
-
+$musicRepository = new MusicRepository();
+$albumRepository = new AlbumRepository();
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +23,8 @@ $musicRepository = new MusicRepository(); // Buat objek MusicRepository
     <link rel="stylesheet" href="public/styles/global.css">
     <link rel="stylesheet" href="public/styles/music-bar.css">
     <link rel="stylesheet" href="public/styles/music-item.css">
+    <link rel="stylesheet" href="public/styles/music-list.css">
+    <link rel="stylesheet" href="public/styles/album-item.css">
     <title>Sevenify</title>
 </head>
 
@@ -28,6 +35,16 @@ $musicRepository = new MusicRepository(); // Buat objek MusicRepository
 
     <section id="section-album">
         <h2>Your Albums</h2>
+        <?php
+        /*
+            $album = $albumRepository->getAlbumById(23);
+            if ($music) {
+                echo musicItem($music);
+            } else {
+                echo "Music not found.";
+            }
+        */
+        ?>
     </section>
 
     <section id="section-playlist">
@@ -35,20 +52,13 @@ $musicRepository = new MusicRepository(); // Buat objek MusicRepository
     </section>
 
     <section id="section-music">
-        <h2>Your Musics</h2>
-        <?php
-            $music = $musicRepository->getByMusicId(23);
-            if ($music) {
-                echo musicItem($music);
-            } else {
-                echo "Music not found.";
-            }
-        ?>
+        <?php require ROOT_DIR . '/public/views/components/musicList.php'; ?>
     </section>
 
     <script src="public/javascript/adios.js"></script>
     <script src="public/javascript/music-bar.js"></script>
     <script src="/public/javascript/music-item.js"></script>
+    <script src="/public/javascript/music-list.js"></script>
 
 </body>
 
