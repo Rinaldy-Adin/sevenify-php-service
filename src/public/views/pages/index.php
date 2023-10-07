@@ -15,9 +15,9 @@ $musicRepository = new MusicRepository(); // Buat objek MusicRepository
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="public/styles/global.css">
-    <link rel="stylesheet" href="public/styles/music-bar.css">
-    <link rel="stylesheet" href="public/styles/music-item.css">
+    <link rel="stylesheet" href="/public/styles/global.css">
+    <link rel="stylesheet" href="/public/styles/music-bar.css">
+    <link rel="stylesheet" href="/public/styles/music-item.css">
     <title>Sevenify</title>
 </head>
 

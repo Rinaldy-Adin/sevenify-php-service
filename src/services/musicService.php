@@ -23,6 +23,18 @@ class MusicService
         return $this->musicRepo->getByMusicId($musicId);
     }
     
+    function getAllMusic(int $page) : array{
+        $searchValue = '';
+        $genre = 'all';
+        $uploadPeriod = 'all-time';
+        $sort = '';
+        return $this->searchMusic($searchValue, $page, $genre, $uploadPeriod, $sort);
+    }
+
+    function deleteMusic(int $musicId) : bool {
+        return $this->musicRepo->deleteMusic($musicId);
+    }
+
     function countAllMusic(){
         return $this->musicRepo->countAllMusic();
     }
@@ -57,6 +69,13 @@ class MusicService
     function createMusic(int $user_id, string $title, string $genre, array $musicFile, ?array $coverFile): ?MusicModel
     {
         $music = $this->musicRepo->createMusic($title, $user_id, $genre, $musicFile, $coverFile);
+
+        return $music;
+    }
+
+    function updateMusic(int $musicId, int $user_id, string $title, string $genre, bool $deleteCover, ?array $coverFile): ?MusicModel
+    {
+        $music = $this->musicRepo->udpateMusic($musicId, $title, $user_id, $genre, $deleteCover, $coverFile);
 
         return $music;
     }

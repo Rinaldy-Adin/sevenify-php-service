@@ -58,10 +58,14 @@ class Adios {
         return await this.makeRequest(url, 'POST', data, 'application/x-www-form-urlencoded');
     }
 
+    async delete(url) {
+        return await this.makeRequest(url, 'DELETE');
+    }
+
     async postFormData(url, data) {
         return await this.makeRequest(url, 'POST', data, 'multipart/form-data');
     }
-
+    
     objectToXWWWFormUrlencoded(obj) {
         const params = [];
 

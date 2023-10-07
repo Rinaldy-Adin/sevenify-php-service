@@ -10,11 +10,19 @@ require_once ROOT_DIR . 'controllers/music/getAudioController.php';
 require_once ROOT_DIR . 'controllers/music/getGenresController.php';
 require_once ROOT_DIR . 'controllers/music/getMusicCoverController.php';
 require_once ROOT_DIR . 'controllers/music/searchMusicController.php';
+require_once ROOT_DIR . 'controllers/music/getAllMusicController.php';
+require_once ROOT_DIR . 'controllers/music/adminCreateMusicController.php';
+require_once ROOT_DIR . 'controllers/music/adminDeleteMusicController.php';
+require_once ROOT_DIR . 'controllers/music/adminUpdateMusicController.php';
 require_once ROOT_DIR . 'controllers/user/getUserController.php';
 
 use controllers\auth\LoginController;
 use controllers\auth\RegisterController;
+use controllers\music\AdminCreateMusicController;
+use controllers\music\AdminDeleteMusicController;
+use controllers\music\AdminUpdateMusicController;
 use controllers\music\CreateMusicController;
+use controllers\music\GetAllMusicController;
 use controllers\music\GetAudioController;
 use controllers\music\GetGenresController;
 use controllers\music\GetMusicController;
@@ -36,5 +44,9 @@ class APIRoutes
         ['/api/user/*', 'get', GetUserController::class],
         ['/api/search', 'get', SearchMusicController::class],
         ['/api/genres', 'get', GetGenresController::class],
+        ['/api/admin/music', 'get', GetAllMusicController::class],
+        ['/api/admin/music', 'post', AdminCreateMusicController::class],
+        ['/api/admin/music/*', 'delete', AdminDeleteMusicController::class],
+        ['/api/admin/music/*', 'post', AdminUpdateMusicController::class],
     ];
 }

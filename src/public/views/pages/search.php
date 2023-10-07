@@ -3,15 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="public/styles/global.css">
-    <link rel="stylesheet" href="public/styles/search.css">
-    <link rel="stylesheet" href="public/styles/music-bar.css">
+    <link rel="stylesheet" href="/public/styles/global.css">
+    <link rel="stylesheet" href="/public/styles/search.css">
+    <link rel="stylesheet" href="/public/styles/music-bar.css">
     <title>Sevenify</title>
 </head>
 
 <body>
     <div class="container">
-        <div class="search-container">
+        <div class="search-container hard-shadow">
             <h1>Search</h1>
             <input id="search-input" type="text" name="search" placeholder="Search music or artists">
         </div>

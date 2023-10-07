@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
-    <link rel="stylesheet" href="/public/styles/upload-music.css">
+    <link rel="stylesheet" href="/public/styles/admin-modify.css">
     <title>Sevenify</title>
 </head>
 
@@ -30,13 +30,28 @@
                     <label>Genre</label>
                     <input required name="genre" type="text" placeholder="Enter your genre here">
                 </div>
+                <div class="input-container">
+                    <label>User</label>
+                    <select required name="user-id">
+                        <?php
+                        use services\UserService;
+                            require_once ROOT_DIR . 'services/userService.php';
+
+                            $users = (new UserService())->getAllUsers();
+
+                            foreach ($users as $user) {
+                                echo " <option value=\"$user->user_id\">$user->user_name</option> " ;
+                            }
+                        ?>
+                    </select>
+                </div>
                 <input id="submit" type="submit" value="Save Music">
             </div>
         </div>
     </form>
 
-    <script src="public/javascript/adios.js"></script>
-    <script src="public/javascript/upload-music.js"></script>
+    <script src="/public/javascript/adios.js"></script>
+    <script src="/public/javascript/admin/music/create.js"></script>
 </body>
 
 </html>

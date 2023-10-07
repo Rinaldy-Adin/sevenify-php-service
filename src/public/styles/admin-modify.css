@@ -1,0 +1,129 @@
+body {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    margin-top: 64px;
+    width: 90vw;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.upload-bar {
+    display: flex;
+    height: 57px;
+    padding: 10px 24px;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 16px;
+    background: #F4F4F4;
+}
+
+#page-title {
+    color: #000;
+    text-align: center;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.6px;
+}
+
+.form-container {
+    display: flex;
+    gap: 44px;
+}
+
+.image-container {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+#cover-image {
+    border-radius: 33px;
+    width: 100%;
+    aspect-ratio: 1/1;
+}
+
+.delete-image-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-container {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: end;
+    flex: 1;
+    min-height: 50vh;
+}
+
+.input-container {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.input-container label {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.6px;
+    display: block;
+}
+
+.input-container input, .input-container select {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #CBCBCB;
+
+    font-family: Open Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.42px;
+}
+
+.input-container textarea {
+    resize: vertical;
+}
+
+#submit {
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    border-radius: 8px;
+    border: 0;
+    background: #E69332;
+    outline-color: #E69332;
+
+    color: #FFF;
+    text-align: center;
+    font-family: Open Sans;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.2px;
+}
+
+#submit:hover {
+    background-color: #D98B2F;
+    cursor: pointer;
+}
