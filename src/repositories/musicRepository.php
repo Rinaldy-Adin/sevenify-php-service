@@ -366,4 +366,22 @@ class MusicRepository extends Repository
         }
         return $musicObjects;
     }    
+
+    public function updateMusic(int $musicId, string $title, string $genre): bool
+    {
+        $query = "UPDATE music SET music_name = :title, music_genre = :genre WHERE music_id = :musicId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":title", $title);
+        $stmt->bindParam(":genre", $genre);
+        $stmt->bindParam(":musicId", $musicId);
+        return $stmt->execute();
+    }
+
+    public function deleteMusic(int $musicId): bool
+    {
+        $query = "DELETE FROM music WHERE music_id = :musicId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":musicId", $musicId);
+        return $stmt->execute();
+    }
 }    
