@@ -5,6 +5,8 @@ let currentSearch = '';
 let currentGenre = document.getElementById('filter-by-genre-dropdown').value;
 let currentUploadPeriod = document.getElementById('filter-by-date-dropdown').value;
 let currentSort = '';
+let pageCount = 0;
+
 
 async function searchMusic(searchValue) {
     updateResults(searchValue, 1, currentGenre, currentUploadPeriod, currentSort);
@@ -48,6 +50,7 @@ async function updateResults(searchValue, page, genre, uploadPeriod, sort) {
         currentGenre = genre;
         currentUploadPeriod = uploadPeriod;
         currentSort = sort;
+        pageCount = data.data['page-count'];
 
         updateMusicList(adios, data.data.result);
         updatePagination(data.data['page-count']);
@@ -101,14 +104,26 @@ async function updateMusicList(adios, searchResults) {
 }
 
 function updatePagination(pageCount) {
-    const elements = [];
-    for (let i = 0; i < pageCount; i++) {
+    let startNum = Math.max(currentPage - 1, 1);
+    let endNum = Math.min(currentPage + 1, pageCount);
+    
+    if (currentPage == 1)
+        endNum = Math.min(currentPage + 2, pageCount)
+
+    if (currentPage == pageCount)
+        startNum = Math.max(currentPage - 2, 1);
+
+    console.log(startNum, endNum);
+
+    const elements = ['<img onclick="changePage(1)" src="/public/assets/icons/double-left.svg" id="pagination-first" class="clickable">'];
+    for (let i = startNum - 1; i < endNum; i++) {
         if (i + 1 == currentPage) {
-            elements.push(`<div onclick="changePage(${i + 1})" class="pagination-item clickable pagination-active">${i + 1}</div>`);
+            elements.push(`<div class="pagination-item clickable pagination-active">${i + 1}</div>`);
         } else {
             elements.push(`<div onclick="changePage(${i + 1})" class="pagination-item clickable">${i + 1}</div>`);
         }
     }
+    elements.push('<img onclick="changePage(pageCount)" src="/public/assets/icons/double-right.svg" id="pagination-last" class="clickable">');
 
     document.getElementById('pagination').innerHTML = elements.join(' ');
 }
