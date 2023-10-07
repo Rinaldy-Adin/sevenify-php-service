@@ -11,6 +11,7 @@ require_once ROOT_DIR . 'controllers/music/getGenresController.php';
 require_once ROOT_DIR . 'controllers/music/getMusicCoverController.php';
 require_once ROOT_DIR . 'controllers/music/searchMusicController.php';
 require_once ROOT_DIR . 'controllers/user/getUserController.php';
+require_once ROOT_DIR . 'controllers/music/findUserMusicController.php';
 
 use controllers\auth\LoginController;
 use controllers\auth\RegisterController;
@@ -21,6 +22,7 @@ use controllers\music\GetMusicController;
 use controllers\music\GetMusicCoverController;
 use controllers\music\GetUserController;
 use controllers\music\SearchMusicController;
+use controllers\music\FindUserMusicController;
 
 // TODO: move this to /router
 
@@ -36,5 +38,6 @@ class APIRoutes
         ['/api/user/*', 'get', GetUserController::class],
         ['/api/search', 'get', SearchMusicController::class],
         ['/api/genres', 'get', GetGenresController::class],
+        ['/api/searchUser', 'get', FindUserMusicController::class],
     ];
 }
