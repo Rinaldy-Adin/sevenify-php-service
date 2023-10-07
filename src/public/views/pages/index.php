@@ -5,6 +5,8 @@ require_once ROOT_DIR . 'repositories/musicRepository.php';
 require_once ROOT_DIR . 'repositories/albumRepository.php';
 require_once ROOT_DIR . 'public/views/components/musicItem.php';
 require_once ROOT_DIR . 'public/views/components/musicList.php';
+require_once ROOT_DIR . 'public/views/components/albumItem.php';
+require_once ROOT_DIR . 'public/views/components/albumList.php';
 
 use models\MusicModel;
 use repositories\MusicRepository;
@@ -25,26 +27,15 @@ $albumRepository = new AlbumRepository();
     <link rel="stylesheet" href="public/styles/music-item.css">
     <link rel="stylesheet" href="public/styles/music-list.css">
     <link rel="stylesheet" href="public/styles/album-item.css">
+    <link rel="stylesheet" href="public/styles/album-list.css">
     <title>Sevenify</title>
 </head>
 
 <body>
-    <h1>hi</h1>
-
     <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
 
     <section id="section-album">
-        <h2>Your Albums</h2>
-        <?php
-        /*
-            $album = $albumRepository->getAlbumById(23);
-            if ($music) {
-                echo musicItem($music);
-            } else {
-                echo "Music not found.";
-            }
-        */
-        ?>
+        <?php require ROOT_DIR . '/public/views/components/albumList.php'; ?>
     </section>
 
     <section id="section-playlist">
@@ -59,6 +50,7 @@ $albumRepository = new AlbumRepository();
     <script src="public/javascript/music-bar.js"></script>
     <script src="/public/javascript/music-item.js"></script>
     <script src="/public/javascript/music-list.js"></script>
+    <script src="/public/javascript/album-list.js"></script>
 
 </body>
 
