@@ -65,6 +65,7 @@ use controllers\playlist\AdminGetPlaylistMusicController;
 use controllers\playlist\AdminUpdatePlaylistController;
 use controllers\playlist\GetPlaylistCoverController;
 use controllers\playlist\SearchPlaylistMusicController;
+use controllers\playlist\CreatePlaylistController;
 
 // TODO: move this to /router
 
@@ -87,6 +88,7 @@ class APIRoutes
         ['/api/searchAlbumMusic', 'get', SearchAlbumMusicController::class],
         ['/api/searchPlaylistMusic', 'get', SearchPlaylistMusicController::class],
         ['/api/createAlbum', 'post', CreateAlbumController::class],
+        ['/api/createPlaylist', 'post', CreatePlaylistController::class],
         ['/api/searchPlaylistUser', 'get', FindUserPlaylistController::class],
         ['/api/admin/music', 'get', AdminGetMusicController::class],
         ['/api/admin/music', 'post', AdminCreateMusicController::class],
