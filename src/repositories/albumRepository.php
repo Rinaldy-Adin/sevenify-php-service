@@ -77,7 +77,7 @@ class AlbumRepository extends Repository {
         return [array_slice($albumObjects, $pageOffset, 4), ceil(count($albumRecords) / 4)];
     }
 
-    public function getCoverPathBAlbumId(int $albumId): ?string
+    public function getCoverPathByAlbumId(int $albumId): ?string
     {
         $user = $this->getByAlbumId($albumId);
 
