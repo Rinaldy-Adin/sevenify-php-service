@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
     <link rel="stylesheet" href="/public/styles/admin-modify.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
     <title>Sevenify</title>
 </head>
 
 <body>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
+
     <form onsubmit="uploadAlbum(event)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Upload Album</h1>

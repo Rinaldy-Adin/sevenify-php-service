@@ -1,25 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require_once ROOT_DIR . 'services/userService.php';
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/public/styles/nav-bar.css">
-    <title>Sevenify</title>
-</head>
+use services\UserService;
+$userService = new UserService();
 
-<body>
-    <div class="sidebar">
-        <div class="logo">
-            <img src="/public/assets/media/sevenify.png" alt="Sevenify Logo">
-        </div>
-        <ul class="nav-links">
-            <li><a href="#"><img src="/public/assets/media/home.png"alt="Home Page"> Home Page</a></li>
-            <li><a href="#"><img src="/public/assets/media/search.png" alt="Search"> Search</a></li>
-            <li><a href="#"><img src="/public/assets/media/album.png" alt="Album & Playlist"> Album & Playlist</a></li>
-            <li><a href="#"><img src="/public/assets/media/music.png" alt="Music"> Music</a></li>
-            <li><a href="#"><img src="/public/assets/media/artist.png" alt="Artist"> Artist</a></li>
-            <li><a href="#"><img src="/public/assets/media/add.png" alt="Add Music"> Add Music</a></li>
-            <li><a href="#"><img src="/public/assets/media/user.png" alt="User Account Settings"> User Account Setings</a></li>
-        </ul>
+$user = $userService->getByUserId($_SESSION['user_id']);
+?>
+<div class="sidebar">
+    <div class="logo">
+        <img src="/public/assets/media/sevenify.png" alt="Sevenify Logo">
     </div>
-</html>
+    <ul class="nav-links">
+        <li><a href="/"><img src="/public/assets/icons/home.png"alt="Home Page">Home Page</a></li>
+        <li><a href="/search"><img src="/public/assets/icons/search.png" alt="Search">Search</a></li>
+        <li><a href="#"><img src="/public/assets/icons/album.png" alt="Album & Playlist">Album & Playlist</a></li>
+        <li><a href="#"><img src="/public/assets/icons/music.png" alt="Music">Music</a></li>
+        <li><a href="/upload-music"><img src="/public/assets/icons/add.png" alt="Add Music">Add Music</a></li>
+        <li><a href="/user-settings"><img src="/public/assets/icons/user.png" alt="User Account Settings">User Account Setings</a></li>
+        <?php
+            if ($user->role == 'admin') {
+                echo '<li><a href="/admin/music/"><img src="/public/assets/icons/admin.svg" alt="User Admin Page">Admin</a></li>';
+            }
+        ?>
+    </ul>
+</div>
