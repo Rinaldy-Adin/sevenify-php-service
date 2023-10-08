@@ -1,18 +1,22 @@
 body {
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: start;
 }
 
 .container {
     margin-top: 64px;
-    width: 90vw;
-    max-width: 1000px;
+    width: 90%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 24px;
+    flex: 1;
+}
+
+.container > div {
+    max-width: 1000px;
 }
 
 .search-container {
@@ -22,6 +26,7 @@ body {
     gap: 24px;
     border-radius: 16px;
     background: #F4F4F4;
+    width: 100%;
 }
 
 .search-container h1 {
@@ -44,6 +49,7 @@ body {
     gap: 24px;
     align-items: start;
     flex-direction: row;
+    width: 100%;
 }
 
 .vertical-divider {

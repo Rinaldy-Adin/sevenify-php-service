@@ -6,10 +6,13 @@
     <link rel="stylesheet" href="/public/styles/global.css">
     <link rel="stylesheet" href="/public/styles/search.css">
     <link rel="stylesheet" href="/public/styles/music-bar.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
     <title>Sevenify</title>
 </head>
 
 <body>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
+    
     <div class="container">
         <div class="search-container hard-shadow">
             <h1>Search</h1>

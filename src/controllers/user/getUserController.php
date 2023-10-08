@@ -17,7 +17,7 @@ class GetUserController
 
         $userModel = (new UserService())->getByUserId($user_id);
         if ($userModel) {
-            return (new Response($userModel->toDTO()))->httpResponse();
+            return (new Response($userModel->toDTOwithoutPass()))->httpResponse();
         } else {
             return (new Response(['message' => 'User not found'], 400))->httpResponse();
         }

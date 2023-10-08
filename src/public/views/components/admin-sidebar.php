@@ -1,6 +1,6 @@
 <?php
 function renderAdminSidebar(string $currentEntity) {
-    $entities = ["user" => "User", "music" => "Music", "album" => "albums", "playlist" => "Playlists"];
+    $entities = ["music" => "Music", "user" => "User", "album" => "albums", "playlist" => "Playlists"];
 
     foreach ($entities as $lc => $uc) {
         if ($lc == $currentEntity) {
