@@ -54,6 +54,7 @@ $coverPath = $playlistService->getCoverPathByPlaylistId($playlist_id);
         <div class="playlist-owner">
             <?= $playlist[0]->playlist_owner_name ?>
         </div>
+        <a href="/playlist/update-playlist/<?php echo $playlist_id; ?>" class="update-playlist-link">Update Playlist</a>
     </section>
 
     <section id="playlist-music-list">
