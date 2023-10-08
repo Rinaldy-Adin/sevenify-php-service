@@ -13,7 +13,7 @@ async function uploadPlaylist(event) {
     const additionalData = playlistMusic.map(({ id }) => ({ key: 'music[]', value: id }));
 
     try {
-        const resp = await adios.postFormData('/api/createPlaylist', event.target, additionalData);
+        const resp = await adios.postFormData('/api/create-playlist', event.target, additionalData);
         const data = JSON.parse(resp);
         console.log(data);
         window.location.href = '/';

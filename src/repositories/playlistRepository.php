@@ -250,7 +250,7 @@ class PlaylistRepository extends Repository {
         
         $playlistRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $users = (new UserRepository()) -> getAllUsers();
+        [$users] = (new UserRepository()) -> getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){
@@ -281,7 +281,7 @@ class PlaylistRepository extends Repository {
         $playlistRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($playlistRecords) {
-            $users = (new UserRepository())->getAllUsers();
+            [$users] = (new UserRepository())->getAllUsers();
             $userIDName = [];
 
             foreach ($users as $user) {

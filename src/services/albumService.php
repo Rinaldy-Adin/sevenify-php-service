@@ -35,7 +35,7 @@ class AlbumService
         return $this->albumRepo->getCoverPathByAlbumId($albumId);
     }
 
-    function createAlbum(string $title, int $user_id, ?array $coverFile, array $music_ids) :AlbumModel {
+    function createAlbum(string $title, int $user_id, ?array $coverFile, array $music_ids = []) :AlbumModel {
         return $this->albumRepo->createAlbum($title, $user_id, $coverFile, $music_ids);
     }
 

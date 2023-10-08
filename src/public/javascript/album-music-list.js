@@ -18,7 +18,7 @@ async function updateResult(albumId, page) {
         params['albumId'] = albumId;
         params['page'] = page;
 
-        const response = await adios.get('/api/searchAlbumMusic', params);
+        const response = await adios.get('/api/search-album-music', params);
         const data = JSON.parse(response);
         console.log(data);
 

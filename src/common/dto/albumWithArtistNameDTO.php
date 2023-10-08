@@ -14,7 +14,7 @@ class AlbumWithArtistNameDTO extends DTO
     public function __construct(
         int $album_id,
         string $album_name,
-        string $album_owner_name,
+        string $album_owner_name
     ) {
         $this->album_id = $album_id;
         $this->album_name = $album_name;

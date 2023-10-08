@@ -65,7 +65,7 @@ class AlbumRepository extends Repository
         $albumRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($albumRecords) {
-            $users = (new UserRepository())->getAllUsers();
+            [$users] = (new UserRepository())->getAllUsers();
             $userIDName = [];
 
             foreach ($users as $user) {
@@ -100,7 +100,7 @@ class AlbumRepository extends Repository
         
         $albumRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $users = (new UserRepository()) -> getAllUsers();
+        [$users] = (new UserRepository()) -> getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){

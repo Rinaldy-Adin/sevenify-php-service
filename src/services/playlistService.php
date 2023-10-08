@@ -40,7 +40,7 @@ class PlaylistService
         return $this->playlistRepo->getCoverPathByPlaylistId($playlistId);
     }
 
-    function createPlaylist(string $title, int $user_id, ?array $coverFile, array $music_ids) :PlaylistModel {
+    function createPlaylist(string $title, int $user_id, ?array $coverFile, array $music_ids = []) :PlaylistModel {
         return $this->playlistRepo->createPlaylist($title, $user_id, $coverFile, $music_ids);
     }
 

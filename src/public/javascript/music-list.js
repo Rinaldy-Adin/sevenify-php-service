@@ -19,7 +19,7 @@ async function updateResult(userId, page) {
         params['userId'] = userId;
         params['page'] = page;
 
-        const response = await adios.get('/api/searchUser', params);
+        const response = await adios.get('/api/search-user', params);
         const data = JSON.parse(response);
         console.log(data);
 

@@ -40,7 +40,7 @@
                         use services\UserService;
                             require_once ROOT_DIR . 'services/userService.php';
 
-                            $users = (new UserService())->getAllUsers();
+                            [$users] = (new UserService())->getAllUsers();
 
                             foreach ($users as $user) {
                                 echo " <option value=\"$user->user_id\">$user->user_name</option> " ;

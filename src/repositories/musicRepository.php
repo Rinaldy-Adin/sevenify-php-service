@@ -88,7 +88,7 @@ class MusicRepository extends Repository
         
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $users = (new UserRepository()) -> getAllUsers();
+        [$users] = (new UserRepository()) -> getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){
@@ -115,9 +115,6 @@ class MusicRepository extends Repository
     }
     public function getByAlbumId(int $albumId, int $page): array
     {
-        $conditions[] = "album_id = :album_id"; 
-        $bindings[':album_id'] = $albumId;
-        
         $query = "SELECT * FROM (music JOIN users ON user_id = music_owner) NATURAL JOIN album_music WHERE album_id = :album_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":album_id", $albumId);
@@ -125,7 +122,7 @@ class MusicRepository extends Repository
         
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $users = (new UserRepository()) -> getAllUsers();
+        [$users] = (new UserRepository()) -> getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){
@@ -152,9 +149,6 @@ class MusicRepository extends Repository
     }
     public function getByPlaylistId(int $playlistId, int $page): array
     {
-        $conditions[] = "playlist_id = :playlist_id"; 
-        $bindings[':playlist_id'] = $playlistId;
-        
         $query = "SELECT * FROM (music JOIN users ON user_id = music_owner) NATURAL JOIN playlist_music WHERE playlist_id = :playlist_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":playlist_id", $playlistId);
@@ -162,7 +156,7 @@ class MusicRepository extends Repository
         
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $users = (new UserRepository()) -> getAllUsers();
+        [$users] = (new UserRepository()) -> getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){
@@ -367,7 +361,7 @@ class MusicRepository extends Repository
         $ext_partition = explode('.', $musicFile['name']);
         $ext = $ext_partition[count($ext_partition) - 1];
 
-        $targetFilePath = STORAGE_DIR . STORAGE_DIR . 'music/' . $musicId . '.' . $ext;
+        $targetFilePath = STORAGE_DIR . 'music/' . $musicId . '.' . $ext;
         if (file_exists($targetFilePath)) {
             // Delete the existing file
             unlink($targetFilePath);

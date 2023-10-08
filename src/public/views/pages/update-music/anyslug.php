@@ -21,7 +21,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
     }
 }
 
-$users = (new UserService())->getAllUsers();
+[$users] = (new UserService())->getAllUsers();
 
 $options = [];
 $musicOwnerName = '';

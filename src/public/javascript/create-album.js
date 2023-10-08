@@ -10,10 +10,8 @@ async function uploadAlbum(event) {
         return;
     }
 
-    const additionalData = albumMusic.map(({ id }) => ({ key: 'music[]', value: id }));
-
     try {
-        const resp = await adios.postFormData('/api/createAlbum', event.target, additionalData);
+        const resp = await adios.postFormData('/api/create-album', event.target, additionalData);
         const data = JSON.parse(resp);
         console.log(data);
         window.location.href = '/';

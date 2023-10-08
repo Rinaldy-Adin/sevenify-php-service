@@ -20,7 +20,7 @@ async function updateAlbumResult(userId, page) {
         params['userId'] = userId;
         params['page'] = page;
 
-        const response = await adios.get('/api/searchAlbumUser', params);
+        const response = await adios.get('/api/search-album-user', params);
         console.log(response);
         const data = JSON.parse(response);
         console.log("Album ", data);
