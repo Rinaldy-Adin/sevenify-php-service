@@ -42,6 +42,7 @@ use controllers\album\AdminUpdateAlbumController;
 use controllers\album\GetAlbumCoverController;
 use controllers\album\FindUserAlbumController;
 use controllers\album\SearchAlbumMusicController;
+use controllers\album\CreateAlbumController;
 use controllers\auth\LoginController;
 use controllers\auth\RegisterController;
 use controllers\music\AdminCreateMusicController;
@@ -85,6 +86,7 @@ class APIRoutes
         ['/api/searchAlbumUser', 'get', FindUserAlbumController::class],
         ['/api/searchAlbumMusic', 'get', SearchAlbumMusicController::class],
         ['/api/searchPlaylistMusic', 'get', SearchPlaylistMusicController::class],
+        ['/api/createAlbum', 'post', CreateAlbumController::class],
         ['/api/searchPlaylistUser', 'get', FindUserPlaylistController::class],
         ['/api/admin/music', 'get', AdminGetMusicController::class],
         ['/api/admin/music', 'post', AdminCreateMusicController::class],

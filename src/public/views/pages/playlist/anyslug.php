@@ -90,15 +90,6 @@ $coverPath = $playlistService->getCoverPathByPlaylistId($playlist_id);
     <script src="../../../public/javascript/music-bar.js"></script>
     <script src="../../../public/javascript/playlist-music-list.js"></script>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const playlistMusicList = document.getElementById('playlist-music-list');
-
-        const playlistId = <?php echo $playlist_id; ?>;
-        displayPlaylistMusic(playlistId);
-    });
-    </script>
-
 </body>
 
 </html>

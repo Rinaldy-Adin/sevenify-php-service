@@ -90,15 +90,6 @@ $coverPath = $albumService->getCoverPathByAlbumId($album_id);
     <script src="../../../public/javascript/music-bar.js"></script>
     <script src="../../../public/javascript/album-music-list.js"></script>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const albumMusicList = document.getElementById('album-music-list');
-
-        const albumId = <?php echo $album_id; ?>;
-        displayAlbumMusic(albumId);
-    });
-    </script>
-
 </body>
 
 </html>
