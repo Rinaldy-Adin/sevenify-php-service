@@ -18,7 +18,7 @@ class AdminDeleteMusicController
 
         $music_id = (int)$pathEntries[count($pathEntries) - 1];
 
-        $ok = (new MusicService())->deleteMusic($music_id);
+        $ok = (MusicService::getInstance())->deleteMusic($music_id);
         if ($ok) {
             return (new Response(['message' => 'Successfully deleted music']))->httpResponse();
         } else {

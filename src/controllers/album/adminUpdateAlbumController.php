@@ -25,7 +25,7 @@ class AdminUpdateAlbumController
             $coverFile = null;
         }
 
-        $musicModel = (new AlbumService())->updateAlbum($album_id, $title, $user_id, $deleteCover, $coverFile, $music_ids);
+        $musicModel = AlbumService::getInstance()->updateAlbum($album_id, $title, $user_id, $deleteCover, $coverFile, $music_ids);
         if ($musicModel !== null) {
             return (new Response($musicModel->toDTO()))->httpResponse();
         } else {

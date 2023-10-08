@@ -20,7 +20,7 @@ class CreateAlbumController
             $coverFile = null;
         }
 
-        $musicModel = (new AlbumService())->createAlbum($title, $user_id, $coverFile);
+        $musicModel = AlbumService::getInstance()->createAlbum($title, $user_id, $coverFile);
         if ($musicModel !== null) {
             return (new Response($musicModel->toDTO()))->httpResponse();
         } else {

@@ -5,7 +5,7 @@ require_once ROOT_DIR . 'services/userService.php';
 use services\PlaylistService;
 use services\UserService;
 
-$playlistService = new PlaylistService();
+$playlistService = PlaylistService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
 $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
@@ -21,7 +21,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
     }
 }
 
-[$users] = (new UserService())->getAllUsers();
+$users = UserService::getInstance()->getAllUsers();
 
 $options = [];
 $playlistOwnerName = '';

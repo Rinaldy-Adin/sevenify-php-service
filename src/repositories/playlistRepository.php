@@ -16,6 +16,16 @@ use PDO;
 
 
 class PlaylistRepository extends Repository {
+    private static $instance;
+    
+    public static function getInstance()
+    {
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+    
     public function getAllPlaylists(?int $page) : array {
         $query = "SELECT * FROM playlists";
 
@@ -250,7 +260,7 @@ class PlaylistRepository extends Repository {
         
         $playlistRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        [$users] = (new UserRepository()) -> getAllUsers();
+        [$users] = (UserRepository::getInstance()) -> getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){
@@ -281,7 +291,7 @@ class PlaylistRepository extends Repository {
         $playlistRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($playlistRecords) {
-            [$users] = (new UserRepository())->getAllUsers();
+            [$users] = (UserRepository::getInstance())->getAllUsers();
             $userIDName = [];
 
             foreach ($users as $user) {

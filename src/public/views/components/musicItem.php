@@ -12,7 +12,7 @@ function musicItem($music){
     $music_id = $music->music_id;
     $music_name = $music->music_name;
     $music_owner = $music->music_owner;
-    $userRepo = new UserRepository();
+    $userRepo = UserRepository::getInstance();
     $owner = $userRepo->getUserById($music_owner);
     $owner_name = $owner->user_name;
 

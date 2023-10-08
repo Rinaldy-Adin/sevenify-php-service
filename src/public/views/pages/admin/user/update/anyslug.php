@@ -3,7 +3,7 @@ require_once ROOT_DIR . 'services/userService.php';
 
 use services\UserService;
 
-$userService = new UserService();
+$userService = UserService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
 $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);

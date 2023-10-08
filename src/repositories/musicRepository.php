@@ -3,6 +3,7 @@
 namespace repositories;
 
 require_once ROOT_DIR . 'repositories/repository.php';
+require_once ROOT_DIR . 'repositories/userRepository.php';
 require_once ROOT_DIR . 'models/musicModel.php';
 require_once ROOT_DIR . 'common/dto/musicWithArtistNameDTO.php';
 
@@ -11,9 +12,20 @@ use DateTime;
 use Exception;
 use models\MusicModel;
 use PDO;
+use repositories\UserRepository;
 
 class MusicRepository extends Repository
 {
+    private static $instance;
+    
+    public static function getInstance()
+    {
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+    
     public function getMusicById(int $musicId): ?MusicModel
     {
         $query = "SELECT * FROM music WHERE music_id = :musicId";
@@ -88,7 +100,8 @@ class MusicRepository extends Repository
         
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        [$users] = (new UserRepository()) -> getAllUsers();
+        $userRepo = UserRepository::getInstance(); 
+        [$users] = $userRepo->getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){
@@ -122,7 +135,7 @@ class MusicRepository extends Repository
         
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        [$users] = (new UserRepository()) -> getAllUsers();
+        [$users] = (UserRepository::getInstance()) -> getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){
@@ -156,7 +169,7 @@ class MusicRepository extends Repository
         
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        [$users] = (new UserRepository()) -> getAllUsers();
+        [$users] = (UserRepository::getInstance()) -> getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){
@@ -283,7 +296,7 @@ class MusicRepository extends Repository
         $stmt->execute();
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        [$users] = (new UserRepository())->getAllUsers();
+        [$users] = (UserRepository::getInstance())->getAllUsers();
         $userNameMap = [];
 
         foreach ($users as $user) {

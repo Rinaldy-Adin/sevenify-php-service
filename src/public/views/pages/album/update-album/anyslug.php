@@ -5,7 +5,7 @@ require_once ROOT_DIR . 'services/userService.php';
 use services\AlbumService;
 use services\UserService;
 
-$albumService = new AlbumService();
+$albumService = AlbumService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
 $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
@@ -21,7 +21,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
     }
 }
 
-[$users] = (new UserService())->getAllUsers();
+$users = UserService::getInstance()->getAllUsers();
 
 $options = [];
 $albumOwnerName = '';

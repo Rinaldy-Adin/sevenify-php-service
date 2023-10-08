@@ -11,7 +11,7 @@ use repositories\AlbumRepository;
 use services\UserService;
 use services\AlbumService;
 
-$albumService = new AlbumService();
+$albumService = AlbumService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
 $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);

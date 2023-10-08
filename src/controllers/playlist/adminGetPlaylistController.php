@@ -16,7 +16,7 @@ class AdminGetPlaylistController
     {
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        [$playlistDTOs, $pageCount] = (new PlaylistService())->getAllPlaylists($page);
+        [$playlistDTOs, $pageCount] = UserService::getInstance()->getAllPlaylists($page);
         $searchResult = array_map(fn(PlaylistModel $model) => $model->toDTO(), $playlistDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }

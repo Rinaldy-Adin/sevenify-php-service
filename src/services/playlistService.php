@@ -8,15 +8,25 @@ require_once ROOT_DIR . 'repositories/userRepository.php';
 
 use models\PlaylistModel;
 use repositories\PlaylistRepository;
-use repositories\UserRepository;
 
 class PlaylistService
 {
     private PlaylistRepository $playlistRepo;
 
-    function __construct()
+    private static $instance;
+
+    // Static method to get the singleton instance
+    public static function getInstance()
     {
-        $this->playlistRepo = new PlaylistRepository();
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
+    protected function __construct()
+    {
+        $this->playlistRepo = PlaylistRepository::getInstance();
     }
 
     function getByPlaylistId(int $playlistId) : PlaylistModel {

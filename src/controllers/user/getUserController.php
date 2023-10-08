@@ -15,7 +15,7 @@ class GetUserController
         $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
         $user_id = $pathEntries[count($pathEntries) - 1];
 
-        $userModel = (new UserService())->getByUserId($user_id);
+        $userModel = UserService::getInstance()->getByUserId($user_id);
         if ($userModel) {
             return (new Response($userModel->toDTOwithoutPass()))->httpResponse();
         } else {

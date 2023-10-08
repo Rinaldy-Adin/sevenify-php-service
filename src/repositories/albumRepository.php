@@ -17,6 +17,16 @@ use PDO;
 
 class AlbumRepository extends Repository
 {
+    private static $instance;
+    
+    public static function getInstance()
+    {
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+    
     public function getAllAlbums(?int $page) : array
     {
         $query = "SELECT * FROM albums";
@@ -65,7 +75,7 @@ class AlbumRepository extends Repository
         $albumRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($albumRecords) {
-            [$users] = (new UserRepository())->getAllUsers();
+            [$users] = (UserRepository::getInstance())->getAllUsers();
             $userIDName = [];
 
             foreach ($users as $user) {
@@ -100,7 +110,7 @@ class AlbumRepository extends Repository
         
         $albumRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        [$users] = (new UserRepository()) -> getAllUsers();
+        [$users] = (UserRepository::getInstance())->getAllUsers();
         $userIDName = [];
 
         foreach($users as $user){

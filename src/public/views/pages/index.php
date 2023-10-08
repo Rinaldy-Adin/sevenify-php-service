@@ -1,24 +1,19 @@
 <?php
+
 require_once ROOT_DIR . 'models/albumModel.php';
 require_once ROOT_DIR . 'models/musicModel.php';
 require_once ROOT_DIR . 'models/playlistModel.php';
 require_once ROOT_DIR . 'repositories/musicRepository.php';
 require_once ROOT_DIR . 'repositories/albumRepository.php';
 require_once ROOT_DIR . 'repositories/playlistRepository.php';
-require_once ROOT_DIR . 'public/views/components/musicList.php';
-require_once ROOT_DIR . 'public/views/components/albumList.php';
-require_once ROOT_DIR . 'public/views/components/playlistList.php';
 
-use models\MusicModel;
 use repositories\MusicRepository;
-use models\AlbumModel;
 use repositories\AlbumRepository;
-use models\PlaylistModel;
 use repositories\PlaylistRepository;
 
-$musicRepository = new MusicRepository();
-$albumRepository = new AlbumRepository();
-$playlistRepository = new PlaylistRepository();
+$musicRepository = MusicRepository::getInstance();
+$albumRepository = AlbumRepository::getInstance();
+$playlistRepository = PlaylistRepository::getInstance();
 ?>
 
 <!DOCTYPE html>
@@ -37,16 +32,16 @@ $playlistRepository = new PlaylistRepository();
 <body>
     <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
 
+    <section id="section-music">
+        <?php require ROOT_DIR . '/public/views/components/musicList.php'; ?>
+    </section>
+
     <section id="section-album">
         <?php require ROOT_DIR . '/public/views/components/albumList.php'; ?>
     </section>
 
     <section id="section-playlist">
         <?php require ROOT_DIR . '/public/views/components/playlistList.php'; ?>
-    </section>
-
-    <section id="section-music">
-        <?php require ROOT_DIR . '/public/views/components/musicList.php'; ?>
     </section>
 
     <script src="public/javascript/adios.js"></script>

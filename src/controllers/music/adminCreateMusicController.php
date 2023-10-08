@@ -22,7 +22,7 @@ class AdminCreateMusicController
             $coverFile = null;
         }
 
-        $musicModel = (new MusicService())->createMusic($user_id, $title, $genre, $musicFile, $coverFile);
+        $musicModel = (MusicService::getInstance())->createMusic($user_id, $title, $genre, $musicFile, $coverFile);
         if ($musicModel !== null) {
             return (new Response($musicModel->toDTO()))->httpResponse();
         } else {

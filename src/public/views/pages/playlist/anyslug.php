@@ -11,7 +11,7 @@ use repositories\PlaylistRepository;
 use services\UserService;
 use services\PlaylistService;
 
-$playlistService = new PlaylistService();
+$playlistService = PlaylistService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
 $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);

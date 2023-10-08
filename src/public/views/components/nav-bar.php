@@ -2,7 +2,7 @@
 require_once ROOT_DIR . 'services/userService.php';
 
 use services\UserService;
-$userService = new UserService();
+$userService = UserService::getInstance();
 
 $user = $userService->getByUserId($_SESSION['user_id']);
 ?>

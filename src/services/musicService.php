@@ -14,9 +14,20 @@ class MusicService
 {
     private MusicRepository $musicRepo;
 
-    function __construct()
+    private static $instance;
+
+    // Static method to get the singleton instance
+    public static function getInstance()
     {
-        $this->musicRepo = new MusicRepository();
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
+    protected function __construct()
+    {
+        $this->musicRepo = MusicRepository::getInstance();
     }
     
     function getByUserID(int $userId, int $page) : array
