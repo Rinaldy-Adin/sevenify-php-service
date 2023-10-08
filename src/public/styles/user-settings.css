@@ -1,136 +1,137 @@
-/* Reset beberapa margin dan padding default */
-body, h1, h2, h3, p {
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    background-color: #000;
-
-}
-
-/* Styling header */
-header {
-    background-color: #656464;
-    color: #fff;
-    padding: 20px;
-    text-align: right;
-}
-
-/* Styling profil */
-.profile {
+body {
+    width: 100%;
+    min-height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: space-between; /* Mengatur elemen-elemen ke kanan */
 }
 
-.profile-image {
-    max-width: 50px;
-    border-radius: 50%;
-    margin-left: 10px; /* Meletakkan gambar profil di sebelah kiri */
-}
-
-.profile-details {
+form {
+    margin-top: 64px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Mengatur teks nama profil dan tombol ke kanan */
-}
-
-.profile-name {
-    font-size: 30px;
-    text-align: right;
-    color: #fff;
-    background-color: #656464;
-    padding: 5px 10px; /* Menambahkan padding agar nama profil terlihat lebih baik */
-}
-
-.view-account-button {
-    background-color: #fff;
-    color: #000;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px; /* Meletakkan tombol "View Account" di sebelah kanan */
-}
-
-/* Styling konten utama */
-main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Styling pengaturan */
-.settings {
-    margin-top: 20px;
-}
-
-h2, h3 {
-    margin-bottom: 10px;
-    text-align: left; /* Mengatur teks judul pengaturan di sebelah kiri */
-}
-
-select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-/* Styling tombol switch */
-.switch {
-    display: flex;
-    justify-content: space-between; /* Tombol switch diatur ke kanan */
+    gap: 24px;
+    flex: 1;
     align-items: center;
+}
+
+form > div {
+    max-width: 1000px;
     width: 100%;
 }
 
-/* Styling tombol switch label */
-.switch label {
-    margin-left: 10px; /* Mengatur jarak antara tombol switch dan labelnya */
-    text-align: left; /* Mengatur label di sebelah kiri */
+.upload-bar {
+    display: flex;
+    height: 57px;
+    padding: 10px 24px;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 16px;
+    background: #F4F4F4;
 }
 
-/* Styling tombol switch slider */
-.slider {
-    position: relative;
-    cursor: pointer;
-    width: 60px;
-    height: 34px;
-}
-
-/* Styling tombol switch input */
-.slider input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-/* Styling tombol switch slider */
-.slider .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    right: 4px; /* Mengatur tombol switch di sebelah kanan */
-    bottom: 4px;
-    background-color: #fff;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-/* Styling tombol switch input checked */
-.slider input:checked + .slider .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Styling footer */
-footer {
-    background-color: #333;
-    color: #fff;
+#page-title {
+    color: #000;
     text-align: center;
-    padding: 10px 0;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.6px;
+}
+
+.form-container {
+    display: flex;
+    gap: 44px;
+}
+
+.details-container {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: end;
+    flex: 1;
+    min-height: 50vh;
+}
+
+.input-container {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.input-container label {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.6px;
+    display: block;
+}
+
+.input-container input {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #CBCBCB;
+
+    font-family: Open Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.42px;
+}
+
+#dynamic-list {
+    list-style-type: disc;
+}
+
+.line-container {
+    display: flex;
+    gap: 20px;
+}
+
+#submit {
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    border-radius: 8px;
+    background: #E69332;
+    outline-color: #E69332;
+
+    color: #FFF;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+#submit:hover {
+    background-color: #D98B2F;
+    cursor: pointer;
+}
+
+#delete {
+    display: flex;
+    padding: 8px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    background: #CA054D;
+    outline-color: #CA054D;
+    align-self: self-start;
+
+    color: #FFF;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+#delete:hover {
+    background-color: #b10745;
+    cursor: pointer;
 }

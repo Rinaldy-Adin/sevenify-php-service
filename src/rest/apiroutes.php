@@ -19,6 +19,7 @@ require_once ROOT_DIR . 'controllers/user/adminGetUserController.php';
 require_once ROOT_DIR . 'controllers/user/adminCreateUserController.php';
 require_once ROOT_DIR . 'controllers/user/adminDeleteUserController.php';
 require_once ROOT_DIR . 'controllers/user/adminUpdateUserController.php';
+require_once ROOT_DIR . 'controllers/user/updateUserController.php';
 require_once ROOT_DIR . 'controllers/album/getAlbumCoverController.php';
 require_once ROOT_DIR . 'controllers/album/adminCreateAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminDeleteAlbumController.php';
@@ -62,6 +63,7 @@ use controllers\user\AdminGetUserController;
 use controllers\user\AdminCreateUserController;
 use controllers\user\AdminDeleteUserController;
 use controllers\user\AdminUpdateUserController;
+use controllers\user\UpdateUserController;
 
 // TODO: move this to /router
 
@@ -76,6 +78,7 @@ class APIRoutes
         ['/api/music-cover/*', 'get', GetMusicCoverController::class],
         ['/api/album-cover/*', 'get', GetAlbumCoverController::class],
         ['/api/playlist-cover/*', 'get', GetPlaylistCoverController::class],
+        ['/api/user', 'post', UpdateUserController::class],
         ['/api/user/*', 'get', GetUserController::class],
         ['/api/search', 'get', SearchMusicController::class],
         ['/api/genres', 'get', GetGenresController::class],

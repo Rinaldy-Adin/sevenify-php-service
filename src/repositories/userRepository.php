@@ -101,21 +101,34 @@ class UserRepository extends Repository
         }
     }
 
-    public function updateUser(int $userId, string $username, string $hashedPassword, bool $isAdmin) : ?UserModel
+    public function updateUser(int $userId, string $username, string $hashedPassword, ?bool $isAdmin = null): ?UserModel
     {
-        $query = "UPDATE users 
-                    SET user_name= :username, user_password = :password, role = :role
-                    WHERE user_id = :userId";
-
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(":username", $username);
-        $stmt->bindParam(":password", $hashedPassword);
-        $isAdmin = $isAdmin ? "admin" : "user";
-        $stmt->bindParam(":role", $isAdmin);
-        $stmt->bindParam(":userId", $userId);
-
         try {
-            $stmt->execute();
+            if ($hashedPassword !== '') {
+                $query = "UPDATE users SET user_password = :password WHERE user_id = :userId";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":password", $hashedPassword);
+                $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+                $stmt->execute();
+            }
+
+            if ($username !== '') {
+                $query = "UPDATE users SET user_name = :username WHERE user_id = :userId";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":username", $username);
+                $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+                $stmt->execute();
+            }
+
+            if ($isAdmin !== null) {
+                $isAdmin = $isAdmin ? "admin" : "user";
+                $query = "UPDATE users SET role = :role WHERE user_id = :userId";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":role", $isAdmin);
+                $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+                $stmt->execute();
+            }
+
             $user = $this->getUserById($userId);
 
             return $user;

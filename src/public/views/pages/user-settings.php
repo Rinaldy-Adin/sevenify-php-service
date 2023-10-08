@@ -7,63 +7,43 @@
     <link rel="stylesheet" href="public/styles/global.css">
     <link rel="stylesheet" href="public/styles/artist.css">
     <link rel="stylesheet" href="public/styles/user-settings.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
+    <link rel="stylesheet" href="/public/styles/music-bar.css">
     <title>Sevenify</title>
 </head>
 
 <body>
-    <header>
-        <div class="profile">
-            <img src="/public/assets/placeholders/music-placeholder.jpg" alt="Profile Image" class="profile-image">
-            <div class="profile-details">
-                <div>
-                    <span id="user-account-name">Nama Pemilik</span></p>
-                    <span id="user-account-gmail">akun@gmail.com</span></p>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
+
+    <form onsubmit="updateUser(event)">
+        <div class="upload-bar hard-shadow">
+            <h1 id="page-title">User Settings</h1>
+            <div></div>
+        </div>
+
+        <div class="form-container">
+            <div class="details-container">
+                <div class="input-container">
+                    <label>Username (Current: <?= $user->user_name ?>)</label>
+                    <input name="username" type="text" placeholder="Enter your username here">
                 </div>
-                <button id="view-account-button" class="view-account-button">View Account</button>
-            
+                <div class="input-container">
+                    <label>Password (Will be hashed)</label>
+                    <input name="password" type="password" placeholder="Enter your password here">
+                </div>
+                <div class="input-container">
+                    <label>Delete Account</label>
+                    <button id="delete" onclick="deleteUser(<?= $user->user_id ?>)">Delete Account</button>
+                </div>
+                <input id="submit" type="submit" value="Update User">
             </div>
         </div>
-    </header>
+    </form>
 
-    <main>
-        <section class="settings">
-            <h2>User Account Settings</h2>
-            <div class="language-setting">
-                <h3>Language</h3>
-                <select>
-                    <option value="english">English</option>
-                    <option value="spanish">Spanish</option>
-                    <option value="french">French</option>
-                    <!-- Tambahkan pilihan bahasa lainnya -->
-                </select>
-            </div>
-            <div class="autoplay-setting">
-                <h3>Auto Play</h3>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="audio-quality-setting">
-                <h3>Audio Quality</h3>
-                <select>
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                    <!-- Tambahkan pilihan kualitas audio lainnya -->
-                </select>
-            </div>
-            <div class="download-quality-setting">
-                <h3>Download Quality</h3>
-                <select>
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                    <!-- Tambahkan pilihan kualitas download lainnya -->
-                </select>
-            </div>
-        </section>
-    </main>
-    <script src="public/javascript/user-setting.js"></script>
+    <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
+    
+    <script src="/public/javascript/adios.js"></script>
+    <script src="/public/javascript/user-settings.js"></script>
+    <script src="/public/javascript/music-bar.js"></script>
 </body>
 </html>

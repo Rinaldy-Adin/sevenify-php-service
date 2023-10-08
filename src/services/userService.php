@@ -50,17 +50,19 @@ class UserService
         }
     }
 
-    function updateUser(string $userId, string $username, string $password, bool $isAdmin): ?UserModel
+    function updateUser(string $userId, string $username, string $password, ?bool $isAdmin = null): ?UserModel
     {
         $user = $this->userRepo->getUserByUsername($username);
 
-        if ($user === null) {
+        // TODO: notify duplicate
+        if ($user !== null) {
             // return [400, "Username not found"];
             return null;
         }
 
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $user = $this->userRepo->updateUser($userId, $username, $hashedPassword, $isAdmin);
+        if ($password != "")
+            $password = password_hash($password, PASSWORD_DEFAULT);
+        $user = $this->userRepo->updateUser($userId, $username, $password, $isAdmin);
 
         return $user;
     }
@@ -70,15 +72,18 @@ class UserService
         return $this->userRepo->getUserById($musicId);
     }
 
-    function getAllUsers(): array {
+    function getAllUsers(): array
+    {
         return $this->userRepo->getAllUsers(null)[0];
     }
-    
-    function getAllUsersAdmin(int $page): array {
+
+    function getAllUsersAdmin(int $page): array
+    {
         return $this->userRepo->getAllUsers($page);
     }
 
-    function deleteUser(int $user_id): bool {
+    function deleteUser(int $user_id): bool
+    {
         return $this->userRepo->deleteUser($user_id);
     }
 
