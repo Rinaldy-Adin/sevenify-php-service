@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
-    <link rel="stylesheet" href="/public/styles/create-album.css">
+    <link rel="stylesheet" href="/public/styles/create.css">
     <title>Sevenify</title>
 </head>
 
