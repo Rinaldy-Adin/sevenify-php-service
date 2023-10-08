@@ -41,19 +41,18 @@ async function updatePlaylistResult(userId, page) {
 async function updatePlaylistList(adios, searchResults) {
     const elmt = await Promise.all(searchResults.map(async ({ playlist_id, playlist_name, playlist_owner_name }) => {
         let cover = '';
-        cover = "/public/assets/placeholders/playlist-placeholder.png";
-        /*
         try {
-            const responseCover = await adios.get(`/api/playlist-cover/'{$playlist_id}`, {}, true);
+            const responseCover = await adios.get(`/api/playlist-cover/${playlist_id}`, {}, true);
             cover = URL.createObjectURL(responseCover);
         } catch (error) {
             cover = "/public/assets/placeholders/playlist-placeholder.png"
         }
-        */
 
         return `
-            <div class="playlist-list-item" onclick="">
-                <img class="playlist-cover soft-shadow" src="${cover}">
+            <div class="playlist-list-item">
+                <a href="/playlist/${playlist_id}">
+                    <img class="playlist-cover soft-shadow" src="${cover}">
+                </a>
                 <div class="playlist-info-text">
                     <div class="playlist-owner">
                         ${playlist_owner_name}
