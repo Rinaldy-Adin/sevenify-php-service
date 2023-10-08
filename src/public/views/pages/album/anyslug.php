@@ -46,31 +46,7 @@ $coverPath = $albumService->getCoverPathByAlbumId($album_id);
 
     <section id="album-music">
         <div class="album-cover">
-            <script>
-                async function fetchAlbumCover() {
-                    let cover = '';
-                    try {
-                        const album_id = <?= $album_id; ?>;
-                        const coverResp = await adios.get(`/api/album-cover/${album_id}`, {}, true);
-                        cover = URL.createObjectURL(coverResp);
-                    } catch (error) {
-                        cover = "/public/assets/placeholders/album-placeholder.png";
-                    }
-                    return cover;
-                }
-
-                document.addEventListener("DOMContentLoaded", async function () {
-                    const albumMusicList = document.getElementById('album-music-list');
-                    const albumId = <?= $album_id; ?>;
-                    const cover = await fetchAlbumCover();
-
-                    // Gunakan variabel 'cover' di sini
-                    document.querySelector('.album-cover img').src = cover;
-
-                    displayAlbumMusic(albumId);
-                });
-            </script>
-            <img src="<?php echo $cover; ?>" alt="Album Cover">
+            <img src="/api/album-cover/<?php echo $album_id; ?>" alt="Playlist Cover">
         </div>
         <div class="album-name">
             <?= $album[0]->album_name ?>
@@ -89,6 +65,8 @@ $coverPath = $albumService->getCoverPathByAlbumId($album_id);
     <script src="../../../public/javascript/adios.js"></script>
     <script src="../../../public/javascript/music-bar.js"></script>
     <script src="../../../public/javascript/album-music-list.js"></script>
+
+    <script>displayAlbumMusic(<?php echo $album_id; ?>);</script>
 
 </body>
 

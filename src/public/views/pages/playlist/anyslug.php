@@ -46,31 +46,7 @@ $coverPath = $playlistService->getCoverPathByPlaylistId($playlist_id);
 
     <section id="playlist-music">
         <div class="playlist-cover">
-            <script>
-                async function fetchPlaylistCover() {
-                    let cover = '';
-                    try {
-                        const playlist_id = <?= $playlist_id; ?>;
-                        const coverResp = await adios.get(`/api/playlist-cover/${playlist_id}`, {}, true);
-                        cover = URL.createObjectURL(coverResp);
-                    } catch (error) {
-                        cover = "/public/assets/placeholders/playlist-placeholder.png";
-                    }
-                    return cover;
-                }
-
-                document.addEventListener("DOMContentLoaded", async function () {
-                    const playlistMusicList = document.getElementById('playlist-music-list');
-                    const playlistId = <?= $playlist_id; ?>;
-                    const cover = await fetchPlaylistCover();
-
-                    // Gunakan variabel 'cover' di sini
-                    document.querySelector('.playlist-cover img').src = cover;
-
-                    displayPlaylistMusic(playlistId);
-                });
-            </script>
-            <img src="<?php echo $cover; ?>" alt="Playlist Cover">
+            <img src="/api/playlist-cover/<?php echo $playlist_id; ?>" alt="Playlist Cover">
         </div>
         <div class="playlist-name">
             <?= $playlist[0]->playlist_name ?>
@@ -90,6 +66,7 @@ $coverPath = $playlistService->getCoverPathByPlaylistId($playlist_id);
     <script src="../../../public/javascript/music-bar.js"></script>
     <script src="../../../public/javascript/playlist-music-list.js"></script>
 
+    <script>displayPlaylistMusic(<?php echo $playlist_id; ?>);</script>
 </body>
 
 </html>
