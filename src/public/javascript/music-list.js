@@ -1,6 +1,6 @@
-let currentPage = 1;
-let currentSearch = '';
-let pageCount = 0;
+currentPage = 1;
+currentSearch = '';
+pageCount = 0;
 
 async function displayMusic(userId) {
     updateResult(userId, 1);

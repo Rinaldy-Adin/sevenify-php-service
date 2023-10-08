@@ -1,9 +1,10 @@
-let albumCurrentPage = 1;
-let albumsPerPage = 4;
-let albumPageCount = 0;
-let currentAlbum = '';
+albumCurrentPage = 1;
+albumsPerPage = 4;
+albumPageCount = 0;
+currentAlbum = '';
 
 function displayAlbums(userId) {
+    console.log(userId);
     updateAlbumResult(userId, 1);
 }
 
@@ -43,19 +44,18 @@ async function updateAlbumResult(userId, page) {
 async function updateAlbumList(adios, searchResults) {
     const elmt = await Promise.all(searchResults.map(async ({ album_id, album_name, album_owner_name }) => {
         let cover = '';
-        cover = "/public/assets/placeholders/album-placeholder.png";
-        /*
         try {
-            const responseCover = await adios.get(`/api/album-cover/'{$album_id}`, {}, true);
+            const responseCover = await adios.get(`/api/album-cover/${$album_id}`, {}, true);
             cover = URL.createObjectURL(responseCover);
         } catch (error) {
-            cover = "/public/assets/placeholders/album-placeholder.png"
+            cover = "public/assets/placeholders/album-placeholder.png"
         }
-        */
 
         return `
-            <div class="album-list-item" onclick="">
-                <img class="album-cover soft-shadow" src="${cover}">
+            <div class="album-list-item">
+                <a href="/album/${album_id}">
+                    <img class="album-cover soft-shadow" src="${cover}">
+                </a>
                 <div class="album-info-text">
                     <div class="album-owner">
                         ${album_owner_name}
