@@ -36,7 +36,7 @@ class PlaylistRepository extends Repository {
         }
     }
 
-    public function getPlaylistById($playlistId) {
+    public function getByPlaylistId($playlistId) {
         $query = "SELECT * FROM playlists WHERE playlist_id = :playlist_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":playlist_id", $playlistId, PDO::PARAM_INT);
@@ -79,7 +79,7 @@ class PlaylistRepository extends Repository {
 
     public function getCoverPathByPlaylistId(int $playlistId): ?string
     {
-        $playlist = $this->getPlaylistById($playlistId);
+        $playlist = $this->getByPlaylistId($playlistId);
 
         if (!$playlist) {
             return null;
@@ -129,7 +129,7 @@ class PlaylistRepository extends Repository {
 
             $this->db->commit();
 
-            return $this->getPlaylistById($playlistId);
+            return $this->getByPlaylistId($playlistId);
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Playlist creation error: " . $e->getMessage());
@@ -231,7 +231,7 @@ class PlaylistRepository extends Repository {
 
             $this->db->commit();
 
-            return $this->getPlaylistById($playlist_id);
+            return $this->getByPlaylistId($playlist_id);
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Playlist update error: " . $e->getMessage());
@@ -271,7 +271,7 @@ class PlaylistRepository extends Repository {
 
         return [array_slice($playlistObjects, $pageOffset, 4), ceil(count($playlistRecords) / 4)];
     }
-    public function getPlaylistByIdName(int $playlistId) : array
+    public function getByPlaylistIdName(int $playlistId) : array
     {
         $query = "SELECT * FROM playlists JOIN users ON user_id = playlist_owner WHERE playlist_id = :playlist_id";
         $stmt = $this->db->prepare($query);

@@ -20,7 +20,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
     header('Location: /404');
 } else {
     $album_id = (int)$pathEntries[count($pathEntries) - 1];
-    $album = $albumService->getAlbumByIdName($album_id);
+    $album = $albumService->getByAlbumIdName($album_id);
 
     if ($album == null) {
         header('Location: /404');
@@ -54,6 +54,7 @@ $coverPath = $albumService->getCoverPathByAlbumId($album_id);
         <div class="album-owner">
             <?= $album[0]->album_owner_name ?>
         </div>
+        <a href="/album/update-album/<?php echo $album_id; ?>" class="update-album-link">Update Album</a>
     </section>
 
     <section id="album-music-list">

@@ -36,6 +36,13 @@ body {
     margin-top: 10px;
 }
 
+.update-album-link {
+    justify-content: center;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
 #album-music-list {
     display: flex;
     flex-direction: column;

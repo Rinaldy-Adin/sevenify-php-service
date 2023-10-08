@@ -20,7 +20,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
     header('Location: /404');
 } else {
     $playlist_id = (int)$pathEntries[count($pathEntries) - 1];
-    $playlist = $playlistService->getPlaylistByIdName($playlist_id);
+    $playlist = $playlistService->getByPlaylistIdName($playlist_id);
 
     if ($playlist == null) {
         header('Location: /404');

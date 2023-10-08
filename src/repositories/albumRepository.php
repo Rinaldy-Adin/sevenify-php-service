@@ -38,7 +38,7 @@ class AlbumRepository extends Repository
         }
     }
 
-    public function getAlbumById(int $albumId) {
+    public function getByAlbumId(int $albumId) {
         $query = "SELECT * FROM albums WHERE album_id = :album_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":album_id", $albumId, PDO::PARAM_INT);
@@ -55,7 +55,7 @@ class AlbumRepository extends Repository
             return null; // Album not found
         }
     }
-    public function getAlbumByIdName(int $albumId) : array
+    public function getByAlbumIdName(int $albumId) : array
     {
         $query = "SELECT * FROM albums JOIN users ON user_id = album_owner WHERE album_id = :album_id";
         $stmt = $this->db->prepare($query);
@@ -124,7 +124,7 @@ class AlbumRepository extends Repository
 
     public function getCoverPathByAlbumId(int $albumId): ?string
     {
-        $album = $this->getAlbumById($albumId);
+        $album = $this->getByAlbumId($albumId);
 
         if (!$album) {
             return null;
@@ -201,7 +201,7 @@ class AlbumRepository extends Repository
 
             $this->db->commit();
 
-            return $this->getAlbumById($albumId);
+            return $this->getByAlbumId($albumId);
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Album creation error: " . $e->getMessage());
@@ -303,7 +303,7 @@ class AlbumRepository extends Repository
 
             $this->db->commit();
 
-            return $this->getAlbumById($album_id);
+            return $this->getByAlbumId($album_id);
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Album update error: " . $e->getMessage());

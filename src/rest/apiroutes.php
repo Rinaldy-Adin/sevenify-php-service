@@ -20,6 +20,7 @@ require_once ROOT_DIR . 'controllers/music/findUserMusicController.php';
 require_once ROOT_DIR . 'controllers/music/findUserPlaylistController.php';
 require_once ROOT_DIR . 'controllers/album/getAlbumCoverController.php';
 require_once ROOT_DIR . 'controllers/album/createAlbumController.php';
+require_once ROOT_DIR . 'controllers/album/updateAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminCreateAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminDeleteAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminGetAlbumController.php';
@@ -46,6 +47,7 @@ use controllers\album\GetAlbumCoverController;
 use controllers\album\FindUserAlbumController;
 use controllers\album\SearchAlbumMusicController;
 use controllers\album\CreateAlbumController;
+use controllers\album\UpdateAlbumController;
 use controllers\auth\LoginController;
 use controllers\auth\RegisterController;
 use controllers\music\AdminCreateMusicController;
@@ -94,6 +96,7 @@ class APIRoutes
         ['/api/createAlbum', 'post', CreateAlbumController::class],
         ['/api/createPlaylist', 'post', CreatePlaylistController::class],
         ['/api/updateMusic/*', 'post', UpdateMusicController::class],
+        ['/api/updateAlbum/*', 'post', UpdateAlbumController::class],
         ['/api/searchPlaylistUser', 'get', FindUserPlaylistController::class],
         ['/api/admin/music', 'get', AdminGetMusicController::class],
         ['/api/admin/music', 'post', AdminCreateMusicController::class],

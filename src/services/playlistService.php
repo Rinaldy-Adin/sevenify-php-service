@@ -19,8 +19,8 @@ class PlaylistService
         $this->playlistRepo = new PlaylistRepository();
     }
 
-    function getPlaylistById(int $playlistId) : PlaylistModel {
-        return $this->playlistRepo->getPlaylistById($playlistId);
+    function getByPlaylistId(int $playlistId) : PlaylistModel {
+        return $this->playlistRepo->getByPlaylistId($playlistId);
     }
 
     function getByUserID(int $userId, int $page) : array
@@ -51,7 +51,7 @@ class PlaylistService
     function deletePlaylist(int $playlistId): bool {
         return $this->playlistRepo->deletePlaylist($playlistId);
     }
-    function getPlaylistByIdName(int $albumId) : array {
-        return $this->playlistRepo->getPlaylistByIdName($albumId);
+    function getByPlaylistIdName(int $albumId) : array {
+        return $this->playlistRepo->getByPlaylistIdName($albumId);
     }
 }

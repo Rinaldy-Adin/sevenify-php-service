@@ -19,8 +19,8 @@ class AlbumService
         $this->albumRepo = new AlbumRepository();
     }
 
-    function getAlbumById(int $albumId) : AlbumModel {
-        return $this->albumRepo->getAlbumById($albumId);
+    function getByAlbumId(int $albumId) : AlbumModel {
+        return $this->albumRepo->getByAlbumId($albumId);
     }
 
     function getAllAlbums(?int $page) : array {
@@ -50,7 +50,7 @@ class AlbumService
         return $this->albumRepo->getByUserId($userId, $page);
     }
 
-    function getAlbumByIdName(int $albumId) : array {
-        return $this->albumRepo->getAlbumByIdName($albumId);
+    function getByAlbumIdName(int $albumId) : array {
+        return $this->albumRepo->getByAlbumIdName($albumId);
     }
 }
