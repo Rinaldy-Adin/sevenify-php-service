@@ -94,5 +94,3 @@ async function updatePaginationPlaylist() {
 
     document.getElementById('pagination-playlist').innerHTML = elmt.join(' ');
 }
-
-displayPlaylists(1); //Ganti dengan userID yang login

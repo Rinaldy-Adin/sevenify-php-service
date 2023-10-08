@@ -124,5 +124,3 @@ function updatePagination(pageCount) {
 
     document.getElementById('pagination').innerHTML = elmt.join(' ');
 }
-
-displayMusic(1); //Ganti dengan userID yang login

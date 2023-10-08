@@ -98,5 +98,3 @@ async function updatePaginationAlbum() {
 
     document.getElementById('pagination-album').innerHTML = elmt.join(' ');
 }
-
-displayAlbums(1); //Ganti dengan userID yang login

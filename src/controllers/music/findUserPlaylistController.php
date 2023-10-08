@@ -14,11 +14,11 @@ class FindUserPlaylistController
 {
     function get(): string
     {
-        $userId = isset($_GET['userId']) ? urldecode($_GET['userId']) : 1;//Ganti User login
+        $userId = isset($_GET['userId']) ? urldecode($_GET['userId']) :  $_SESSION["user_id"];
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        [$musicDTOs, $pageCount] = (new PlaylistService())->getByUserID($userId, $page);
-        $searchResult = array_map(fn(PlaylistWithArtistNameDTO $dto) => $dto->toDTOArray(), $musicDTOs);
+        [$playlistDTOs, $pageCount] = (new PlaylistService())->getByUserID($userId, $page);
+        $searchResult = array_map(fn(PlaylistWithArtistNameDTO $dto) => $dto->toDTOArray(), $playlistDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }
 }
