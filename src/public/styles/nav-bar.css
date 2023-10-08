@@ -7,10 +7,10 @@
     background-color: #333;
     color: #fff;
     width: 250px;
-    height: 100vh;
     top: 0;
     left: 0;
     overflow-y: auto;
+    align-self: stretch;
 }
 
 .logo {
