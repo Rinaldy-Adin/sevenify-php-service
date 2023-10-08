@@ -10,7 +10,7 @@ use common\dto\MusicWithArtistNameDTO;
 use common\Response;
 use services\MusicService;
 
-class GetAllMusicController
+class AdminGetMusicController
 {
     function get(): string
     {

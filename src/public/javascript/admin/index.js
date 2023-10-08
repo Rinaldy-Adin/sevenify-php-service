@@ -5,14 +5,14 @@ let pageCount = 1;
 
 
 
-async function loadDataPage(page, updateDataListCb) {
+async function loadDataPage(url, page, updateDataListCb) {
     const adios = new Adios();
 
     try {
         const params = [];
         params['page'] = page;
 
-        const resp = await adios.get('/api/admin/music', params);
+        const resp = await adios.get(url, params);
         const data = JSON.parse(resp);
         const result = data.data.result;
         pageCount = data.data['page-count'];

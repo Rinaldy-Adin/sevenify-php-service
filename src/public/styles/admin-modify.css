@@ -101,6 +101,64 @@ form {
     resize: vertical;
 }
 
+.dynamic-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.dynamic-list-input-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.dynamic-list-input-container label {
+    display: flex;
+    gap: 8px;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.dynamic-list-input {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+}
+
+.dynamic-list-input input {
+    flex: 1;
+}
+
+#add-music {
+    display: flex;
+    padding: 4px 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #E69332;
+    outline-color: #E69332;
+
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+#add-music:hover {
+    background-color: #D98B2F;
+    cursor: pointer;
+}
+
+#dynamic-list {
+    list-style-type: disc;
+}
+
+.line-container {
+    display: flex;
+    gap: 20px;
+}
+
 #submit {
     display: flex;
     padding: 8px 16px;
@@ -109,17 +167,12 @@ form {
     gap: 10px;
     margin-top: 40px;
     border-radius: 8px;
-    border: 0;
     background: #E69332;
     outline-color: #E69332;
 
     color: #FFF;
-    text-align: center;
-    font-family: Open Sans;
     font-size: 20px;
-    font-style: normal;
     font-weight: 600;
-    line-height: normal;
     letter-spacing: -0.2px;
 }
 

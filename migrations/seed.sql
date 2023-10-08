@@ -13,14 +13,12 @@ CREATE TABLE IF NOT EXISTS albums (
     album_id INT AUTO_INCREMENT PRIMARY KEY,
     album_name VARCHAR(255) NOT NULL,
     album_owner INT NOT NULL,
-    album_cover_path VARCHAR(255),
     FOREIGN KEY (album_owner) REFERENCES users(user_id)
 );
 CREATE TABLE IF NOT EXISTS playlists (
     playlist_id INT AUTO_INCREMENT PRIMARY KEY,
     playlist_name VARCHAR(255) NOT NULL,
     playlist_owner INT NOT NULL,
-    playlist_cover_path VARCHAR(255),
     FOREIGN KEY (playlist_owner) REFERENCES users(user_id)
 );
 CREATE TABLE IF NOT EXISTS music (

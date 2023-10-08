@@ -18,10 +18,10 @@
             <div class="admin-entities-container">
                 <h2>Admin Entities</h2>
                 <div class="admin-entities">
-                    <div class="current-entity">Music</div>
-                    <a class="entity-link" href="/admin/album/">
-                        Albums
+                    <a class="entity-link" href="/admin/music/">
+                        Music
                     </a>
+                    <div class="current-entity">Albums</div>
                     <a class="entity-link" href="/admin/playlist/">
                         Playlists
                     </a>
@@ -30,9 +30,9 @@
             <div class="vertical-divider"></div>
             <div class="entity-data-container">
                 <div class="entity-data-title">
-                    <h2>Music</h2>
-                    <a class="new-data-button" href="/admin/music/create">
-                        New Music
+                    <h2>Albums</h2>
+                    <a class="new-data-button" href="/admin/album/create">
+                        New album
                     </a>
                 </div>
                 <div class="entity-data">
@@ -43,9 +43,7 @@
                                 <th>Cover</th>
                                 <th>id</th>
                                 <th>Name</th>
-                                <th>Uploader</th>
-                                <th>Genre</th>
-                                <th>Upload Date</th>
+                                <th>Owner ID</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -53,7 +51,6 @@
                         </tbody>
                     </table>
                     <div id="pagination">
-
                     </div>
                 </div>
             </div>
@@ -65,7 +62,7 @@
     <script src="/public/javascript/adios.js"></script>
     <script src="/public/javascript/music-bar.js"></script>
     <script src="/public/javascript/admin/index.js"></script>
-    <script src="/public/javascript/admin/music/index.js"></script>
+    <script src="/public/javascript/admin/album/index.js"></script>
 </body>
 
 </html>
