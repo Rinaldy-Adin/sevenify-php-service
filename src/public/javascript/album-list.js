@@ -1,17 +1,17 @@
 let albumCurrentPage = 1;
 let albumsPerPage = 4;
 let albumPageCount = 0;
+let currentAlbum = '';
 
 function displayAlbums(userId) {
-    console.log("CHEECKKKKKKKKKKKK");
-    updateResult(userId, 1);
+    updateAlbumResult(userId, 1);
 }
 
-function changePage(page) {
-    updateResult(currentSearch, page);
+function changeAlbumPage(page) {
+    updateAlbumResult(currentAlbum, page);
 }
 
-async function updateResult(userId, page) {
+async function updateAlbumResult(userId, page) {
     const adios = new Adios();
 
     try {
@@ -24,12 +24,12 @@ async function updateResult(userId, page) {
         const data = JSON.parse(response);
         console.log("Album ", data);
 
-        currentSearch = userId;
+        currentAlbum = userId;
         albumCurrentPage = page;
         albumPageCount = data.data['page-count'];
 
         updateAlbumList(adios, data.data.result);
-        updatePagination(data.data['page-count']);
+        updatePaginationAlbum(data.data['page-count']);
     } catch (error) {
         if (error.response) {
             const data = JSON.parse(error.response);
@@ -74,7 +74,7 @@ async function updateAlbumList(adios, searchResults) {
 }
 
 
-async function updatePagination() {
+async function updatePaginationAlbum() {
     let start = Math.max(albumCurrentPage - 1, 1);
     let end = Math.min(albumCurrentPage + 1, albumPageCount);
 
@@ -86,15 +86,15 @@ async function updatePagination() {
         start = Math.max(albumCurrentPage - 2, 1);
     }
 
-    const elmt = ['<img class="clickable" onclick="changePage(1)" src="/public/assets/icons/double-left.svg" id="pagination-album-first">'];
+    const elmt = ['<img class="clickable" onclick="changeAlbumPage(1)" src="/public/assets/icons/double-left.svg" id="pagination-album-first">'];
     for (let i = start - 1; i < end; i++) {
         if (i + 1 == albumCurrentPage) {
             elmt.push(`<div class="pagination-album-item clickable pagination-album-active">${i + 1}</div>`);
         } else {
-            elmt.push(`<div onclick="changePage(${i + 1})" class="pagination-album-item clickable">${i + 1}</div>`);
+            elmt.push(`<div onclick="changeAlbumPage(${i + 1})" class="pagination-album-item clickable">${i + 1}</div>`);
         }
     }
-    elmt.push('<img onclick="changePage(albumPageCount)" src="/public/assets/icons/double-right.svg" id="pagination-album-last" class="clickable">');
+    elmt.push('<img onclick="changeAlbumPage(albumPageCount)" src="/public/assets/icons/double-right.svg" id="pagination-album-last" class="clickable">');
 
     document.getElementById('pagination-album').innerHTML = elmt.join(' ');
 }
