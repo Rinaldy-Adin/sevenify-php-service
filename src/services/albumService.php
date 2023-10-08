@@ -23,7 +23,7 @@ class AlbumService{
 
     function getCoverPathByAlbumId(string $albumId): ?string
     {
-        return $this->albumRepo->getCoverPathByMusicId($albumId);
+        return $this->albumRepo->getCoverPathByAlbumId($albumId);
     }
 }
 ?>
