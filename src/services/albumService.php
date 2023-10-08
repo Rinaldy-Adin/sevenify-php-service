@@ -10,36 +10,6 @@ use models\AlbumModel;
 use repositories\AlbumRepository;
 use repositories\UserRepository;
 
-class AlbumService{
-    private AlbumRepository $albumRepo;
-    function __construct()
-    {
-        $this->albumRepo = new AlbumRepository();
-    }
-    function getByUserID(int $userId, int $page) : array
-    {
-        return $this->albumRepo->getByUserId($userId, $page);
-    }
-
-    function getCoverPathByAlbumId(string $albumId): ?string
-    {
-        return $this->albumRepo->getCoverPathByAlbumId($albumId);
-    }
-    public function getByAlbumIdName(int $albumId) : array
-    {
-        return $this->albumRepo->getByAlbumIdName($albumId);
-    }
-}
-?><?php
-
-namespace services;
-
-require_once ROOT_DIR . 'models/albumModel.php';
-require_once ROOT_DIR . 'repositories/albumRepository.php';
-
-use models\AlbumModel;
-use repositories\AlbumRepository;
-
 class AlbumService
 {
     private AlbumRepository $albumRepo;
@@ -49,7 +19,7 @@ class AlbumService
         $this->albumRepo = new AlbumRepository();
     }
 
-    function getByAlbumId(int $albumId) : AlbumModel {
+    function getAlbumById(int $albumId) : AlbumModel {
         return $this->albumRepo->getAlbumById($albumId);
     }
 
@@ -75,5 +45,12 @@ class AlbumService
 
     function deleteAlbum(int $albumId): bool {
         return $this->albumRepo->deleteAlbum($albumId);
+    }
+    function getByUserID(int $userId, int $page) : array {
+        return $this->albumRepo->getByUserId($userId, $page);
+    }
+
+    function getAlbumByIdName(int $albumId) : array {
+        return $this->albumRepo->getAlbumByIdName($albumId);
     }
 }

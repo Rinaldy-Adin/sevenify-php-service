@@ -11,7 +11,6 @@ require_once ROOT_DIR . 'common/dto/albumWithArtistNameDTO.php';
 use common\dto\AlbumWithArtistNameDTO;
 use Exception;
 use DateTime;
-use Exception;
 use models\AlbumModel;
 use models\MusicModel;
 use PDO;
@@ -39,7 +38,7 @@ class AlbumRepository extends Repository
         }
     }
 
-    public function getByAlbumId(int $albumId) {
+    public function getAlbumById(int $albumId) {
         $query = "SELECT * FROM albums WHERE album_id = :album_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":album_id", $albumId, PDO::PARAM_INT);
@@ -50,39 +49,43 @@ class AlbumRepository extends Repository
             return new AlbumModel(
                 $albumRecord['album_id'], 
                 $albumRecord['album_name'], 
-                $albumRecord['album_owner'], 
-                $albumRecord['album_cover_path']);
+                $albumRecord['album_owner']
+            );
         } else {
             return null; // Album not found
         }
     }
-    public function getByAlbumIdName(int $albumId) : array
+    public function getAlbumByIdName(int $albumId) : array
     {
-        $query = "SELECT * FROM albums WHERE album_id = :album_id";
+        $query = "SELECT * FROM albums JOIN users ON user_id = album_owner WHERE album_id = :album_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":album_id", $albumId, PDO::PARAM_INT);
         $stmt->execute();
 
-        $albumRecords = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        $users = (new UserRepository()) -> getAllUsers();
-        $userIDName = [];
+        $albumRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach($users as $user){
-            $userIDName[$user->user_id] = $user->user_name;
+        if ($albumRecords) {
+            $users = (new UserRepository())->getAllUsers();
+            $userIDName = [];
+
+            foreach ($users as $user) {
+                $userIDName[$user->user_id] = $user->user_name;
+            }
+
+            $albumObjects = [];
+            foreach ($albumRecords as $albumRecord) {
+                $album = new AlbumWithArtistNameDTO(
+                    $albumRecord['album_id'],
+                    $albumRecord['album_name'],
+                    $userIDName[$albumRecord['album_owner']]
+                );
+                $albumObjects[] = $album;
+            }
+
+            return $albumObjects;
+        } else {
+            return []; // Album not found
         }
-
-        $albumObjects = [];
-        foreach ($albumRecords as $albumRecord) {
-            $album = new AlbumWithArtistNameDTO(
-                $albumRecord['album_id'],
-                $albumRecord['album_name'],
-                $userIDName[$albumRecord['album_owner']],
-            );
-            $albumObjects[] = $album;
-        }
-        return [$albumObjects];
-
     }
 
     public function getByUserId(int $userId, int $page): array
@@ -121,9 +124,9 @@ class AlbumRepository extends Repository
 
     public function getCoverPathByAlbumId(int $albumId): ?string
     {
-        $user = $this->getByAlbumId($albumId);
+        $album = $this->getAlbumById($albumId);
 
-        if (!$user) {
+        if (!$album) {
             return null;
         }
 
@@ -164,26 +167,6 @@ class AlbumRepository extends Repository
         }
 
         return $musicObjects;
-    }
-
-    public function getCoverPathByAlbumId(int $albumId): ?string
-    {
-        $album = $this->getAlbumById($albumId);
-
-        if (!$album) {
-            return null;
-        }
-
-        $files = glob(STORAGE_DIR . "covers/album/*");
-
-        if (count($files) > 0)
-            foreach ($files as $file) {
-                $info = pathinfo($file);
-                if ($info['filename'] == strval($albumId))
-                    return realpath($file);
-            }
-
-        return null;
     }
 
     public function createAlbum(string $album_name, int $album_owner, ?array $coverFile, array $music_ids): ?AlbumModel
