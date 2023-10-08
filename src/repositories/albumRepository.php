@@ -42,6 +42,34 @@ class AlbumRepository extends Repository {
             return null; // Album not found
         }
     }
+    public function getByAlbumIdName(int $albumId) : array
+    {
+        $query = "SELECT * FROM albums WHERE album_id = :album_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":album_id", $albumId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $albumRecords = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $users = (new UserRepository()) -> getAllUsers();
+        $userIDName = [];
+
+        foreach($users as $user){
+            $userIDName[$user->user_id] = $user->user_name;
+        }
+
+        $albumObjects = [];
+        foreach ($albumRecords as $albumRecord) {
+            $album = new AlbumWithArtistNameDTO(
+                $albumRecord['album_id'],
+                $albumRecord['album_name'],
+                $userIDName[$albumRecord['album_owner']],
+            );
+            $albumObjects[] = $album;
+        }
+        return [$albumObjects];
+
+    }
 
     public function getByUserId(int $userId, int $page): array
     {

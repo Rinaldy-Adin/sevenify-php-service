@@ -25,5 +25,9 @@ class AlbumService{
     {
         return $this->albumRepo->getCoverPathByAlbumId($albumId);
     }
+    public function getByAlbumIdName(int $albumId) : array
+    {
+        return $this->albumRepo->getByAlbumIdName($albumId);
+    }
 }
 ?>
