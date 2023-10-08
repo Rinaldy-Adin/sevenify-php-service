@@ -6,10 +6,13 @@
     <link rel="stylesheet" href="/public/styles/global.css">
     <link rel="stylesheet" href="/public/styles/music-bar.css">
     <link rel="stylesheet" href="/public/styles/admin.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
     <title>Sevenify</title>
 </head>
 
 <body>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
+
     <div class="container">
         <div class="title-container hard-shadow">
             <h1>Admin</h1>
@@ -18,13 +21,8 @@
             <div class="admin-entities-container">
                 <h2>Admin Entities</h2>
                 <div class="admin-entities">
-                    <div class="current-entity">Music</div>
-                    <a class="entity-link" href="/admin/album/">
-                        Albums
-                    </a>
-                    <a class="entity-link" href="/admin/playlist/">
-                        Playlists
-                    </a>
+                    <?php require ROOT_DIR . "public/views/components/admin-sidebar.php";
+                    renderAdminSidebar("music") ?>
                 </div>
             </div>
             <div class="vertical-divider"></div>

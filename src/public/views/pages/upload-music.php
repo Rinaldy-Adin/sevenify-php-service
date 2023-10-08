@@ -5,10 +5,14 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
     <link rel="stylesheet" href="/public/styles/upload-music.css">
+    <link rel="stylesheet" href="/public/styles/music-bar.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
     <title>Sevenify</title>
 </head>
 
 <body>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
+
     <form onsubmit="uploadMusic(event)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Upload Music</h1>
@@ -35,8 +39,11 @@
         </div>
     </form>
 
+    <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
+    
     <script src="public/javascript/adios.js"></script>
     <script src="public/javascript/upload-music.js"></script>
+    <script src="public/javascript/music-bar.js"></script>
 </body>
 
 </html>

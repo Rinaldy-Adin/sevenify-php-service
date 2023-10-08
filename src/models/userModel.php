@@ -21,4 +21,10 @@ class UserModel extends Model {
         $this->user_password = $user_password;
         $this->role = $role;
     }
+
+    public function toDTOwithoutPass() {
+        $dto = $this->toDTO();
+        unset($dto['user_password']);
+        return $dto;
+    }
 }

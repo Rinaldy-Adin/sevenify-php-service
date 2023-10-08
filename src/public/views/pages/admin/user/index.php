@@ -22,15 +22,15 @@
                 <h2>Admin Entities</h2>
                 <div class="admin-entities">
                     <?php require ROOT_DIR . "public/views/components/admin-sidebar.php";
-                    renderAdminSidebar("playlist") ?>
+                    renderAdminSidebar("user") ?>
                 </div>
             </div>
             <div class="vertical-divider"></div>
             <div class="entity-data-container">
                 <div class="entity-data-title">
-                    <h2>Playlists</h2>
-                    <a class="new-data-button" href="/admin/playlist/create">
-                        New playlist
+                    <h2>User</h2>
+                    <a class="new-data-button" href="/admin/user/create">
+                        New User
                     </a>
                 </div>
                 <div class="entity-data">
@@ -38,10 +38,10 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Cover</th>
                                 <th>id</th>
                                 <th>Name</th>
-                                <th>Owner ID</th>
+                                <th class="cell-width-limit">Hashed Password</th>
+                                <th>Role</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -60,7 +60,7 @@
     <script src="/public/javascript/adios.js"></script>
     <script src="/public/javascript/music-bar.js"></script>
     <script src="/public/javascript/admin/index.js"></script>
-    <script src="/public/javascript/admin/playlist/index.js"></script>
+    <script src="/public/javascript/admin/user/index.js"></script>
 </body>
 
 </html>

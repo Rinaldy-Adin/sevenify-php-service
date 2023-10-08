@@ -289,7 +289,7 @@ class MusicRepository extends Repository
         $stmt->execute();
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $users = (new UserRepository())->getAllUsers();
+        [$users] = (new UserRepository())->getAllUsers();
         $userNameMap = [];
 
         foreach ($users as $user) {

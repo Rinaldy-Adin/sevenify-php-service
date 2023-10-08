@@ -5,13 +5,14 @@ namespace repositories;
 require_once ROOT_DIR . 'repositories/repository.php';
 require_once ROOT_DIR . 'models/userModel.php';
 
+use Exception;
 use models\UserModel;
 use PDO;
 use PDOException;
 
 class UserRepository extends Repository
 {
-    public function getAllUsers()
+    public function getAllUsers(?int $page = null)
     {
         $query = "SELECT * FROM users";
         $stmt = $this->db->query($query);
@@ -22,7 +23,12 @@ class UserRepository extends Repository
             $users[] = $user;
         }
 
-        return $users;
+        if ($page) {
+            $pageOffset = ($page - 1) * 5;
+            return [array_slice($users, $pageOffset, 5), ceil(count($users) / 5)];
+        } else {
+            return [$users, 0];
+        }
     }
 
     public function getUserByUsername(string $username)
@@ -55,14 +61,16 @@ class UserRepository extends Repository
         }
     }
 
-    public function createUser(string $username, string $hashedPassword)
+    public function createUser(string $username, string $hashedPassword, bool $isAdmin)
     {
         $query = "INSERT INTO users (user_name, user_password, role)
-                  VALUES (:username, :password, 'user')";
+                  VALUES (:username, :password, :role)";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":username", $username);
         $stmt->bindParam(":password", $hashedPassword);
+        $isAdmin = $isAdmin ? "admin" : "user";
+        $stmt->bindParam(":role", $isAdmin);
 
         try {
             $stmt->execute();
@@ -73,6 +81,59 @@ class UserRepository extends Repository
             return $user;
         } catch (PDOException $e) {
             error_log("User registration error: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function deleteUser(int $userId): bool
+    {
+        $query = "DELETE FROM users WHERE user_id = :userId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+
+        try {
+            $stmt->execute();
+
+            return true;
+        } catch (Exception $e) {
+            error_log("User deletion error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updateUser(int $userId, string $username, string $hashedPassword, ?bool $isAdmin = null): ?UserModel
+    {
+        try {
+            if ($hashedPassword !== '') {
+                $query = "UPDATE users SET user_password = :password WHERE user_id = :userId";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":password", $hashedPassword);
+                $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+                $stmt->execute();
+            }
+
+            if ($username !== '') {
+                $query = "UPDATE users SET user_name = :username WHERE user_id = :userId";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":username", $username);
+                $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+                $stmt->execute();
+            }
+
+            if ($isAdmin !== null) {
+                $isAdmin = $isAdmin ? "admin" : "user";
+                $query = "UPDATE users SET role = :role WHERE user_id = :userId";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":role", $isAdmin);
+                $stmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+                $stmt->execute();
+            }
+
+            $user = $this->getUserById($userId);
+
+            return $user;
+        } catch (PDOException $e) {
+            error_log("User update error: " . $e->getMessage());
             return null;
         }
     }

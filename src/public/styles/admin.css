@@ -1,19 +1,24 @@
 body {
     position: relative;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: start;
 }
 
 .container {
     margin-top: 64px;
-    width: 90vw;
-    max-width: 1000px;
     display: flex;
     flex-direction: column;
     gap: 24px;
+    flex: 1;
+    align-items: center;
+    width: 100%;
+}
+
+.container > div {
+    max-width: 1000px;
+    width: 100%;
 }
 
 .title-container {
@@ -181,6 +186,13 @@ body {
 .table-centered {
     text-align: center;
     vertical-align: middle;
+}
+
+.cell-width-limit {
+    max-width: 100px;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
 }
 
 .data-action {

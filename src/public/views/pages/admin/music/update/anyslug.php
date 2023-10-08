@@ -44,10 +44,13 @@ $coverPath = $musicService->getCoverPathByMusicId($music->music_id);
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
     <link rel="stylesheet" href="/public/styles/admin-modify.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
     <title>Sevenify</title>
 </head>
 
 <body>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
+
     <form onsubmit="uploadMusic(event, <?= $music_id ?>)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Upload Music</h1>
