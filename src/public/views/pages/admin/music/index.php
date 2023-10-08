@@ -18,13 +18,8 @@
             <div class="admin-entities-container">
                 <h2>Admin Entities</h2>
                 <div class="admin-entities">
-                    <div class="current-entity">Music</div>
-                    <a class="entity-link" href="/admin/album/">
-                        Albums
-                    </a>
-                    <a class="entity-link" href="/admin/playlist/">
-                        Playlists
-                    </a>
+                    <?php require ROOT_DIR . "public/views/components/admin-sidebar.php";
+                    renderAdminSidebar("music") ?>
                 </div>
             </div>
             <div class="vertical-divider"></div>

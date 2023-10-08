@@ -183,6 +183,13 @@ body {
     vertical-align: middle;
 }
 
+.cell-width-limit {
+    max-width: 100px;
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+}
+
 .data-action {
     display: flex;
     gap: 12px;

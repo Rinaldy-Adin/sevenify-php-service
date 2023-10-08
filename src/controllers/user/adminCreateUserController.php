@@ -1,22 +1,22 @@
 <?php
 
-namespace controllers\auth;
+namespace controllers\user;
 
-require_once ROOT_DIR . 'services/userService.php';
 require_once ROOT_DIR . 'common/response.php';
+require_once ROOT_DIR . 'services/userService.php';
 
 use common\Response;
 use services\UserService;
 
-class RegisterController
+class AdminCreateUserController
 {
     function post(): string
     {
-        // TODO: String length validation
         $username = $_POST["username"];
         $password = $_POST["password"];
+        $is_admin = isset($_POST["is-admin"]) ? true : false;
 
-        [$statusCode, $message] = (new UserService())->register($username, $password);
+        [$statusCode, $message] = (new UserService())->register($username, $password, $is_admin);
         http_response_code($statusCode);
         return (new Response(['message' => $message], $statusCode, []))->httpResponse();
     }

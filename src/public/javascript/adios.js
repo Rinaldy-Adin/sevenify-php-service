@@ -3,7 +3,7 @@ class Adios {
         return new Promise(function (resolve, reject) {
             let xhr = new XMLHttpRequest();
 
-            xhr.open(method, url);
+            xhr.open(method, url, true);
 
             xhr.onload = function () {
                 if (this.status >= 200 && this.status < 300) {
@@ -36,7 +36,7 @@ class Adios {
                     xhr.setRequestHeader('Content-type', contentType);
                 if (contentType == 'multipart/form-data') {
                     data = new FormData(data);
-                    additionalData.forEach(({key, value}) => {
+                    additionalData.forEach(({ key, value }) => {
                         data.append(key, value)
                     });
                 }
@@ -82,6 +82,19 @@ class Adios {
         }
 
         return params.join('&');
+    }
+
+    formToXWWWFormUrlencoded(form) {
+        const formData = new FormData(form);
+        const urlEncodedEntries = [];
+
+        for (const [name, value] of formData.entries()) {
+            const encodedName = encodeURIComponent(name);
+            const encodedValue = encodeURIComponent(value);
+            urlEncodedEntries.push(`${encodedName}=${encodedValue}`);
+        }
+
+        return urlEncodedEntries.join('&');
     }
 }
 

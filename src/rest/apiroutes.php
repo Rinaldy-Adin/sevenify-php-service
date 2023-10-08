@@ -15,6 +15,10 @@ require_once ROOT_DIR . 'controllers/music/adminCreateMusicController.php';
 require_once ROOT_DIR . 'controllers/music/adminDeleteMusicController.php';
 require_once ROOT_DIR . 'controllers/music/adminUpdateMusicController.php';
 require_once ROOT_DIR . 'controllers/user/getUserController.php';
+require_once ROOT_DIR . 'controllers/user/adminGetUserController.php';
+require_once ROOT_DIR . 'controllers/user/adminCreateUserController.php';
+require_once ROOT_DIR . 'controllers/user/adminDeleteUserController.php';
+require_once ROOT_DIR . 'controllers/user/adminUpdateUserController.php';
 require_once ROOT_DIR . 'controllers/album/getAlbumCoverController.php';
 require_once ROOT_DIR . 'controllers/album/adminCreateAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminDeleteAlbumController.php';
@@ -54,6 +58,10 @@ use controllers\playlist\AdminGetPlaylistController;
 use controllers\playlist\AdminGetPlaylistMusicController;
 use controllers\playlist\AdminUpdatePlaylistController;
 use controllers\playlist\GetPlaylistCoverController;
+use controllers\user\AdminGetUserController;
+use controllers\user\AdminCreateUserController;
+use controllers\user\AdminDeleteUserController;
+use controllers\user\AdminUpdateUserController;
 
 // TODO: move this to /router
 
@@ -79,11 +87,15 @@ class APIRoutes
         ['/api/admin/album', 'post', AdminCreateAlbumController::class],
         ['/api/admin/album/*', 'delete', AdminDeleteAlbumController::class],
         ['/api/admin/album/*', 'post', AdminUpdateAlbumController::class],
-        ['/api/admin/playlist-music/*', 'get', AdminGetPlaylistMusicController::class],
+        ['/api/admin/album-music/*', 'get', AdminGetAlbumMusicController::class],
         ['/api/admin/playlist', 'get', AdminGetPlaylistController::class],
         ['/api/admin/playlist', 'post', AdminCreatePlaylistController::class],
         ['/api/admin/playlist/*', 'delete', AdminDeletePlaylistController::class],
         ['/api/admin/playlist/*', 'post', AdminUpdatePlaylistController::class],
         ['/api/admin/playlist-music/*', 'get', AdminGetPlaylistMusicController::class],
+        ['/api/admin/user', 'get', AdminGetUserController::class],
+        ['/api/admin/user', 'post', AdminCreateUserController::class],
+        ['/api/admin/user/*', 'delete', AdminDeleteUserController::class],
+        ['/api/admin/user/*', 'post', AdminUpdateUserController::class]
     ];
 }
