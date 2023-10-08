@@ -1,0 +1,97 @@
+/* Reset beberapa margin dan padding default */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+/* Styling nama artist */
+.artist-name {
+    font-size: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    .artist-name {
+        font-size: 30px; 
+    }
+}
+
+/* Styling header */
+header {
+    background-color: #CBCBCB;
+    color: #000f;
+    padding: 20px;
+}
+
+/* Styling nama artist */
+.artist-info {
+    display: flex;
+    align-items: center;
+}
+
+.artist-image {
+    max-width: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.artist-details {
+    font-size: 18px;
+}
+
+/* Styling konten utama */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Styling album dan playlist */
+.albums, .playlists {
+    margin-top: 20px;
+}
+
+.album-list, .playlist-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.album, .playlist {
+    text-align: center;
+}
+
+.album-cover, .playlist-cover {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.album-title, .playlist-title {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Styling lagu */
+.songs {
+    margin-top: 20px;
+}
+
+.song-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.song {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.song-title {
+    font-size: 14px;
+}
+
+.play-button {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
