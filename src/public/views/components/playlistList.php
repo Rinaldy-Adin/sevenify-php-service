@@ -1,4 +1,5 @@
 <h2>Your Playlist</h2>
+    <a href="/create-playlist" class="create-playlist-link">Create Playlist</a>
 <div class="playlist-slider" id="playlist-slider"></div>
 <div id="pagination-playlist"></div>
 

@@ -41,6 +41,13 @@
     margin-bottom: 50px;
 }
 
+.create-playlist-link {
+    margin-left: auto;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
 .playlist-list-item {
     display: flex;
     flex-direction: column;

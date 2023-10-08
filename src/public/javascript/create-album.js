@@ -16,7 +16,7 @@ async function uploadAlbum(event) {
         const resp = await adios.postFormData('/api/createAlbum', event.target, additionalData);
         const data = JSON.parse(resp);
         console.log(data);
-        window.location.href = '/album/';
+        window.location.href = '/';
     } catch (error) {
         if (error.response) {
             const data = JSON.parse(error.response);

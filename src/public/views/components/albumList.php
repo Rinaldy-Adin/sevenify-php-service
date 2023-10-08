@@ -1,4 +1,5 @@
 <h2>Your Album</h2>
+    <a href="/create-album" class="create-album-link">Create Album</a>
 <div id="album-slider"></div>
 <div id="pagination-album"></div>
 

@@ -45,8 +45,9 @@ async function updateAlbumList(adios, searchResults) {
     const elmt = await Promise.all(searchResults.map(async ({ album_id, album_name, album_owner_name }) => {
         let cover = '';
         try {
-            const responseCover = await adios.get(`/api/album-cover/${$album_id}`, {}, true);
+            const responseCover = await adios.get(`/api/album-cover/${album_id}`, {}, true);
             cover = URL.createObjectURL(responseCover);
+            console.log("COVER ALBUM ", cover);
         } catch (error) {
             cover = "public/assets/placeholders/album-placeholder.png"
         }

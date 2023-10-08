@@ -16,7 +16,7 @@ async function uploadPlaylist(event) {
         const resp = await adios.postFormData('/api/createPlaylist', event.target, additionalData);
         const data = JSON.parse(resp);
         console.log(data);
-        window.location.href = '/playlist/';
+        window.location.href = '/';
     } catch (error) {
         if (error.response) {
             const data = JSON.parse(error.response);
