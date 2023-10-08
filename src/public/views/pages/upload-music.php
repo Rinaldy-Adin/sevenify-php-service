@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="public/styles/global.css">
-    <link rel="stylesheet" href="public/styles/upload-music.css">
+    <link rel="stylesheet" href="/public/styles/global.css">
+    <link rel="stylesheet" href="/public/styles/upload-music.css">
     <title>Sevenify</title>
 </head>
 

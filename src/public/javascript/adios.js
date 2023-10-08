@@ -1,5 +1,5 @@
 class Adios {
-    makeRequest(url, method, data = null, contentType = null, blob = false) {
+    makeRequest(url, method, data = null, contentType = null, blob = false, additionalData = []) {
         return new Promise(function (resolve, reject) {
             let xhr = new XMLHttpRequest();
 
@@ -34,8 +34,12 @@ class Adios {
             } else {
                 if (contentType != 'multipart/form-data')
                     xhr.setRequestHeader('Content-type', contentType);
-                if (contentType == 'multipart/form-data')
+                if (contentType == 'multipart/form-data') {
                     data = new FormData(data);
+                    additionalData.forEach(({key, value}) => {
+                        data.append(key, value)
+                    });
+                }
                 xhr.send(data);
             }
         });
@@ -58,8 +62,12 @@ class Adios {
         return await this.makeRequest(url, 'POST', data, 'application/x-www-form-urlencoded');
     }
 
-    async postFormData(url, data) {
-        return await this.makeRequest(url, 'POST', data, 'multipart/form-data');
+    async delete(url) {
+        return await this.makeRequest(url, 'DELETE');
+    }
+
+    async postFormData(url, element, additionalData = []) {
+        return await this.makeRequest(url, 'POST', element, 'multipart/form-data', false, additionalData);
     }
 
     objectToXWWWFormUrlencoded(obj) {

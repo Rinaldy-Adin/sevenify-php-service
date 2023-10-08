@@ -22,6 +22,10 @@ class UserService
         return $this->userRepo->getUserById($musicId);
     }
 
+    function getAllUsers(): array {
+        return $this->userRepo->getAllUsers();
+    }
+
     // function createMusic(int $user_id, string $title, string $genre, array $musicFile, ?array $coverFile): ?MusicModel
     // {
     //     $music = $this->musicRepo->createMusic($title, $user_id, $genre, $musicFile, $coverFile);

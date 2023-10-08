@@ -25,9 +25,9 @@ $playlistRepository = new PlaylistRepository();
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="public/styles/global.css">
-    <link rel="stylesheet" href="public/styles/music-bar.css">
-    <link rel="stylesheet" href="public/styles/music-list.css">
+    <link rel="stylesheet" href="/public/styles/global.css">
+    <link rel="stylesheet" href="/public/styles/music-bar.css">
+    <link rel="stylesheet" href="/public/styles/music-list.css">
     <link rel="stylesheet" href="public/styles/album-list.css">
     <link rel="stylesheet" href="public/styles/playlist-list.css">
     <title>Sevenify</title>
