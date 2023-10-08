@@ -11,27 +11,6 @@ function changePage(page) {
     updateResult(currentSearch, page);
 }
 
-function openEditPage(musicId) {
-    let dataToSend = musicId;
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8000/edit-music', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                console.log(xhr.responseText);
-            } else {
-                console.error('Error:', xhr.status);
-            }
-
-            // Setelah respons AJAX selesai, arahkan ke 'localhost/edit-music'
-            window.location.href = 'http://localhost/edit-music';
-        }
-    };
-    console.log("datasent ", dataToSend);
-    xhr.send('data=' + encodeURIComponent(dataToSend));
-}
-
 async function updateResult(userId, page) {
     const adios = new Adios();
 
@@ -90,7 +69,7 @@ async function updateMusicList(adios, searchResults) {
                             </div>
                         </div>
                     </div>
-                    <div class="music-option" onclick="openEditPage('${music_id}')">
+                    <div class="music-option" onclick="">
                         <img src="/public/assets/media/EditButton.png" alt="Music Option">
                     </div>
                 </div>
