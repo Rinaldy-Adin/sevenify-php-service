@@ -4,6 +4,7 @@ require_once ROOT_DIR . 'models/musicModel.php';
 require_once ROOT_DIR . 'models/playlistModel.php';
 require_once ROOT_DIR . 'repositories/musicRepository.php';
 require_once ROOT_DIR . 'repositories/albumRepository.php';
+require_once ROOT_DIR . 'repositories/playlistRepository.php';
 require_once ROOT_DIR . 'public/views/components/musicList.php';
 require_once ROOT_DIR . 'public/views/components/albumList.php';
 require_once ROOT_DIR . 'public/views/components/playlistList.php';

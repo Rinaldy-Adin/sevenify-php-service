@@ -14,7 +14,7 @@ use PDO;
 
 class MusicRepository extends Repository
 {
-    public function getByMusicId(int $musicId): ?MusicModel
+    public function getMusicById(int $musicId): ?MusicModel
     {
         $query = "SELECT * FROM music WHERE music_id = :musicId";
         $stmt = $this->db->prepare($query);
@@ -38,7 +38,7 @@ class MusicRepository extends Repository
 
     public function getAudioPathByMusicId(int $musicId): ?string
     {
-        $user = $this->getByMusicId($musicId);
+        $user = $this->getMusicById($musicId);
 
         if (!$user) {
             return null;
@@ -58,7 +58,7 @@ class MusicRepository extends Repository
 
     public function getCoverPathByMusicId(int $musicId): ?string
     {
-        $user = $this->getByMusicId($musicId);
+        $user = $this->getMusicById($musicId);
 
         if (!$user) {
             return null;
@@ -84,6 +84,80 @@ class MusicRepository extends Repository
         $query = "SELECT * FROM music JOIN users ON user_id = music_owner WHERE music_owner = :user_id"; // Ubah ":userownerId" menjadi ":user_id"
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":user_id", $userId); // Ubah ":userownerId" menjadi ":user_id"
+        $stmt->execute();
+        
+        $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = (new UserRepository()) -> getAllUsers();
+        $userIDName = [];
+
+        foreach($users as $user){
+            $userIDName[$user->user_id] = $user->user_name;
+        }
+
+        // Convert music records to Music model objects
+        $musicObjects = [];
+        foreach ($musicRecords as $musicRecord) {
+            $uploadDate = new DateTime($musicRecord['music_upload_date']);
+            $music = new MusicWithArtistNameDTO(
+                $musicRecord['music_id'],
+                $musicRecord['music_name'],
+                $userIDName[$musicRecord['music_owner']],
+                $musicRecord['music_genre'],
+                $uploadDate
+            );
+            $musicObjects[] = $music;
+        }
+
+        $pageOffset = ($page - 1) * 5;
+
+        return [array_slice($musicObjects, $pageOffset, 5), ceil(count($musicRecords) / 5)];
+    }
+    public function getByAlbumId(int $albumId, int $page): array
+    {
+        $conditions[] = "album_id = :album_id"; 
+        $bindings[':album_id'] = $albumId;
+        
+        $query = "SELECT * FROM (music JOIN users ON user_id = music_owner) NATURAL JOIN album_music WHERE album_id = :album_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":album_id", $albumId);
+        $stmt->execute();
+        
+        $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = (new UserRepository()) -> getAllUsers();
+        $userIDName = [];
+
+        foreach($users as $user){
+            $userIDName[$user->user_id] = $user->user_name;
+        }
+
+        // Convert music records to Music model objects
+        $musicObjects = [];
+        foreach ($musicRecords as $musicRecord) {
+            $uploadDate = new DateTime($musicRecord['music_upload_date']);
+            $music = new MusicWithArtistNameDTO(
+                $musicRecord['music_id'],
+                $musicRecord['music_name'],
+                $userIDName[$musicRecord['music_owner']],
+                $musicRecord['music_genre'],
+                $uploadDate
+            );
+            $musicObjects[] = $music;
+        }
+
+        $pageOffset = ($page - 1) * 5;
+
+        return [array_slice($musicObjects, $pageOffset, 5), ceil(count($musicRecords) / 5)];
+    }
+    public function getByPlaylistId(int $playlistId, int $page): array
+    {
+        $conditions[] = "playlist_id = :playlist_id"; 
+        $bindings[':playlist_id'] = $playlistId;
+        
+        $query = "SELECT * FROM (music JOIN users ON user_id = music_owner) NATURAL JOIN playlist_music WHERE playlist_id = :playlist_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":playlist_id", $playlistId);
         $stmt->execute();
         
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -280,7 +354,7 @@ class MusicRepository extends Repository
 
             $this->db->commit();
 
-            return $this->getByMusicId($musicId);
+            return $this->getMusicById($musicId);
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Music creation error: " . $e->getMessage());
@@ -368,7 +442,7 @@ class MusicRepository extends Repository
         }
     }
 
-    public function udpateMusic(int $music_id, string $music_name, string $music_owner, string $music_genre, bool $deleteCover, ?array $coverFile): ?MusicModel
+    public function updateMusic(int $music_id, string $music_name, string $music_owner, string $music_genre, bool $deleteCover, ?array $coverFile): ?MusicModel
     {
         $query = "UPDATE music 
                     SET music_name = :musicName, music_owner = :musicOwner, music_genre = :musicGenre
@@ -394,7 +468,7 @@ class MusicRepository extends Repository
 
             $this->db->commit();
 
-            return $this->getByMusicId($music_id);;
+            return $this->getMusicById($music_id);;
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Music creation error: " . $e->getMessage());
@@ -454,22 +528,4 @@ class MusicRepository extends Repository
         }
         return $musicObjects;
     }    
-
-    public function updateMusic(int $musicId, string $title, string $genre): bool
-    {
-        $query = "UPDATE music SET music_name = :title, music_genre = :genre WHERE music_id = :musicId";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(":title", $title);
-        $stmt->bindParam(":genre", $genre);
-        $stmt->bindParam(":musicId", $musicId);
-        return $stmt->execute();
-    }
-
-    public function deleteMusic(int $musicId): bool
-    {
-        $query = "DELETE FROM music WHERE music_id = :musicId";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(":musicId", $musicId);
-        return $stmt->execute();
-    }
 }    
