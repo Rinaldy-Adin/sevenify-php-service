@@ -7,7 +7,29 @@ async function displayMusic(userId) {
 }
 
 function changePage(page) {
+    console.log("Changing page to ", page);
     updateResult(currentSearch, page);
+}
+
+function openEditPage(musicId) {
+    let dataToSend = musicId;
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8000/edit-music', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+            } else {
+                console.error('Error:', xhr.status);
+            }
+
+            // Setelah respons AJAX selesai, arahkan ke 'localhost/edit-music'
+            window.location.href = 'http://localhost/edit-music';
+        }
+    };
+    console.log("datasent ", dataToSend);
+    xhr.send('data=' + encodeURIComponent(dataToSend));
 }
 
 async function updateResult(userId, page) {
@@ -45,7 +67,7 @@ async function updateMusicList(adios, searchResults) {
             const responseCover = await adios.get(`/api/music-cover/${music_id}`, {}, true);
             cover = URL.createObjectURL(responseCover);
         } catch (error) {
-            coverSrc = "/public/assets/placeholders/music-placeholder.jpg";
+            cover = "/public/assets/placeholders/music-placeholder.jpg";
         }
 
         music_upload_date - new Date(music_upload_date).toLocaleDateString(undefined, {
@@ -56,6 +78,7 @@ async function updateMusicList(adios, searchResults) {
 
         return `
                 <div class="music-list-item">
+                    <img onclick="playMusic('${music_id}')" class="play-button clickable" src="/public/assets/media/PlayButton.png">
                     <div class="music-info-container">
                         <img class="music-cover soft-shadow" src="${cover}">
                         <div class="music-info-text">
@@ -67,7 +90,9 @@ async function updateMusicList(adios, searchResults) {
                             </div>
                         </div>
                     </div>
-                    <img onclick="playMusic('${music_id}')" class="play-button clickable" src="/public/assets/media/PlayButton.png">
+                    <div class="music-option" onclick="openEditPage('${music_id}')">
+                        <img src="/public/assets/media/EditButton.png" alt="Music Option">
+                    </div>
                 </div>
         `
     }));
