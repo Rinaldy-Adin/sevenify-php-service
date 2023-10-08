@@ -69,8 +69,10 @@ async function updateMusicList(adios, searchResults) {
                             </div>
                         </div>
                     </div>
-                    <div class="music-option" onclick="">
-                        <img src="/public/assets/media/EditButton.png" alt="Music Option">
+                    <div class="music-option">
+                        <a href="/update-music/${music_id}">
+                            <img src="/public/assets/media/EditButton.png" alt="Music Option">
+                        </a>
                     </div>
                 </div>
         `
