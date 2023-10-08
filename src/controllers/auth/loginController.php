@@ -2,11 +2,11 @@
 
 namespace controllers\auth;
 
-require_once ROOT_DIR . 'services/authService.php';
+require_once ROOT_DIR . 'services/userService.php';
 require_once ROOT_DIR . 'common/response.php';
 
 use common\Response;
-use services\AuthService;
+use services\UserService;
 
 class LoginController
 {
@@ -16,7 +16,7 @@ class LoginController
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        [$user, $message] = (new AuthService())->login($username, $password);
+        [$user, $message] = (new UserService())->login($username, $password);
         if ($user) {
             http_response_code(200);
             $_SESSION["user_id"] = $user->user_id;

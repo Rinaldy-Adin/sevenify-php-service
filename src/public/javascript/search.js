@@ -78,7 +78,7 @@ async function updateMusicList(adios, searchResults) {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
-          });;
+          });
 
         return `
                 <div class="result-item">
@@ -112,8 +112,6 @@ function updatePagination(pageCount) {
 
     if (currentPage == pageCount)
         startNum = Math.max(currentPage - 2, 1);
-
-    console.log(startNum, endNum);
 
     const elements = ['<img onclick="changePage(1)" src="/public/assets/icons/double-left.svg" id="pagination-first" class="clickable">'];
     for (let i = startNum - 1; i < endNum; i++) {

@@ -178,7 +178,7 @@ class MusicRepository extends Repository
 
         if ($sort !== '' && strpos($sort, "-") !== false) {
             [$sortColumn, $sortMethod] = explode('-', $sort);
-            
+
             if ($sortColumn == 'date') {
                 $sortColumn = 'music_upload_date';
             } else {
@@ -202,7 +202,7 @@ class MusicRepository extends Repository
         $stmt->execute();
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $users = (new UserRepository())->getAllUsers();
+        [$users] = (new UserRepository())->getAllUsers();
         $userNameMap = [];
 
         foreach ($users as $user) {
@@ -279,11 +279,17 @@ class MusicRepository extends Repository
     {
         $ext_partition = explode('.', $musicFile['name']);
         $ext = $ext_partition[count($ext_partition) - 1];
-        $ok = move_uploaded_file($musicFile["tmp_name"], STORAGE_DIR . '/music/' . $musicId . '.' . $ext);
+
+        $targetFilePath = STORAGE_DIR . STORAGE_DIR . 'music/' . $musicId . '.' . $ext;
+        if (file_exists($targetFilePath)) {
+            // Delete the existing file
+            unlink($targetFilePath);
+        }
+
+        $ok = move_uploaded_file($musicFile["tmp_name"], $targetFilePath);
 
         if (!$ok) {
             error_log('Error log music: ' . $musicFile['error']);
-            echo $musicFile['error'];
             throw new \RuntimeException('Error saving music file');
         }
     }
@@ -292,12 +298,94 @@ class MusicRepository extends Repository
     {
         $ext_partition = explode('.', $coverFile['name']);
         $ext = $ext_partition[count($ext_partition) - 1];
-        $ok = move_uploaded_file($coverFile["tmp_name"], STORAGE_DIR . '/covers/music/' . $musicId . '.' . $ext);
+
+        $targetFilePath = STORAGE_DIR . 'covers/music/' . $musicId . '.' . $ext;
+        if (file_exists($targetFilePath)) {
+            // Delete the existing file
+            unlink($targetFilePath);
+        }
+
+        $ok = move_uploaded_file($coverFile["tmp_name"], $targetFilePath);
 
         if (!$ok) {
             error_log('Error log cover: ' . $coverFile['error']);
-            echo $coverFile['error'];
             throw new \RuntimeException('Error saving cover file');
+        }
+    }
+
+    public function deleteMusic(int $musicId): bool
+    {
+        $query = "DELETE FROM music WHERE music_id = :musicId";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":musicId", $musicId);
+
+        try {
+            $stmt->execute();
+            $this->deleteMusicFile($musicId);
+            $this->deleteCoverFile($musicId);
+
+            return true;
+        } catch (Exception $e) {
+            error_log("Music deletion error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    private function deleteMusicFile(int $musicId)
+    {
+        $file = glob(STORAGE_DIR . "music/$musicId.*");
+
+        if (count($file) > 0) {
+            $ok = unlink($file[0]);
+            if (!$ok) {
+                throw new \RuntimeException('Error deleting music file');
+            }
+        }
+    }
+
+    private function deleteCoverFile(int $musicId)
+    {
+        $file = glob(STORAGE_DIR . "covers/music/$musicId.*");
+
+        if (count($file) > 0) {
+            $ok = unlink($file[0]);
+            if (!$ok) {
+                throw new \RuntimeException('Error deleting music file');
+            }
+        }
+    }
+
+    public function udpateMusic(int $music_id, string $music_name, string $music_owner, string $music_genre, bool $deleteCover, ?array $coverFile): ?MusicModel
+    {
+        $query = "UPDATE music 
+                    SET music_name = :musicName, music_owner = :musicOwner, music_genre = :musicGenre
+                    WHERE music_id = :musicId";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":musicName", $music_name);
+        $stmt->bindParam(":musicOwner", $music_owner);
+        $stmt->bindParam(":musicGenre", $music_genre);
+        $stmt->bindParam(":musicId", $music_id);
+
+        $this->db->beginTransaction();
+        try {
+            $stmt->execute();
+
+            if ($coverFile) {
+                $this->saveCoverFile($coverFile, $music_id);
+            } else {
+                if ($deleteCover) {
+                    $this->deleteCoverFile($music_id);
+                }
+            }
+
+            $this->db->commit();
+
+            return $this->getByMusicId($music_id);;
+        } catch (Exception $e) {
+            $this->db->rollBack();
+            error_log("Music creation error: " . $e->getMessage());
+            return null;
         }
     }
 }
