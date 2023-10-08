@@ -1,6 +1,6 @@
 <?php
 
-namespace controllers\music;
+namespace controllers\album;
 
 require_once ROOT_DIR . 'common/response.php';
 require_once ROOT_DIR . 'common/dto/albumWithArtistNameDTO.php';
