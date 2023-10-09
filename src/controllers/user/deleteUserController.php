@@ -8,18 +8,14 @@ require_once ROOT_DIR . 'services/userService.php';
 use common\Response;
 use services\UserService;
 
-class AdminDeleteUserController
+class DeleteUserController
 {
     function delete(): string
     {
-        $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
-
-        if (!is_numeric($pathEntries[count($pathEntries) - 1]))
-            return (new Response(['message' => 'User id invalid'], 400))->httpResponse();
-
-        $user_id = (int)$pathEntries[count($pathEntries) - 1];
+        $user_id = (int)$_SESSION['user_id'];
 
         UserService::getInstance()->deleteUser($user_id);
+        unset($_SESSION['user_id']);
         return (new Response(['message' => 'Successfully deleted user']))->httpResponse();
     }
 }

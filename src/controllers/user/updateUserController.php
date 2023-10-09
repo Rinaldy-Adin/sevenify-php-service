@@ -19,11 +19,6 @@ class UpdateUserController
         $password = $_POST["password"];
 
         $userModel = UserService::getInstance()->updateUser($userId, $username, $password);
-        if ($userModel !== null) {
-            return (new Response($userModel->toDTOwithoutPass()))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error updating user'], 500))->httpResponse();
-        }
+        return (new Response($userModel->toDTOwithoutPass()))->httpResponse();
     }
 }

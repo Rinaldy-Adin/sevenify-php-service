@@ -16,14 +16,8 @@ class LoginController
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        [$user, $message] = UserService::getInstance()->login($username, $password);
-        if ($user) {
-            http_response_code(200);
-            $_SESSION["user_id"] = $user->user_id;
-            return (new Response(['message' => $message], 200, []))->httpResponse();
-        } else {
-            http_response_code(401);
-            return (new Response(['message' => $message], 401))->httpResponse();
-        }
+        $user = UserService::getInstance()->login($username, $password);
+        $_SESSION["user_id"] = $user->user_id;
+        return (new Response(['message' => "Successfully logged in"]))->httpResponse();
     }
 }

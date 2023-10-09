@@ -10,6 +10,7 @@ require_once ROOT_DIR . 'common/dto/playlistWithArtistNameDTO.php';
 use common\dto\PlaylistWithArtistNameDTO;
 use Exception;
 use DateTime;
+use exceptions\AppException;
 use models\MusicModel;
 use models\PlaylistModel;
 use PDO;
@@ -143,11 +144,11 @@ class PlaylistRepository extends Repository {
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Playlist creation error: " . $e->getMessage());
-            return null;
+            throw new AppException();
         }
     }
 
-    public function deletePlaylist(int $playlistId): bool
+    public function deletePlaylist(int $playlistId): void
     {
         $query0 = "DELETE FROM playlist_music WHERE playlist_id = :playlistId";
         $stmt0 = $this->db->prepare($query0);
@@ -161,11 +162,9 @@ class PlaylistRepository extends Repository {
             $stmt0->execute();
             $stmt1->execute();
             $this->deleteCoverFile($playlistId);
-
-            return true;
         } catch (Exception $e) {
             error_log("Music deletion error: " . $e->getMessage());
-            return false;
+            throw new AppException();
         }
     }
 

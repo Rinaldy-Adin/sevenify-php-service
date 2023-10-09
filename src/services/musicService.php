@@ -6,6 +6,7 @@ require_once ROOT_DIR . 'models/musicModel.php';
 require_once ROOT_DIR . 'repositories/musicRepository.php';
 require_once ROOT_DIR . 'repositories/userRepository.php';
 
+use exceptions\BadRequestException;
 use models\MusicModel;
 use repositories\MusicRepository;
 use repositories\UserRepository;
@@ -51,15 +52,18 @@ class MusicService
         return $this->searchMusic($searchValue, $page, $genre, $uploadPeriod, $sort);
     }
 
-    function deleteMusic(int $musicId) : bool {
-        return $this->musicRepo->deleteMusic($musicId);
+    function deleteMusic(int $musicId) : void {
+        if (!$this->getMusicById($musicId))
+            throw new BadRequestException("Music id does not exist");
+
+        $this->musicRepo->deleteMusic($musicId);
     }
 
-    function countAllMusic(){
+    function countAllMusic() {
         return $this->musicRepo->countAllMusic();
     }
 
-    function countMusicBy($where=[]) : ?int
+    function countMusicBy($where=[]) : int
     {
         return $this->musicRepo->countMusicBy($where);
     }
@@ -87,18 +91,17 @@ class MusicService
         return $this->musicRepo->getAllGenres();
     }
 
-    function createMusic(int $user_id, string $title, string $genre, array $musicFile, ?array $coverFile): ?MusicModel
+    function createMusic(int $user_id, string $title, string $genre, array $musicFile, ?array $coverFile): MusicModel
     {
-        $music = $this->musicRepo->createMusic($title, $user_id, $genre, $musicFile, $coverFile);
-
-        return $music;
+        return $this->musicRepo->createMusic($title, $user_id, $genre, $musicFile, $coverFile);
     }
 
-    function updateMusic(int $musicId, int $user_id, string $title, string $genre, bool $deleteCover, ?array $coverFile): ?MusicModel
+    function updateMusic(int $musicId, int $user_id, string $title, string $genre, bool $deleteCover, ?array $coverFile): MusicModel
     {
-        $music = $this->musicRepo->updateMusic($musicId, $title, $user_id, $genre, $deleteCover, $coverFile);
+        if ($this->getMusicById($musicId))
+            throw new BadRequestException("Music id does not exist");
 
-        return $music;
+        return $this->musicRepo->updateMusic($musicId, $title, $user_id, $genre, $deleteCover, $coverFile);
     }
 }
 ?>

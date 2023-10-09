@@ -22,5 +22,8 @@ $user = $userService->getByUserId($_SESSION['user_id']);
                 echo '<li><a href="/admin/music/"><img src="/public/assets/icons/admin.svg" alt="User Admin Page">Admin</a></li>';
             }
         ?>
+        <li><div class="a-div clickable" onclick="logout()" href=""><img src="/public/assets/icons/logout.svg" alt="Log Out">Log Out</div></li>
     </ul>
+    <script src="/public/javascript/popup.js"></script>
+    <script src="/public/javascript/nav-bar.js"></script>
 </div>

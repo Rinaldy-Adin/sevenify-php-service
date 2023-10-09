@@ -29,10 +29,11 @@ AuthMiddleware::getInstance()->authUnauthenticated()
             </div>
             <input id="submit" type="submit" value="Log in">
         </form>
-
-        <script src="public/javascript/adios.js"></script>
-        <script src="public/javascript/login.js"></script>
+        <p class="go-to-other">Don't have an account? <a href="/register">Register</a></p>
     </div>
+
+    <script src="public/javascript/adios.js"></script>
+    <script src="public/javascript/login.js"></script>
 </body>
 
 </html>

@@ -33,6 +33,7 @@ AuthMiddleware::getInstance()->authUnauthenticated()
             </div>
             <input id="submit" type="submit" value="Register">
         </form>
+        <p class="go-to-other">Already have an account? <a href="/login">Log in</a></p>
 
     </div>
     <script src="public/javascript/adios.js"></script>

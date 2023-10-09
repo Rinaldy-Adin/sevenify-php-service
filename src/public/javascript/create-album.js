@@ -11,6 +11,12 @@ async function uploadAlbum(event) {
     }
 
     try {
+        await confirmCancelPopup('Create Album', "Are you sure you want to create album?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.postFormData('/api/create-album', event.target);
         const data = JSON.parse(resp);
         console.log(data);

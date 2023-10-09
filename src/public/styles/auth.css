@@ -98,3 +98,16 @@ body {
     background-color: #D98B2F;
     cursor: pointer;
 }
+
+.go-to-other {
+    margin-top: 20px;
+}
+
+.go-to-other > a:visited {
+    color: cornflowerblue;
+}
+
+.go-to-other > a {
+    color: cornflowerblue;
+    text-decoration: none;
+}

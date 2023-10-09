@@ -51,3 +51,24 @@
 .nav-links li a i {
     margin-right: 10px;
 }
+
+.a-div {
+    padding: 10px 20px;
+    border-bottom: 1px solid #040404;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.a-div:hover {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    background-color: #2b2b2b;
+}
+
+.a-div i {
+    margin-right: 10px;
+}

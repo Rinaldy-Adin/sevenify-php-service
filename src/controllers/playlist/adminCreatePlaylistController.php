@@ -4,8 +4,10 @@ namespace controllers\playlist;
 
 require_once ROOT_DIR . 'common/response.php';
 require_once ROOT_DIR . 'services/playlistService.php';
+require_once ROOT_DIR . 'exceptions/UnsupportedMediaTypeException.php';
 
 use common\Response;
+use exceptions\UnsupportedMediaTypeException;
 use services\PlaylistService;
 
 class AdminCreatePlaylistController
@@ -17,16 +19,19 @@ class AdminCreatePlaylistController
         $coverFile = $_FILES["cover-file"];
         $music_ids = isset($_POST["music"]) ? array_map(fn($id) => (int)$id, $_POST["music"]) : [];
 
-        if ($coverFile['error'] == 4) {
+        if ($coverFile['error'] == UPLOAD_ERR_NO_FILE) {
             $coverFile = null;
         }
 
-        $musicModel = UserService::getInstance()->createPlaylist($title, $user_id, $coverFile, $music_ids);
-        if ($musicModel !== null) {
-            return (new Response($musicModel->toDTO()))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error creating music'], 500))->httpResponse();
+        if ($coverFile) {
+            $mime = $coverFile['type'];
+            $pattern = '/^image\/.*/';
+
+            if (!preg_match($pattern, $mime))
+                throw new UnsupportedMediaTypeException("Cover file is not an image");
         }
+
+        $playlistModel = PlaylistService::getInstance()->createPlaylist($title, $user_id, $coverFile, $music_ids);
+        return (new Response($playlistModel->toDTO()))->httpResponse();
     }
 }

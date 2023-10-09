@@ -16,8 +16,7 @@ class AdminCreateUserController
         $password = $_POST["password"];
         $is_admin = isset($_POST["is-admin"]) ? true : false;
 
-        [$statusCode, $message] = UserService::getInstance()->register($username, $password, $is_admin);
-        http_response_code($statusCode);
-        return (new Response(['message' => $message], $statusCode, []))->httpResponse();
+        UserService::getInstance()->register($username, $password, $is_admin);
+        return (new Response(['message' => "Successfully created user"]))->httpResponse();
     }
 }

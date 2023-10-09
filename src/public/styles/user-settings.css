@@ -124,6 +124,7 @@ form > div {
     background: #CA054D;
     outline-color: #CA054D;
     align-self: self-start;
+    border: 2px solid black;
 
     color: #FFF;
     font-size: 18px;

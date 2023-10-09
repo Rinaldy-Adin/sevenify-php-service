@@ -13,6 +13,12 @@ async function uploadPlaylist(event) {
     const additionalData = playlistMusic.map(({id})=> ({key: 'music[]', value: id}));
 
     try {
+        await confirmCancelPopup('Create Playlist', "Are you sure you want to create playlist?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.postFormData('/api/admin/playlist', event.target, additionalData);
         const data = JSON.parse(resp);
         console.log(data);
