@@ -1,3 +1,8 @@
+<?php
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
+use middlewares\AuthMiddleware;
+AuthMiddleware::getInstance()->authUser();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +29,7 @@
         <div class="form-container">
             <div class="details-container">
                 <div class="input-container">
-                    <label>Username (Current: <?= $user->user_name ?>)</label>
+                    <label>Username (Current: <?php $user->user_name ?>)</label>
                     <input name="username" type="text" placeholder="Enter your username here">
                 </div>
                 <div class="input-container">
@@ -33,7 +38,7 @@
                 </div>
                 <div class="input-container">
                     <label>Delete Account</label>
-                    <button id="delete" onclick="deleteUser(<?= $user->user_id ?>)">Delete Account</button>
+                    <button id="delete" onclick="deleteUser(<?php $user->user_id ?>)">Delete Account</button>
                 </div>
                 <input id="submit" type="submit" value="Update User">
             </div>

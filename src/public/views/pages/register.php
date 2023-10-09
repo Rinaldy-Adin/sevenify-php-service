@@ -1,3 +1,10 @@
+<?php
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
+
+use middlewares\AuthMiddleware;
+
+AuthMiddleware::getInstance()->authUnauthenticated()
+?>
 <!DOCTYPE html>
 <html lang="en">
 

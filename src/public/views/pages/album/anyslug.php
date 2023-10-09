@@ -4,13 +4,12 @@ require_once ROOT_DIR . 'repositories/musicRepository.php';
 require_once ROOT_DIR . 'repositories/albumRepository.php';
 require_once ROOT_DIR . 'services/albumService.php';
 require_once ROOT_DIR . 'services/userService.php';
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
 
-use models\MusicModel;
-use repositories\MusicRepository;
-use repositories\AlbumRepository;
-use services\UserService;
+use middlewares\AuthMiddleware;
 use services\AlbumService;
 
+AuthMiddleware::getInstance()->authUser();
 $albumService = AlbumService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
@@ -49,10 +48,10 @@ $coverPath = $albumService->getCoverPathByAlbumId($album_id);
             <img src="/api/album-cover/<?php echo $album_id; ?>" alt="Playlist Cover">
         </div>
         <div class="album-name">
-            <?= $album[0]->album_name ?>
+            <?php $album[0]->album_name ?>
         </div>    
         <div class="album-owner">
-            <?= $album[0]->album_owner_name ?>
+            <?php $album[0]->album_owner_name ?>
         </div>
         <a href="/album/update-album/<?php echo $album_id; ?>" class="update-album-link">Update Album</a>
     </section>

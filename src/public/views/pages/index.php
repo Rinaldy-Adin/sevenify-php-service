@@ -6,11 +6,14 @@ require_once ROOT_DIR . 'models/playlistModel.php';
 require_once ROOT_DIR . 'repositories/musicRepository.php';
 require_once ROOT_DIR . 'repositories/albumRepository.php';
 require_once ROOT_DIR . 'repositories/playlistRepository.php';
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
 
+use middlewares\AuthMiddleware;
 use repositories\MusicRepository;
 use repositories\AlbumRepository;
 use repositories\PlaylistRepository;
 
+AuthMiddleware::getInstance()->authUser();
 $musicRepository = MusicRepository::getInstance();
 $albumRepository = AlbumRepository::getInstance();
 $playlistRepository = PlaylistRepository::getInstance();
