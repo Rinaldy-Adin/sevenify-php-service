@@ -13,6 +13,12 @@ async function uploadAlbum(event, albumId) {
     const additionalData = albumMusic.map(({ id }) => ({ key: 'music[]', value: id }));
 
     try {
+        await confirmCancelPopup('Update Album', "Are you sure you want to update?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.postFormData('/api/update-album/' + albumId, event.target, additionalData);
         console.log(JSON.parse(resp));
         window.location.href = '/album/' + albumId;

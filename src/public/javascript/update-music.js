@@ -8,6 +8,12 @@ async function uploadMusic(event, musicId) {
     }
 
     try {
+        await confirmCancelPopup('Update Music', "Are you sure you want to update music?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.postFormData('/api/update-music/' + musicId, event.target);
         console.log(JSON.parse(resp));
         window.location.href = '/';

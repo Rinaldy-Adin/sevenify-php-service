@@ -11,6 +11,12 @@ async function uploadPlaylist(event) {
     }
 
     try {
+        await confirmCancelPopup('Create Playlist', "Are you sure you want to create playlist?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.postFormData('/api/create-playlist', event.target);
         const data = JSON.parse(resp);
         console.log(data);

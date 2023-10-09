@@ -3,6 +3,12 @@ async function uploadUser(event, userId) {
     const adios = new Adios();
 
     try {
+        await confirmCancelPopup('Update User', "Are you sure you want to update user?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.post('/api/admin/user/' + userId, adios.formToXWWWFormUrlencoded(event.target));
         const data = JSON.parse(resp);
         window.location.href = '/admin/user/';

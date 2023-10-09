@@ -13,6 +13,12 @@ async function uploadPlaylist(event, playlistId) {
     const additionalData = playlist.map(({ id }) => ({ key: 'music[]', value: id }));
 
     try {
+        await confirmCancelPopup('Upload Playlist', "Are you sure you want to upload playlist?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.postFormData('/api/update-playlist/' + playlistId, event.target, additionalData);
         console.log(JSON.parse(resp));
         window.location.href = '/playlist/' + playlistId;

@@ -11,6 +11,12 @@ async function uploadMusic(event) {
         alert("Must upload an image file")
         return;
     }
+    
+    try {
+        await confirmCancelPopup('Upload Music', "Are you sure you want to upload?");
+    } catch (error) {
+        return;
+    }
 
     try {
         const resp = await adios.postFormData('/api/admin/music', event.target);

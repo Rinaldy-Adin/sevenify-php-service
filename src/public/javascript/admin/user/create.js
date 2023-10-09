@@ -3,6 +3,12 @@ async function uploadUser(event) {
     const adios = new Adios();
 
     try {
+        await confirmCancelPopup('Create User', "Are you sure you want to create user?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.post('/api/admin/user', adios.formToXWWWFormUrlencoded(event.target));
         const data = JSON.parse(resp);
         window.location.href = '/admin/user/';
