@@ -26,11 +26,6 @@ class AdminUpdateAlbumController
         }
 
         $musicModel = AlbumService::getInstance()->updateAlbum($album_id, $title, $user_id, $deleteCover, $coverFile, $music_ids);
-        if ($musicModel !== null) {
-            return (new Response($musicModel->toDTO()))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error creating music'], 500))->httpResponse();
-        }
+        return (new Response($musicModel->toDTO()))->httpResponse();
     }
 }

@@ -30,11 +30,6 @@ class AdminUpdateMusicController
 
         
         $musicModel = (MusicService::getInstance())->updateMusic($musicId, $user_id, $title, $genre, $deleteCover, $coverFile);
-        if ($musicModel !== null) {
-            return (new Response($musicModel->toDTO()))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error updating music'], 500))->httpResponse();
-        }
+        return (new Response($musicModel->toDTO()))->httpResponse();
     }
 }

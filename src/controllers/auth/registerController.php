@@ -16,8 +16,7 @@ class RegisterController
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        [$statusCode, $message] = UserService::getInstance()->register($username, $password);
-        http_response_code($statusCode);
-        return (new Response(['message' => $message], $statusCode, []))->httpResponse();
+        UserService::getInstance()->register($username, $password);
+        return (new Response(['message' => "Successfully registered user"]))->httpResponse();
     }
 }

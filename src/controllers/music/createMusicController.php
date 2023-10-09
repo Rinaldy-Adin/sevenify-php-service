@@ -23,11 +23,6 @@ class CreateMusicController
         }
 
         $musicModel = (MusicService::getInstance())->createMusic($user_id, $title, $genre, $musicFile, $coverFile);
-        if ($musicModel !== null) {
-            return (new Response($musicModel->toDTO()))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error uploading music'], 500))->httpResponse();
-        }
+        return (new Response($musicModel->toDTO()))->httpResponse();
     }
 }

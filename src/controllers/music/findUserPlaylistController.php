@@ -17,7 +17,7 @@ class FindUserPlaylistController
         $userId = isset($_GET['userId']) ? urldecode($_GET['userId']) :  $_SESSION["user_id"];
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        [$playlistDTOs, $pageCount] = UserService::getInstance()->getByUserID($userId, $page);
+        [$playlistDTOs, $pageCount] = PlaylistService::getInstance()->getByUserID($userId, $page);
         $searchResult = array_map(fn(PlaylistWithArtistNameDTO $dto) => $dto->toDTOArray(), $playlistDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }

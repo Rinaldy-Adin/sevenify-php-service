@@ -16,7 +16,7 @@ class AdminGetUserController
     {
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        [$userDTOs, $pageCount] = UserService::getInstance()->getAllUsersAdmin($page);
+        [$userDTOs, $pageCount] = UserService::getInstance()->getAllUsersPaged($page);
         $searchResult = array_map(fn(UserModel $model) => $model->toDTO(), $userDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }

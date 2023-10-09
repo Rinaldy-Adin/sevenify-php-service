@@ -5,7 +5,9 @@ namespace repositories;
 require_once ROOT_DIR . 'repositories/repository.php';
 require_once ROOT_DIR . 'models/userModel.php';
 
+use app\App;
 use Exception;
+use exceptions\AppException;
 use models\UserModel;
 use PDO;
 use PDOException;
@@ -71,7 +73,7 @@ class UserRepository extends Repository
         }
     }
 
-    public function createUser(string $username, string $hashedPassword, bool $isAdmin)
+    public function createUser(string $username, string $hashedPassword, bool $isAdmin) : UserModel
     {
         $query = "INSERT INTO users (user_name, user_password, role)
                   VALUES (:username, :password, :role)";
@@ -91,7 +93,7 @@ class UserRepository extends Repository
             return $user;
         } catch (PDOException $e) {
             error_log("User registration error: " . $e->getMessage());
-            return null;
+            throw new AppException();
         }
     }
 
@@ -107,11 +109,11 @@ class UserRepository extends Repository
             return true;
         } catch (Exception $e) {
             error_log("User deletion error: " . $e->getMessage());
-            return false;
+            throw new AppException();
         }
     }
 
-    public function updateUser(int $userId, string $username, string $hashedPassword, ?bool $isAdmin = null): ?UserModel
+    public function updateUser(int $userId, string $username, string $hashedPassword, ?bool $isAdmin = null): UserModel
     {
         try {
             if ($hashedPassword !== '') {
@@ -144,7 +146,7 @@ class UserRepository extends Repository
             return $user;
         } catch (PDOException $e) {
             error_log("User update error: " . $e->getMessage());
-            return null;
+            throw new AppException();
         }
     }
 }

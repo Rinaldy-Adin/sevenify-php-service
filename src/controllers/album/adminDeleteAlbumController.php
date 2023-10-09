@@ -19,12 +19,7 @@ class AdminDeleteAlbumController
 
         $album_id = (int)$pathEntries[count($pathEntries) - 1];
 
-        $ok = AlbumService::getInstance()->deleteAlbum($album_id);
-        if ($ok) {
-            return (new Response(['message' => 'Successfully deleted album']))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error deleting album'], 500))->httpResponse();
-        }
+        AlbumService::getInstance()->deleteAlbum($album_id);
+        return (new Response(['message' => 'Successfully deleted album']))->httpResponse();
     }
 }
