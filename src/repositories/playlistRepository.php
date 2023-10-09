@@ -312,4 +312,20 @@ class PlaylistRepository extends Repository {
             return []; // Playlist not found
         }
     }
+
+    function addMusicToPlaylist(int $playlist_id, int $music_id) {
+        $query = "INSERT INTO playlist_music (playlist_id, music_id)
+              VALUES (:playlist_id, :music_id)";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":playlist_id", $playlist_id);
+        $stmt->bindParam(":music_id", $music_id);
+
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Playlist music creation error: " . $e->getMessage());
+            throw new AppException();
+        }
+    }
 }

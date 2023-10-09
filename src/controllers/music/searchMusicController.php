@@ -22,11 +22,12 @@ class SearchMusicController
         $uploadPeriod = isset($_GET['upload-period']) ? urldecode($_GET['upload-period']) : 'all-time';
         $sort = isset($_GET['sort']) ? urldecode($_GET['sort']) : '';
 
-        if (is_int($page))
+        $page = (int)$page;
+        if (!is_int($page))
             throw new BadRequestException("Page requested not an integer");
 
         [$musicDTOs, $pageCount] = (MusicService::getInstance())->searchMusic($searchValue, $page, $genre, $uploadPeriod, $sort);
-        $searchResult = array_map(fn(MusicWithArtistNameDTO $dto) => $dto->toDTOArray(), $musicDTOs);
+        $searchResult = array_map(fn (MusicWithArtistNameDTO $dto) => $dto->toDTOArray(), $musicDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }
 }
