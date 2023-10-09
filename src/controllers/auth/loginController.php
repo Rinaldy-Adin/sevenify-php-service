@@ -16,8 +16,8 @@ class LoginController
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        [$user, $message] = UserService::getInstance()->login($username, $password);
+        $user = UserService::getInstance()->login($username, $password);
         $_SESSION["user_id"] = $user->user_id;
-        return (new Response(['message' => $message]))->httpResponse();
+        return (new Response(['message' => "Successfully logged in"]))->httpResponse();
     }
 }
