@@ -4,6 +4,7 @@ namespace services;
 
 require_once ROOT_DIR . 'models/playlistModel.php';
 require_once ROOT_DIR . 'repositories/playlistRepository.php';
+require_once ROOT_DIR . 'repositories/userRepository.php';
 
 use models\PlaylistModel;
 use repositories\PlaylistRepository;
@@ -12,13 +13,29 @@ class PlaylistService
 {
     private PlaylistRepository $playlistRepo;
 
-    function __construct()
+    private static $instance;
+
+    // Static method to get the singleton instance
+    public static function getInstance()
     {
-        $this->playlistRepo = new PlaylistRepository();
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
+    protected function __construct()
+    {
+        $this->playlistRepo = PlaylistRepository::getInstance();
     }
 
     function getByPlaylistId(int $playlistId) : PlaylistModel {
-        return $this->playlistRepo->getPlaylistById($playlistId);
+        return $this->playlistRepo->getByPlaylistId($playlistId);
+    }
+
+    function getByUserID(int $userId, int $page) : array
+    {
+        return $this->playlistRepo->getByUserId($userId, $page);
     }
 
     function getAllPlaylists(?int $page) : array {
@@ -33,7 +50,7 @@ class PlaylistService
         return $this->playlistRepo->getCoverPathByPlaylistId($playlistId);
     }
 
-    function createPlaylist(string $title, int $user_id, ?array $coverFile, array $music_ids) :PlaylistModel {
+    function createPlaylist(string $title, int $user_id, ?array $coverFile, array $music_ids = []) :PlaylistModel {
         return $this->playlistRepo->createPlaylist($title, $user_id, $coverFile, $music_ids);
     }
 
@@ -43,5 +60,8 @@ class PlaylistService
 
     function deletePlaylist(int $playlistId): bool {
         return $this->playlistRepo->deletePlaylist($playlistId);
+    }
+    function getByPlaylistIdName(int $albumId) : array {
+        return $this->playlistRepo->getByPlaylistIdName($albumId);
     }
 }

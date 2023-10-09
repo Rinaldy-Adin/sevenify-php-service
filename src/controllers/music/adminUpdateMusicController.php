@@ -29,7 +29,7 @@ class AdminUpdateMusicController
         }
 
         
-        $musicModel = (new MusicService())->updateMusic($musicId, $user_id, $title, $genre, $deleteCover, $coverFile);
+        $musicModel = (MusicService::getInstance())->updateMusic($musicId, $user_id, $title, $genre, $deleteCover, $coverFile);
         if ($musicModel !== null) {
             return (new Response($musicModel->toDTO()))->httpResponse();
         } else {

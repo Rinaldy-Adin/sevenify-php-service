@@ -21,7 +21,7 @@ class AdminUpdateUserController
         $password = $_POST["password"];
         $is_admin = isset($_POST["is-admin"]) ? true : false;
 
-        $userModel = (new UserService())->updateUser($userId, $username, $password, $is_admin);
+        $userModel = UserService::getInstance()->updateUser($userId, $username, $password, $is_admin);
         if ($userModel !== null) {
             return (new Response($userModel->toDTO()))->httpResponse();
         } else {

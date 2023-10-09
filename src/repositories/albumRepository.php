@@ -2,18 +2,31 @@
 
 namespace repositories;
 
+
 require_once ROOT_DIR . 'repositories/repository.php';
 require_once ROOT_DIR . 'models/albumModel.php';
 require_once ROOT_DIR . 'models/musicModel.php';
+require_once ROOT_DIR . 'common/dto/albumWithArtistNameDTO.php';
 
-use DateTime;
+use common\dto\AlbumWithArtistNameDTO;
 use Exception;
+use DateTime;
 use models\AlbumModel;
 use models\MusicModel;
 use PDO;
 
 class AlbumRepository extends Repository
 {
+    private static $instance;
+    
+    public static function getInstance()
+    {
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+    
     public function getAllAlbums(?int $page) : array
     {
         $query = "SELECT * FROM albums";
@@ -35,19 +48,108 @@ class AlbumRepository extends Repository
         }
     }
 
-    public function getAlbumById($albumId)
-    {
+    public function getByAlbumId(int $albumId) {
         $query = "SELECT * FROM albums WHERE album_id = :album_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":album_id", $albumId, PDO::PARAM_INT);
         $stmt->execute();
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($row) {
-            return new AlbumModel($row['album_id'], $row['album_name'], $row['album_owner']);
+        $albumRecord = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($albumRecord) {
+            return new AlbumModel(
+                $albumRecord['album_id'], 
+                $albumRecord['album_name'], 
+                $albumRecord['album_owner']
+            );
         } else {
             return null; // Album not found
         }
+    }
+    public function getByAlbumIdName(int $albumId) : array
+    {
+        $query = "SELECT * FROM albums JOIN users ON user_id = album_owner WHERE album_id = :album_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":album_id", $albumId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $albumRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($albumRecords) {
+            [$users] = (UserRepository::getInstance())->getAllUsers();
+            $userIDName = [];
+
+            foreach ($users as $user) {
+                $userIDName[$user->user_id] = $user->user_name;
+            }
+
+            $albumObjects = [];
+            foreach ($albumRecords as $albumRecord) {
+                $album = new AlbumWithArtistNameDTO(
+                    $albumRecord['album_id'],
+                    $albumRecord['album_name'],
+                    $userIDName[$albumRecord['album_owner']]
+                );
+                $albumObjects[] = $album;
+            }
+
+            return $albumObjects;
+        } else {
+            return []; // Album not found
+        }
+    }
+
+    public function getByUserId(int $userId, int $page): array
+    {
+        $conditions[] = "album_owner = :user_id"; 
+        $bindings[':user_id'] = $userId;
+        
+        $query = "SELECT * FROM albums JOIN users ON user_id = album_owner WHERE album_owner = :user_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->execute();
+        
+        $albumRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        [$users] = (UserRepository::getInstance())->getAllUsers();
+        $userIDName = [];
+
+        foreach($users as $user){
+            $userIDName[$user->user_id] = $user->user_name;
+        }
+
+        $albumObjects = [];
+        foreach ($albumRecords as $albumRecord) {
+            $album = new AlbumWithArtistNameDTO(
+                $albumRecord['album_id'],
+                $albumRecord['album_name'],
+                $userIDName[$albumRecord['album_owner']],
+            );
+            $albumObjects[] = $album;
+        }
+
+        $pageOffset = ($page - 1) * 4;
+
+        return [array_slice($albumObjects, $pageOffset, 4), ceil(count($albumRecords) / 4)];
+    }
+
+    public function getCoverPathByAlbumId(int $albumId): ?string
+    {
+        $album = $this->getByAlbumId($albumId);
+
+        if (!$album) {
+            return null;
+        }
+
+        $files = glob(STORAGE_DIR . "covers/album/*");
+
+        if (count($files) > 0)
+            foreach ($files as $file) {
+                $info = pathinfo($file);
+                if ($info['filename'] == strval($albumId))
+                    return realpath($file);
+            }
+
+        return null;
     }
 
     public function getAlbumMusic($albumId) : array {
@@ -75,26 +177,6 @@ class AlbumRepository extends Repository
         }
 
         return $musicObjects;
-    }
-
-    public function getCoverPathByAlbumId(int $albumId): ?string
-    {
-        $album = $this->getAlbumById($albumId);
-
-        if (!$album) {
-            return null;
-        }
-
-        $files = glob(STORAGE_DIR . "covers/album/*");
-
-        if (count($files) > 0)
-            foreach ($files as $file) {
-                $info = pathinfo($file);
-                if ($info['filename'] == strval($albumId))
-                    return realpath($file);
-            }
-
-        return null;
     }
 
     public function createAlbum(string $album_name, int $album_owner, ?array $coverFile, array $music_ids): ?AlbumModel
@@ -129,7 +211,7 @@ class AlbumRepository extends Repository
 
             $this->db->commit();
 
-            return $this->getAlbumById($albumId);
+            return $this->getByAlbumId($albumId);
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Album creation error: " . $e->getMessage());
@@ -231,7 +313,7 @@ class AlbumRepository extends Repository
 
             $this->db->commit();
 
-            return $this->getAlbumById($album_id);
+            return $this->getByAlbumId($album_id);
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Album update error: " . $e->getMessage());

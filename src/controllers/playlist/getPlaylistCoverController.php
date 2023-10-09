@@ -15,7 +15,7 @@ class GetPlaylistCoverController
         $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
         $playlist_id = $pathEntries[count($pathEntries) - 1];
 
-        $file = (new PlaylistService())->getCoverPathByPlaylistId($playlist_id);
+        $file = UserService::getInstance()->getCoverPathByPlaylistId($playlist_id);
         if ($file) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');

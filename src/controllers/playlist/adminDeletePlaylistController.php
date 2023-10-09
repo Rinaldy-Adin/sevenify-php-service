@@ -19,7 +19,7 @@ class AdminDeletePlaylistController
 
         $playlist_id = (int)$pathEntries[count($pathEntries) - 1];
 
-        $ok = (new PlaylistService())->deletePlaylist($playlist_id);
+        $ok = UserService::getInstance()->deletePlaylist($playlist_id);
         if ($ok) {
             return (new Response(['message' => 'Successfully deleted playlist']))->httpResponse();
         } else {

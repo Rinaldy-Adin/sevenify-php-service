@@ -12,7 +12,7 @@ class GetGenresController
 {
     function get(): string
     {
-        $genres = (new MusicService())->getAllGenres();
+        $genres = (MusicService::getInstance())->getAllGenres();
         return (new Response(["genres" => $genres]))->httpResponse();
     }
 }

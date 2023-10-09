@@ -4,21 +4,34 @@ namespace services;
 
 require_once ROOT_DIR . 'models/albumModel.php';
 require_once ROOT_DIR . 'repositories/albumRepository.php';
+require_once ROOT_DIR . 'repositories/userRepository.php';
 
 use models\AlbumModel;
 use repositories\AlbumRepository;
+use repositories\UserRepository;
 
 class AlbumService
 {
     private AlbumRepository $albumRepo;
 
-    function __construct()
+    private static $instance;
+
+    // Static method to get the singleton instance
+    public static function getInstance()
     {
-        $this->albumRepo = new AlbumRepository();
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
+    protected function __construct()
+    {
+        $this->albumRepo = AlbumRepository::getInstance();
     }
 
     function getByAlbumId(int $albumId) : AlbumModel {
-        return $this->albumRepo->getAlbumById($albumId);
+        return $this->albumRepo->getByAlbumId($albumId);
     }
 
     function getAllAlbums(?int $page) : array {
@@ -33,7 +46,7 @@ class AlbumService
         return $this->albumRepo->getCoverPathByAlbumId($albumId);
     }
 
-    function createAlbum(string $title, int $user_id, ?array $coverFile, array $music_ids) :AlbumModel {
+    function createAlbum(string $title, int $user_id, ?array $coverFile, array $music_ids = []) :AlbumModel {
         return $this->albumRepo->createAlbum($title, $user_id, $coverFile, $music_ids);
     }
 
@@ -43,5 +56,12 @@ class AlbumService
 
     function deleteAlbum(int $albumId): bool {
         return $this->albumRepo->deleteAlbum($albumId);
+    }
+    function getByUserID(int $userId, int $page) : array {
+        return $this->albumRepo->getByUserId($userId, $page);
+    }
+
+    function getByAlbumIdName(int $albumId) : array {
+        return $this->albumRepo->getByAlbumIdName($albumId);
     }
 }

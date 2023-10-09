@@ -15,7 +15,7 @@ class GetAudioController
         $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
         $music_id = $pathEntries[count($pathEntries) - 1];
 
-        $file = (new MusicService())->getAudioPathByMusicId($music_id);
+        $file = (MusicService::getInstance())->getAudioPathByMusicId($music_id);
         if ($file) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');

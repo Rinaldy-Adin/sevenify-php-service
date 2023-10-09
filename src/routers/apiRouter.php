@@ -4,21 +4,44 @@ declare(strict_types=1);
 
 namespace router;
 
+require_once ROOT_DIR . 'rest/apiroutes.php';
+
 use exceptions\NotFoundException;
+use middlewares\AuthMiddleware;
+use rest\APIRoutes;
 
 class APIRouter
 {
     protected array $routes;
+    protected AuthMiddleware $authMiddleware;
+    private static $instance;
+    
+    private function __construct() {
+        $this->authMiddleware = AuthMiddleware::getInstance();
+    }
 
-    public function register(string $route, string $method, string $controller): void
+    // Static method to get the singleton instance
+    public static function getInstance()
     {
-        $this->routes[$route][$method] = $controller;
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+
+            foreach (APIRoutes::$apiroutes as $route) {
+                static::$instance->register(...$route);
+            }
+        }
+        return static::$instance;
+    }
+
+    public function register(string $route, string $method, string $controller, string $access = 'user'): void
+    {
+        $this->routes[$route][$method] = [$controller, $access];
     }
 
     public function resolve(string $URL, string $method): string
     {
         $route = explode('?', $URL)[0];
-        $controller = $this->routes[$route][$method] ?? null;
+        [$controller, $access] = $this->routes[$route][$method] ?? null;
 
         if (!$controller) {
             $route = explode('/', $route);
@@ -34,6 +57,14 @@ class APIRouter
 
         if (class_exists($controller)) {
             $controller = new $controller;
+
+            if ($access == 'user') {
+                $this->authMiddleware->authUser();
+            } else if ($access == 'admin') {
+                $this->authMiddleware->authAdmin();
+            } else {
+                $this->authMiddleware->authUnauthenticated();
+            }
 
             if (method_exists($controller, $method)) {
                 return call_user_func_array([$controller, $method], []);

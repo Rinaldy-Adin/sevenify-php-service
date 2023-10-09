@@ -1,3 +1,8 @@
+<?php
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
+use middlewares\AuthMiddleware;
+AuthMiddleware::getInstance()->authAdmin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +43,7 @@
 
                         require_once ROOT_DIR . 'services/userService.php';
 
-                        $users = (new UserService())->getAllUsers();
+                        $users = UserService::getInstance()->getAllUsers();
 
                         foreach ($users as $user) {
                             echo " <option value=\"$user->user_id\">$user->user_name</option> ";

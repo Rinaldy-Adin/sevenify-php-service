@@ -19,7 +19,7 @@ class AdminDeleteUserController
 
         $user_id = (int)$pathEntries[count($pathEntries) - 1];
 
-        $ok = (new UserService())->deleteUser($user_id);
+        $ok = UserService::getInstance()->deleteUser($user_id);
         if ($ok) {
             return (new Response(['message' => 'Successfully deleted user']))->httpResponse();
         } else {

@@ -1,0 +1,141 @@
+body {
+    width: 1500px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#playlist-music {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.playlist-cover img {
+    width: 255px;
+    height: auto;
+    max-width: 100%;
+    border-radius: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.playlist-name {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.playlist-owner {
+    font-size: 18px;
+    color: #707070;
+    margin-top: 10px;
+}
+
+.update-playlist-link {
+    justify-content: center;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+#playlist-music-list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    align-self: stretch;
+    margin-top: 30px;
+}
+
+#playlist-music-list h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.playlist-music-list-item {
+    display: flex;
+    height: 64px;
+    padding: 8px 12px;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-self: stretch;
+}
+
+.playlist-result-item-divider {
+    border-bottom: 1px solid #CBCBCB;
+}
+
+.playlist-music-info-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    gap: 3px;
+}
+
+.playlist-music-cover {
+    height: 100%;
+    aspect-ratio: 1;
+    border-radius: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.playlist-music-info-text {
+    display: flex;
+    align-items: end;
+    gap: 3px;
+}
+
+.playlist-music-title {
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 1.4px;
+    max-width: 250px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.playlist-music-genre {
+    color: #707070;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.98px;
+}
+
+.play-button {
+    height: 70%;
+    width: auto;
+}
+
+#pagination-playlist-music {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 70px;
+}
+
+.pagination-playlist-music-item {
+    height: 28px;
+    width: 28px;
+    border-radius: 100%;
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-playlist-music-active {
+    background-color: #E69332;
+}

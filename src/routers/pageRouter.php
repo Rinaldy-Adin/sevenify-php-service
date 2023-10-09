@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace router;
 
+require_once ROOT_DIR . 'exceptions/ForbiddenException.php';
+require_once ROOT_DIR . 'exceptions/NotFoundException.php';
+
+use exceptions\NotFoundException;
+
 define('PAGE_DIR', ROOT_DIR . 'public/views/pages');
 
 class PageRouter
 {
-    public string $errorRoute;
-    public array $unauthenticatedRoutes;
-
-    function __construct(string $errorRoute, array $unauthenticatedRoutes)
+    private static $instance;
+    // Static method to get the singleton instance
+    public static function getInstance()
     {
-        $this->errorRoute = $errorRoute;
-        $this->unauthenticatedRoutes = $unauthenticatedRoutes;
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
     }
 
     private function getViewPath(string $URL): string
@@ -33,18 +39,8 @@ class PageRouter
             if (!empty($withoutSlug) && file_exists($fullPathWithoutSlug . '/anyslug.php')) {
                 $fullViewPath = $fullPathWithoutSlug . '/anyslug.php';
             } else {
-                return PAGE_DIR . $this->errorRoute . '.php';;
+                throw new NotFoundException();
             }
-        }
-
-        if (!isset($_SESSION["user_id"]) && !in_array($route, $this->unauthenticatedRoutes)) {
-            header("Location: " . $this->unauthenticatedRoutes[0]);
-            return '';
-        }
-
-        if (isset($_SESSION["user_id"]) && in_array($route, $this->unauthenticatedRoutes)) {
-            header("Location: /");
-            return '';
         }
 
         return $fullViewPath;
@@ -53,16 +49,10 @@ class PageRouter
     public function resolve(string $URL): string
     {
         $fullViewPath = $this->getViewPath($URL);
-
-        if ($fullViewPath != '') {
-            ob_start();
-            require $fullViewPath;
-            $content = ob_get_contents();
-            ob_end_clean();
-
-            return $content;
-        }
-
-        return '';
+        ob_start();
+        require $fullViewPath;
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
     }
 }

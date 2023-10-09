@@ -12,6 +12,16 @@ use PDOException;
 
 class UserRepository extends Repository
 {
+    private static $instance;
+    
+    public static function getInstance()
+    {
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+    
     public function getAllUsers(?int $page = null)
     {
         $query = "SELECT * FROM users";

@@ -14,13 +14,33 @@ class MusicService
 {
     private MusicRepository $musicRepo;
 
-    function __construct()
+    private static $instance;
+
+    // Static method to get the singleton instance
+    public static function getInstance()
     {
-        $this->musicRepo = new MusicRepository();
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
+    protected function __construct()
+    {
+        $this->musicRepo = MusicRepository::getInstance();
     }
     
-    function getMusicById($musicId) {
-        return $this->musicRepo->getByMusicId($musicId);
+    function getByUserID(int $userId, int $page) : array
+    {
+        return $this->musicRepo->getByUserId($userId, $page);
+    }
+    function getByAlbumId(int $albumId, int $page) : array
+    {
+        return $this->musicRepo->getByAlbumId($albumId, $page);
+    }
+    function getByPlaylistID(int $playlistId, int $page) : array
+    {
+        return $this->musicRepo->getByPlaylistId($playlistId, $page);
     }
     
     function getAllMusic(int $page) : array{
@@ -39,12 +59,13 @@ class MusicService
         return $this->musicRepo->countAllMusic();
     }
 
-    function countMusicBy($where=[]){
+    function countMusicBy($where=[]) : ?int
+    {
         return $this->musicRepo->countMusicBy($where);
     }
-    function getByMusicId(string $musicId): ?MusicModel
+    function getMusicById(string $musicId): ?MusicModel
     {
-        return $this->musicRepo->getByMusicId($musicId);
+        return $this->musicRepo->getMusicById($musicId);
     }
 
     function getAudioPathByMusicId(string $musicId): ?string
@@ -75,7 +96,7 @@ class MusicService
 
     function updateMusic(int $musicId, int $user_id, string $title, string $genre, bool $deleteCover, ?array $coverFile): ?MusicModel
     {
-        $music = $this->musicRepo->udpateMusic($musicId, $title, $user_id, $genre, $deleteCover, $coverFile);
+        $music = $this->musicRepo->updateMusic($musicId, $title, $user_id, $genre, $deleteCover, $coverFile);
 
         return $music;
     }

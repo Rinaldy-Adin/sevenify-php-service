@@ -16,7 +16,7 @@ class AdminGetAlbumController
     {
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        [$albumDTOs, $pageCount] = (new AlbumService())->getAllAlbums($page);
+        [$albumDTOs, $pageCount] = AlbumService::getInstance()->getAllAlbums($page);
         $searchResult = array_map(fn(AlbumModel $model) => $model->toDTO(), $albumDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }

@@ -10,11 +10,22 @@ use repositories\UserRepository;
 
 class UserService
 {
+    private static $instance;
+
+    // Static method to get the singleton instance
+    public static function getInstance()
+    {
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
     private UserRepository $userRepo;
 
-    function __construct()
+    protected function __construct()
     {
-        $this->userRepo = new userRepository();
+        $this->userRepo = userRepository::getInstance();
     }
 
     function login(string $username, string $password): array
