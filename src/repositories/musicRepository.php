@@ -10,6 +10,7 @@ require_once ROOT_DIR . 'common/dto/musicWithArtistNameDTO.php';
 use common\dto\MusicWithArtistNameDTO;
 use DateTime;
 use Exception;
+use exceptions\AppException;
 use models\MusicModel;
 use PDO;
 use repositories\UserRepository;
@@ -226,9 +227,13 @@ class MusicRepository extends Repository
             }
         }
 
-        $stmt->execute();
-
-        return $stmt->fetchColumn();
+        try {
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (Exception $e) {
+            error_log("Music count error: $e");
+            throw new AppException();
+        }
     }
 
     public function searchMusic(string $searchValue, int $page, string $genre, string $uploadPeriod, string $sort): array
@@ -365,7 +370,7 @@ class MusicRepository extends Repository
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Music creation error: " . $e->getMessage());
-            return null;
+            throw new AppException();
         }
     }
 
@@ -407,7 +412,7 @@ class MusicRepository extends Repository
         }
     }
 
-    public function deleteMusic(int $musicId): bool
+    public function deleteMusic(int $musicId): void
     {
         $query = "DELETE FROM music WHERE music_id = :musicId";
         $stmt = $this->db->prepare($query);
@@ -417,11 +422,9 @@ class MusicRepository extends Repository
             $stmt->execute();
             $this->deleteMusicFile($musicId);
             $this->deleteCoverFile($musicId);
-
-            return true;
         } catch (Exception $e) {
             error_log("Music deletion error: " . $e->getMessage());
-            return false;
+            throw new AppException();
         }
     }
 

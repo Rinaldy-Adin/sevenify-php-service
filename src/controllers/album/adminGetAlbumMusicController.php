@@ -7,7 +7,6 @@ require_once ROOT_DIR . 'common/dto/musicWithArtistNameDTO.php';
 require_once ROOT_DIR . 'services/albumService.php';
 
 use common\Response;
-use models\AlbumModel;
 use models\MusicModel;
 use services\AlbumService;
 

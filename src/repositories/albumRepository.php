@@ -11,6 +11,7 @@ require_once ROOT_DIR . 'common/dto/albumWithArtistNameDTO.php';
 use common\dto\AlbumWithArtistNameDTO;
 use Exception;
 use DateTime;
+use exceptions\AppException;
 use models\AlbumModel;
 use models\MusicModel;
 use PDO;
@@ -48,7 +49,7 @@ class AlbumRepository extends Repository
         }
     }
 
-    public function getByAlbumId(int $albumId) {
+    public function getByAlbumId(int $albumId) : ?AlbumModel {
         $query = "SELECT * FROM albums WHERE album_id = :album_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":album_id", $albumId, PDO::PARAM_INT);
@@ -215,11 +216,11 @@ class AlbumRepository extends Repository
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Album creation error: " . $e->getMessage());
-            return null;
+            throw new AppException();
         }
     }
 
-    public function deleteAlbum(int $albumId): bool
+    public function deleteAlbum(int $albumId): void
     {
         $query0 = "DELETE FROM album_music WHERE album_id = :albumId";
         $stmt0 = $this->db->prepare($query0);
@@ -233,11 +234,9 @@ class AlbumRepository extends Repository
             $stmt0->execute();
             $stmt1->execute();
             $this->deleteCoverFile($albumId);
-
-            return true;
         } catch (Exception $e) {
             error_log("Album deletion error: " . $e->getMessage());
-            return false;
+            throw new AppException();
         }
     }
 
@@ -317,7 +316,7 @@ class AlbumRepository extends Repository
         } catch (Exception $e) {
             $this->db->rollBack();
             error_log("Album update error: " . $e->getMessage());
-            return null;
+            throw new AppException();
         }
     }
 }
