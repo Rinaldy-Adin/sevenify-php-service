@@ -13,7 +13,7 @@
         <h3>Error</h3>
         <h2>404</h2>
         <h3>Not Found</h3>
-        <a href="/">GO TO HOME</a>
+        <a href="/">GO TO HOMEPAGE</a>
     </div>
 </body>
 </html>
