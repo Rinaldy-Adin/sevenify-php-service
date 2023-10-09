@@ -1,11 +1,16 @@
 <?php
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
+use middlewares\AuthMiddleware;
+AuthMiddleware::getInstance()->authAdmin();
+?>
+<?php
 require_once ROOT_DIR . 'services/playlistService.php';
 require_once ROOT_DIR . 'services/userService.php';
 
 use services\PlaylistService;
 use services\UserService;
 
-$playlistService = new PlaylistService();
+$playlistService = PlaylistService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
 $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
@@ -21,7 +26,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
     }
 }
 
-$users = (new UserService())->getAllUsers();
+$users = UserService::getInstance()->getAllUsers();
 
 $options = [];
 $playlistOwnerName = '';
@@ -49,7 +54,7 @@ foreach ($users as $user) {
 <body>
     <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
 
-    <form onsubmit="uploadPlaylist(event,  <?= $playlist_id ?>)">
+    <form onsubmit="uploadPlaylist(event,  <?php $playlist_id ?>)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Update Album</h1>
             <div></div>
@@ -67,11 +72,11 @@ foreach ($users as $user) {
             </div>
             <div class="details-container">
                 <div class="input-container">
-                    <label>Title (current: <?= $playlist->playlist_name ?>)</label>
-                    <input required name="title" type="text" placeholder="Enter your title here" value="<?= $playlist->playlist_name ?>">
+                    <label>Title (current: <?php $playlist->playlist_name ?>)</label>
+                    <input required name="title" type="text" placeholder="Enter your title here" value="<?php $playlist->playlist_name ?>">
                 </div>
                 <div class="input-container">
-                    <label>User (current: <?= $playlistOwnerName ?>)</label>
+                    <label>User (current: <?php $playlistOwnerName ?>)</label>
                     <select required name="user-id">
                         <?php
                         echo implode(" ", $options);
@@ -100,7 +105,7 @@ foreach ($users as $user) {
     <script src="/public/javascript/adios.js"></script>
     <script src="/public/javascript/admin/playlist/update.js"></script>
     <script>
-        initUpdatePage(<?= $playlist_id ?>)
+        initUpdatePage(<?php $playlist_id ?>)
     </script>
 </body>
 

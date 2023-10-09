@@ -15,7 +15,7 @@ class GetAlbumCoverController
         $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
         $album_id = $pathEntries[count($pathEntries) - 1];
 
-        $file = (new AlbumService())->getCoverPathByAlbumId($album_id);
+        $file = AlbumService::getInstance()->getCoverPathByAlbumId($album_id);
         if ($file) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');

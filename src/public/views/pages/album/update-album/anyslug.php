@@ -1,11 +1,14 @@
 <?php
 require_once ROOT_DIR . 'services/albumService.php';
 require_once ROOT_DIR . 'services/userService.php';
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
 
+use middlewares\AuthMiddleware;
 use services\AlbumService;
 use services\UserService;
 
-$albumService = new AlbumService();
+AuthMiddleware::getInstance()->authUser();
+$albumService = AlbumService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
 $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
@@ -21,7 +24,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
     }
 }
 
-$users = (new UserService())->getAllUsers();
+$users = UserService::getInstance()->getAllUsers();
 
 $options = [];
 $albumOwnerName = '';
@@ -46,7 +49,7 @@ foreach ($users as $user) {
 </head>
 
 <body>
-    <form onsubmit="uploadAlbum(event,  <?= $album_id ?>)">
+    <form onsubmit="uploadAlbum(event,  <?php $album_id ?>)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Update Album</h1>
             <div></div>
@@ -64,11 +67,11 @@ foreach ($users as $user) {
             </div>
             <div class="details-container">
                 <div class="input-container">
-                    <label>Title (current: <?= $album->album_name ?>)</label>
-                    <input required name="title" type="text" placeholder="Enter your title here" value="<?= $album->album_name ?>">
+                    <label>Title (current: <?php $album->album_name ?>)</label>
+                    <input required name="title" type="text" placeholder="Enter your title here" value="<?php $album->album_name ?>">
                 </div>
                 <div class="input-container">
-                    <label>User (current: <?= $albumOwnerName ?>)</label>
+                    <label>User (current: <?php $albumOwnerName ?>)</label>
                     <select required name="user-id">
                         <?php
                         echo implode(" ", $options);
@@ -97,7 +100,7 @@ foreach ($users as $user) {
     <script src="/public/javascript/adios.js"></script>
     <script src="/public/javascript/update-album.js"></script>
     <script>
-        initUpdatePage(<?= $album_id ?>)
+        initUpdatePage(<?php $album_id ?>)
     </script>
 </body>
 

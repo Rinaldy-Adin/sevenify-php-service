@@ -17,7 +17,7 @@ class SearchPlaylistMusicController
         $playlistId = isset($_GET['playlistId']) ? urldecode($_GET['playlistId']) : -1;
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        [$musicDTOs, $pageCount] = (new MusicService())->getByPlaylistId($playlistId, $page);
+        [$musicDTOs, $pageCount] = (MusicService::getInstance())->getByPlaylistId($playlistId, $page);
         $searchResult = array_map(fn(MusicWithArtistNameDTO $dto) => $dto->toDTOArray(), $musicDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }

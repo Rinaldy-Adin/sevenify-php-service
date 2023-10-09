@@ -8,7 +8,7 @@ async function uploadMusic(event, musicId) {
     }
 
     try {
-        const resp = await adios.postFormData('/api/updateMusic/' + musicId, event.target);
+        const resp = await adios.postFormData('/api/update-music/' + musicId, event.target);
         console.log(JSON.parse(resp));
         window.location.href = '/';
     } catch (error) {

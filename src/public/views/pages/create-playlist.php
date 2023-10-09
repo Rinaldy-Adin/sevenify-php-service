@@ -1,3 +1,8 @@
+<?php
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
+use middlewares\AuthMiddleware;
+AuthMiddleware::getInstance()->authUser();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,37 +30,6 @@
                 <div class="input-container">
                     <label>Title</label>
                     <input required name="title" type="text" placeholder="Enter your title here">
-                </div>
-                <div class="input-container">
-                    <label>User</label>
-                    <select required name="user-id">
-                        <?php
-
-                        use services\UserService;
-
-                        require_once ROOT_DIR . 'services/userService.php';
-
-                        $users = (new UserService())->getAllUsers();
-
-                        foreach ($users as $user) {
-                            echo " <option value=\"$user->user_id\">$user->user_name</option> ";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="input-container">
-                    <label>Music</label>
-                    <div class="dynamic-list-container">
-                        <div class="dynamic-list-input-container">
-                            <label>Add by id:</label>
-                            <div class="dynamic-list-input">
-                                <input type="text" placeholder="Enter music id to add" id="add-music-input">
-                                <div onclick="addListItem()" id="add-music">Add Music</div>
-                            </div>
-                        </div>
-                        <ul id="dynamic-list">
-                        </ul>
-                    </div>
                 </div>
                 <input id="submit" type="submit" value="Save Playlist">
             </div>

@@ -4,14 +4,17 @@ require_once ROOT_DIR . 'repositories/musicRepository.php';
 require_once ROOT_DIR . 'repositories/playlistRepository.php';
 require_once ROOT_DIR . 'services/playlistService.php';
 require_once ROOT_DIR . 'services/userService.php';
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
 
+use middlewares\AuthMiddleware;
 use models\MusicModel;
 use repositories\MusicRepository;
 use repositories\PlaylistRepository;
 use services\UserService;
 use services\PlaylistService;
 
-$playlistService = new PlaylistService();
+AuthMiddleware::getInstance()->authUser();
+$playlistService = PlaylistService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
 $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
@@ -49,10 +52,10 @@ $coverPath = $playlistService->getCoverPathByPlaylistId($playlist_id);
             <img src="/api/playlist-cover/<?php echo $playlist_id; ?>" alt="Playlist Cover">
         </div>
         <div class="playlist-name">
-            <?= $playlist[0]->playlist_name ?>
+            <?php $playlist[0]->playlist_name ?>
         </div>    
         <div class="playlist-owner">
-            <?= $playlist[0]->playlist_owner_name ?>
+            <?php $playlist[0]->playlist_owner_name ?>
         </div>
         <a href="/playlist/update-playlist/<?php echo $playlist_id; ?>" class="update-playlist-link">Update Playlist</a>
     </section>

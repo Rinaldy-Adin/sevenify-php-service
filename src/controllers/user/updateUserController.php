@@ -18,7 +18,7 @@ class UpdateUserController
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        $userModel = (new UserService())->updateUser($userId, $username, $password);
+        $userModel = UserService::getInstance()->updateUser($userId, $username, $password);
         if ($userModel !== null) {
             return (new Response($userModel->toDTOwithoutPass()))->httpResponse();
         } else {

@@ -14,7 +14,7 @@ class PlaylistWithArtistNameDTO extends DTO
     public function __construct(
         int $playlist_id,
         string $playlist_name,
-        string $playlist_owner_name,
+        string $playlist_owner_name
     ) {
         $this->playlist_id = $playlist_id;
         $this->playlist_name = $playlist_name;

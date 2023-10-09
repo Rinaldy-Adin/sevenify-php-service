@@ -14,9 +14,20 @@ class AlbumService
 {
     private AlbumRepository $albumRepo;
 
-    function __construct()
+    private static $instance;
+
+    // Static method to get the singleton instance
+    public static function getInstance()
     {
-        $this->albumRepo = new AlbumRepository();
+        if (!isset(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
+
+    protected function __construct()
+    {
+        $this->albumRepo = AlbumRepository::getInstance();
     }
 
     function getByAlbumId(int $albumId) : AlbumModel {
@@ -35,7 +46,7 @@ class AlbumService
         return $this->albumRepo->getCoverPathByAlbumId($albumId);
     }
 
-    function createAlbum(string $title, int $user_id, ?array $coverFile, array $music_ids) :AlbumModel {
+    function createAlbum(string $title, int $user_id, ?array $coverFile, array $music_ids = []) :AlbumModel {
         return $this->albumRepo->createAlbum($title, $user_id, $coverFile, $music_ids);
     }
 

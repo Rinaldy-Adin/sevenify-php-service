@@ -15,7 +15,7 @@ class GetMusicController
         $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
         $music_id = $pathEntries[count($pathEntries) - 1];
 
-        $musicModel = (new MusicService())->getMusicById($music_id);
+        $musicModel = (MusicService::getInstance())->getMusicById($music_id);
         if ($musicModel) {
             return (new Response($musicModel->toDTO()))->httpResponse();
         } else {

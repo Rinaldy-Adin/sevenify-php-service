@@ -1,11 +1,14 @@
 <?php
 require_once ROOT_DIR . 'services/musicService.php';
 require_once ROOT_DIR . 'services/userService.php';
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
 
+use middlewares\AuthMiddleware;
 use services\UserService;
 use services\MusicService;
 
-$musicService = new MusicService();
+AuthMiddleware::getInstance()->authUser();
+$musicService = MusicService::getInstance();
 
 $uri = $_SERVER['REQUEST_URI'];
 $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
@@ -21,7 +24,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
     }
 }
 
-$users = (new UserService())->getAllUsers();
+$users = UserService::getInstance()->getAllUsers();
 
 $options = [];
 $musicOwnerName = '';
@@ -48,7 +51,7 @@ $coverPath = $musicService->getCoverPathByMusicId($music->music_id);
 </head>
 
 <body>
-    <form onsubmit="uploadMusic(event, <?= $music_id ?>)">
+    <form onsubmit="uploadMusic(event, <?php $music_id ?>)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Upload Music</h1>
             <div></div>
@@ -66,15 +69,15 @@ $coverPath = $musicService->getCoverPathByMusicId($music->music_id);
             </div>
             <div class="details-container">
                 <div class="input-container">
-                    <label>Title (current: <?= $music->music_name ?>)</label>
-                    <input required name="title" type="text" placeholder="Enter your title here" value="<?= $music->music_name ?>">
+                    <label>Title (current: <?php $music->music_name ?>)</label>
+                    <input required name="title" type="text" placeholder="Enter your title here" value="<?php $music->music_name ?>">
                 </div>
                 <div class="input-container">
-                    <label>Genre (current: <?= $music->music_genre ?>)</label>
-                    <input required name="genre" type="text" placeholder="Enter your genre here" value="<?= $music->music_genre ?>">
+                    <label>Genre (current: <?php $music->music_genre ?>)</label>
+                    <input required name="genre" type="text" placeholder="Enter your genre here" value="<?php $music->music_genre ?>">
                 </div>
                 <div class="input-container">
-                    <label>User (current: <?= $musicOwnerName ?>)</label>
+                    <label>User (current: <?php $musicOwnerName ?>)</label>
                     <select required name="user-id">
                     <?php
                         echo implode(" ", $options);
@@ -88,7 +91,7 @@ $coverPath = $musicService->getCoverPathByMusicId($music->music_id);
 
     <script src="/public/javascript/adios.js"></script>
     <script src="/public/javascript/update-music.js"></script>
-    <script>initUpdatePage(<?= $music_id ?>)</script>
+    <script>initUpdatePage(<?php $music_id ?>)</script>
 </body>
 
 </html>

@@ -17,7 +17,7 @@ class AdminGetPlaylistMusicController
         $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
         $playlist_id = $pathEntries[count($pathEntries) - 1];
 
-        $musicModels = (new PlaylistService())->getPlaylistMusic($playlist_id);
+        $musicModels = UserService::getInstance()->getPlaylistMusic($playlist_id);
         $searchResult = array_map(fn(MusicModel $model) => $model->toDTO(), $musicModels);
         return (new Response($searchResult))->httpResponse();
     }

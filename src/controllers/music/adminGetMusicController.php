@@ -16,7 +16,7 @@ class AdminGetMusicController
     {
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        [$musicDTOs, $pageCount] = (new MusicService())->getAllMusic($page);
+        [$musicDTOs, $pageCount] = (MusicService::getInstance())->getAllMusic($page);
         $searchResult = array_map(fn(MusicWithArtistNameDTO $dto) => $dto->toDTOArray(), $musicDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }

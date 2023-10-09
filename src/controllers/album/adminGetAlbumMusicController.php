@@ -18,7 +18,7 @@ class AdminGetAlbumMusicController
         $pathEntries = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
         $album_id = $pathEntries[count($pathEntries) - 1];
 
-        $musicModels = (new AlbumService())->getAlbumMusic($album_id);
+        $musicModels = AlbumService::getInstance()->getAlbumMusic($album_id);
         $searchResult = array_map(fn(MusicModel $model) => $model->toDTO(), $musicModels);
         return (new Response($searchResult))->httpResponse();
     }

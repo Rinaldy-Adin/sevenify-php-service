@@ -17,7 +17,7 @@ class FindUserAlbumController
         $userId = isset($_GET['userId']) ? urldecode($_GET['userId']) : $_SESSION["user_id"];
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        [$albumDTOs, $pageCount] = (new AlbumService())->getByUserID($userId, $page);
+        [$albumDTOs, $pageCount] = AlbumService::getInstance()->getByUserID($userId, $page);
         $searchResult = array_map(fn(AlbumWithArtistNameDTO $dto) => $dto->toDTOArray(), $albumDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }
