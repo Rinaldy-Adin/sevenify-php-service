@@ -6,6 +6,7 @@ require_once ROOT_DIR . 'common/response.php';
 require_once ROOT_DIR . 'services/playlistService.php';
 
 use common\Response;
+use models\PlaylistModel;
 use services\PlaylistService;
 
 class CreatePlaylistController
@@ -20,12 +21,7 @@ class CreatePlaylistController
             $coverFile = null;
         }
 
-        $musicModel = UserService::getInstance()->createPlaylist($title, $user_id, $coverFile);
-        if ($musicModel !== null) {
-            return (new Response($musicModel->toDTO()))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error creating music'], 500))->httpResponse();
-        }
+        $playlistModel = PlaylistService::getInstance()->createPlaylist($title, $user_id, $coverFile);
+        return (new Response($playlistModel->toDTO()))->httpResponse();
     }
 }

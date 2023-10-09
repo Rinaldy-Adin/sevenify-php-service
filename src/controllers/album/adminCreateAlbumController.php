@@ -24,11 +24,6 @@ class AdminCreateAlbumController
         }
 
         $musicModel = AlbumService::getInstance()->createAlbum($title, $user_id, $coverFile, $music_ids);
-        if ($musicModel !== null) {
-            return (new Response($musicModel->toDTO()))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error creating music'], 500))->httpResponse();
-        }
+        return (new Response($musicModel->toDTO()))->httpResponse();
     }
 }

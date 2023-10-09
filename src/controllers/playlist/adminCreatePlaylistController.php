@@ -21,12 +21,7 @@ class AdminCreatePlaylistController
             $coverFile = null;
         }
 
-        $musicModel = UserService::getInstance()->createPlaylist($title, $user_id, $coverFile, $music_ids);
-        if ($musicModel !== null) {
-            return (new Response($musicModel->toDTO()))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error creating music'], 500))->httpResponse();
-        }
+        $playlistModel = PlaylistService::getInstance()->createPlaylist($title, $user_id, $coverFile, $music_ids);
+        return (new Response($playlistModel->toDTO()))->httpResponse();
     }
 }

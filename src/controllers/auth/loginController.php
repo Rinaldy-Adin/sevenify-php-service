@@ -18,6 +18,6 @@ class LoginController
 
         [$user, $message] = UserService::getInstance()->login($username, $password);
         $_SESSION["user_id"] = $user->user_id;
-        return (new Response(['message' => $message], 200, []))->httpResponse();
+        return (new Response(['message' => $message]))->httpResponse();
     }
 }
