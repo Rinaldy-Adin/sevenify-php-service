@@ -11,6 +11,7 @@ require_once ROOT_DIR . 'controllers/music/getGenresController.php';
 require_once ROOT_DIR . 'controllers/music/getMusicCoverController.php';
 require_once ROOT_DIR . 'controllers/music/searchMusicController.php';
 require_once ROOT_DIR . 'controllers/music/updateMusicController.php';
+require_once ROOT_DIR . 'controllers/music/deleteMusicController.php';
 require_once ROOT_DIR . 'controllers/music/adminGetMusicController.php';
 require_once ROOT_DIR . 'controllers/music/adminCreateMusicController.php';
 require_once ROOT_DIR . 'controllers/music/adminDeleteMusicController.php';
@@ -26,6 +27,7 @@ require_once ROOT_DIR . 'controllers/user/updateUserController.php';
 require_once ROOT_DIR . 'controllers/album/getAlbumCoverController.php';
 require_once ROOT_DIR . 'controllers/album/createAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/updateAlbumController.php';
+require_once ROOT_DIR . 'controllers/album/deleteAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminCreateAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminDeleteAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminGetAlbumController.php';
@@ -35,6 +37,7 @@ require_once ROOT_DIR . 'controllers/album/findUserAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/searchAlbumMusicController.php';
 require_once ROOT_DIR . 'controllers/playlist/createPlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/updatePlaylistController.php';
+require_once ROOT_DIR . 'controllers/playlist/deletePlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/adminCreatePlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/adminDeletePlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/adminGetPlaylistController.php';
@@ -54,6 +57,7 @@ use controllers\album\FindUserAlbumController;
 use controllers\album\SearchAlbumMusicController;
 use controllers\album\CreateAlbumController;
 use controllers\album\UpdateAlbumController;
+use controllers\album\DeleteAlbumController;
 use controllers\auth\LoginController;
 use controllers\auth\RegisterController;
 use controllers\music\AdminCreateMusicController;
@@ -62,6 +66,7 @@ use controllers\music\AdminGetMusicController;
 use controllers\music\AdminUpdateMusicController;
 use controllers\music\CreateMusicController;
 use controllers\music\UpdateMusicController;
+use controllers\music\DeleteMusicController;
 use controllers\music\GetAudioController;
 use controllers\music\GetGenresController;
 use controllers\music\GetMusicController;
@@ -79,6 +84,7 @@ use controllers\playlist\GetPlaylistCoverController;
 use controllers\playlist\SearchPlaylistMusicController;
 use controllers\playlist\CreatePlaylistController;
 use controllers\playlist\UpdatePlaylistController;
+use controllers\playlist\DeletePlaylistController;
 use controllers\user\AdminGetUserController;
 use controllers\user\AdminCreateUserController;
 use controllers\user\AdminDeleteUserController;
@@ -111,6 +117,9 @@ class APIRoutes
         ['/api/update-music/*', 'post', UpdateMusicController::class],
         ['/api/update-album/*', 'post', UpdateAlbumController::class],
         ['/api/update-playlist/*', 'post', UpdatePlaylistController::class],
+        ['/api/delete-music/*', 'delete', DeleteMusicController::class],
+        ['/api/delete-album/*', 'delete', DeleteAlbumController::class],
+        ['/api/delete-playlist/*', 'delete', DeletePlaylistController::class],
         ['/api/search-playlist-user', 'get', FindUserPlaylistController::class],
         ['/api/admin/music', 'get', AdminGetMusicController::class, 'admin'],
         ['/api/admin/music', 'post', AdminCreateMusicController::class, 'admin'],
