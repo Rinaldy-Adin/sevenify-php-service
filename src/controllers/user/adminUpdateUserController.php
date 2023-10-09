@@ -22,11 +22,6 @@ class AdminUpdateUserController
         $is_admin = isset($_POST["is-admin"]) ? true : false;
 
         $userModel = UserService::getInstance()->updateUser($userId, $username, $password, $is_admin);
-        if ($userModel !== null) {
-            return (new Response($userModel->toDTO()))->httpResponse();
-        } else {
-            http_response_code(500);
-            return (new Response(['message' => 'Error updating user'], 500))->httpResponse();
-        }
+        return (new Response($userModel->toDTO()))->httpResponse();
     }
 }

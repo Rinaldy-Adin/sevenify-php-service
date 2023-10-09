@@ -3,8 +3,11 @@
 namespace controllers\music;
 
 require_once ROOT_DIR . 'services/musicService.php';
+require_once ROOT_DIR . 'common/response.php';
+require_once ROOT_DIR . 'services/UnsupportedMediaTypeException.php';
 
 use common\Response;
+use exceptions\UnsupportedMediaTypeException;
 use services\MusicService;
 
 class AdminUpdateMusicController
@@ -28,6 +31,13 @@ class AdminUpdateMusicController
             $coverFile = null;
         }
 
+        if ($coverFile) {
+            $mime = $coverFile['type'];
+            $pattern = '/^image\/.*/';
+
+            if (!preg_match($pattern, $mime))
+                throw new UnsupportedMediaTypeException("Cover file is not an image");
+        }
         
         $musicModel = (MusicService::getInstance())->updateMusic($musicId, $user_id, $title, $genre, $deleteCover, $coverFile);
         return (new Response($musicModel->toDTO()))->httpResponse();
