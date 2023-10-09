@@ -3,6 +3,12 @@ async function updateUser(event) {
     const adios = new Adios();
 
     try {
+        await confirmCancelPopup('Update User', "Are you sure you want to upate your user profile?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.post('/api/user', adios.formToXWWWFormUrlencoded(event.target));
         const data = JSON.parse(resp);
         console.log(data);

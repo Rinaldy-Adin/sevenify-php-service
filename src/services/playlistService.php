@@ -69,7 +69,7 @@ class PlaylistService
     function deletePlaylist(int $playlistId): void {
         if (!$this->getByPlaylistId($playlistId))
             throw new BadRequestException("Playlist id does not exist");
-        return $this->playlistRepo->deletePlaylist($playlistId);
+        $this->playlistRepo->deletePlaylist($playlistId);
     }
     function getByPlaylistIdName(int $albumId) : array {
         return $this->playlistRepo->getByPlaylistIdName($albumId);

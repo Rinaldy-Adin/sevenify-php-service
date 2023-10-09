@@ -1,7 +1,25 @@
 <?php
 require_once ROOT_DIR . 'middlewares/authMiddleware.php';
+
 use middlewares\AuthMiddleware;
+
 AuthMiddleware::getInstance()->authUser();
+?>
+<?php
+require_once ROOT_DIR . 'services/userService.php';
+
+use services\UserService;
+
+$userService = UserService::getInstance();
+
+$user_id = $_SESSION['user_id'];
+
+
+$currentUser = $userService->getByUserId($user_id);
+
+if ($currentUser == null) {
+    header('Location: /404');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +47,7 @@ AuthMiddleware::getInstance()->authUser();
         <div class="form-container">
             <div class="details-container">
                 <div class="input-container">
-                    <label>Username (Current: <?php $user->user_name ?>)</label>
+                    <label>Username (Current: <?= $currentUser->user_name ?>)</label>
                     <input name="username" type="text" placeholder="Enter your username here">
                 </div>
                 <div class="input-container">
@@ -38,7 +56,7 @@ AuthMiddleware::getInstance()->authUser();
                 </div>
                 <div class="input-container">
                     <label>Delete Account</label>
-                    <button id="delete" onclick="deleteUser(<?php $user->user_id ?>)">Delete Account</button>
+                    <button id="delete" onclick="deleteUser(<?= $currentUser->user_id ?>)">Delete Account</button>
                 </div>
                 <input id="submit" type="submit" value="Update User">
             </div>
@@ -46,9 +64,11 @@ AuthMiddleware::getInstance()->authUser();
     </form>
 
     <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
-    
+
     <script src="/public/javascript/adios.js"></script>
+    <script src="/public/javascript/popup.js"></script>
     <script src="/public/javascript/user-settings.js"></script>
     <script src="/public/javascript/music-bar.js"></script>
 </body>
+
 </html>

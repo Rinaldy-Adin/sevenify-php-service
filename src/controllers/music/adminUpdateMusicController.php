@@ -4,7 +4,7 @@ namespace controllers\music;
 
 require_once ROOT_DIR . 'services/musicService.php';
 require_once ROOT_DIR . 'common/response.php';
-require_once ROOT_DIR . 'services/UnsupportedMediaTypeException.php';
+require_once ROOT_DIR . 'exceptions/UnsupportedMediaTypeException.php';
 
 use common\Response;
 use exceptions\UnsupportedMediaTypeException;

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace router;
 
 require_once ROOT_DIR . 'rest/apiroutes.php';
+require_once ROOT_DIR . 'middlewares/authMiddleware.php';
+require_once ROOT_DIR . 'exceptions/NotFoundException.php';
 
 use exceptions\NotFoundException;
 use middlewares\AuthMiddleware;
@@ -47,7 +49,7 @@ class APIRouter
             $route = explode('/', $route);
             array_pop($route);
             $route = implode('/', $route) . '/*';
-            $controller = $this->routes[$route][$method] ?? null;
+            [$controller, $access] = $this->routes[$route][$method] ?? null;
         }
 
         if (!$controller) {

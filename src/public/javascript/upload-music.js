@@ -13,6 +13,12 @@ async function uploadMusic(event) {
     }
 
     try {
+        await confirmCancelPopup('Upload Music', "Are you sure you want to upload?");
+    } catch (error) {
+        return;
+    }
+
+    try {
         const resp = await adios.postFormData('/api/music', event.target);
         const data = JSON.parse(resp);
         window.location.href = '/';
