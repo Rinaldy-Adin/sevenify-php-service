@@ -51,12 +51,13 @@ class APIRouter
             $route = implode('/', $route) . '/*';
             [$controller, $access] = $this->routes[$route][$method] ?? null;
         }
-
+        
         if (!$controller) {
+            error_log('controller not found');
             http_response_code(404);
             throw new NotFoundException($URL);
         }
-
+    
         if (class_exists($controller)) {
             $controller = new $controller;
 
@@ -73,6 +74,7 @@ class APIRouter
             }
         }
 
+        error_log('method doesnt exist');
         http_response_code(404);
         throw new NotFoundException($URL);
     }

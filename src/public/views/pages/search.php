@@ -93,7 +93,7 @@ $currentUser = UserService::getInstance()->getByUserId($user_id);
     <script src="public/javascript/adios.js"></script>
     <script src="public/javascript/music-bar.js"></script>
     <script src="public/javascript/search.js"></script>
-    <script>userId = <?= $currentUser->user_id ?></script>
+    <script>currentUserId = <?= $currentUser->user_id ?></script>
 </body>
 
 </html>

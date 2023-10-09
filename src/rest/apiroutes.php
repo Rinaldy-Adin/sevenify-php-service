@@ -44,6 +44,8 @@ require_once ROOT_DIR . 'controllers/playlist/adminGetPlaylistMusicController.ph
 require_once ROOT_DIR . 'controllers/playlist/adminUpdatePlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/getPlaylistCoverController.php';
 require_once ROOT_DIR . 'controllers/playlist/searchPlaylistMusicController.php';
+require_once ROOT_DIR . 'controllers/playlist/addMusicToPlaylist.php';
+require_once ROOT_DIR . 'controllers/album/addMusicToAlbum.php';
 
 use controllers\album\AddMusicToAlbum;
 use controllers\album\AdminCreateAlbumController;

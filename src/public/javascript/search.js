@@ -6,7 +6,7 @@ let currentGenre = document.getElementById('filter-by-genre-dropdown').value;
 let currentUploadPeriod = document.getElementById('filter-by-date-dropdown').value;
 let currentSort = '';
 let pageCount = 0;
-let suerId = 0;
+let currentUserId = 0;
 
 
 async function searchMusic(searchValue) {
@@ -107,7 +107,7 @@ async function updateMusicList(adios, searchResults) {
     document.getElementById('search-page-results').innerHTML = elements.join(divider);
 }
 
-async function addMusicPopup(userId, musicId) {
+async function addMusicPopup(musicId) {
     const adios = new Adios();
 
     const content = `
@@ -119,7 +119,7 @@ async function addMusicPopup(userId, musicId) {
 
             <select name="collection-id" id="collection-id"></select>
 
-            <button onclick="addMusic()">Add Music</button>
+            <button onclick="addMusic(${musicId})">Add Music</button>
         </div>
     `
 
@@ -127,7 +127,7 @@ async function addMusicPopup(userId, musicId) {
 
     let albums = [];
     try {
-        const resp = await adios.get('/api/search-album-user', {"userId": userId, "page": 1});
+        const resp = await adios.get('/api/search-album-user', {"userId": currentUserId, "page": 1});
         const data = JSON.parse(resp).data;
         albums = data.result.map(({album_id, album_name}) => ({id: album_id, name: album_name}));
     } catch (error) {
@@ -141,7 +141,7 @@ async function addMusicPopup(userId, musicId) {
 
     let playlists = [];
     try {
-        const resp = await adios.get('/api/search-playlist-user', {"userId": userId, "page": 1});
+        const resp = await adios.get('/api/search-playlist-user', {"userId": currentUserId, "page": 1});
         const data = JSON.parse(resp).data;
         playlists = data.result.map(({playlist_id, playlist_name}) => ({id: playlist_id, name: playlist_name}));
     } catch (error) {
@@ -165,6 +165,7 @@ async function addMusicPopup(userId, musicId) {
 }
 
 async function addMusic(musicId) {
+    const adios = new Adios();
     try {
         const collectionType = document.getElementById('collection-type').value;
         const collectionId = document.getElementById('collection-id').value;
