@@ -223,3 +223,8 @@ body {
 .pagination-active {
     background-color: #E69332;
 }
+
+.search-action {
+    display: flex;
+    gap: 10px;
+}

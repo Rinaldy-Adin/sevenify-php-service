@@ -41,7 +41,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
 <body>
     <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
 
-    <form onsubmit="uploadUser(event, <?php $currentUser->user_id ?>)">
+    <form onsubmit="uploadUser(event, <?= $currentUser->user_id ?>)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Update User</h1>
             <div></div>
@@ -50,7 +50,7 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
         <div class="form-container">
             <div class="details-container">
                 <div class="input-container">
-                    <label>Username (Current: <?php $currentUser->user_name ?>)</label>
+                    <label>Username (Current: <?= $currentUser->user_name ?>)</label>
                     <input name="username" type="text" placeholder="Enter your username here">
                 </div>
                 <div class="input-container">
@@ -58,8 +58,8 @@ if (!is_numeric($pathEntries[count($pathEntries) - 1])) {
                     <input name="password" type="password" placeholder="Enter your password here">
                 </div>
                 <div class="input-container">
-                    <label>User is admin <input name="is-admin" type="checkbox" <?php $currentUser->role == "admin" ? "checked" : ''?>></label>
-                    (Current role: <?php $currentUser->role ?>)
+                    <label>User is admin <input name="is-admin" type="checkbox" <?= $currentUser->role == "admin" ? "checked" : ''?>></label>
+                    (Current role: <?= $currentUser->role ?>)
                 </div>
                 <input id="submit" type="submit" value="Update User">
             </div>

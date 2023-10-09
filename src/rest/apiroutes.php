@@ -44,8 +44,10 @@ require_once ROOT_DIR . 'controllers/playlist/adminGetPlaylistMusicController.ph
 require_once ROOT_DIR . 'controllers/playlist/adminUpdatePlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/getPlaylistCoverController.php';
 require_once ROOT_DIR . 'controllers/playlist/searchPlaylistMusicController.php';
+require_once ROOT_DIR . 'controllers/playlist/addMusicToPlaylist.php';
+require_once ROOT_DIR . 'controllers/album/addMusicToAlbum.php';
 
-
+use controllers\album\AddMusicToAlbum;
 use controllers\album\AdminCreateAlbumController;
 use controllers\album\AdminDeleteAlbumController;
 use controllers\album\AdminGetAlbumController;
@@ -73,6 +75,7 @@ use controllers\music\GetUserController;
 use controllers\music\SearchMusicController;
 use controllers\music\FindUserMusicController;
 use controllers\music\FindUserPlaylistController;
+use controllers\playlist\AddMusicToPlaylist;
 use controllers\playlist\AdminCreatePlaylistController;
 use controllers\playlist\AdminDeletePlaylistController;
 use controllers\playlist\AdminGetPlaylistController;
@@ -117,6 +120,8 @@ class APIRoutes
         ['/api/update-music/*', 'post', UpdateMusicController::class],
         ['/api/update-album/*', 'post', UpdateAlbumController::class],
         ['/api/update-playlist/*', 'post', UpdatePlaylistController::class],
+        ['/api/playlist/add-music/*', 'post', AddMusicToPlaylist::class],
+        ['/api/album/add-music/*', 'post', AddMusicToAlbum::class],
         ['/api/search-playlist-user', 'get', FindUserPlaylistController::class],
         ['/api/admin/music', 'get', AdminGetMusicController::class, 'admin'],
         ['/api/admin/music', 'post', AdminCreateMusicController::class, 'admin'],

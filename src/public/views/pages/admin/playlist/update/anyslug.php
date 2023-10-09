@@ -54,7 +54,7 @@ foreach ($users as $user) {
 <body>
     <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
 
-    <form onsubmit="uploadPlaylist(event,  <?php $playlist_id ?>)">
+    <form onsubmit="uploadPlaylist(event,  <?= $playlist_id ?>)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Update Album</h1>
             <div></div>
@@ -72,11 +72,11 @@ foreach ($users as $user) {
             </div>
             <div class="details-container">
                 <div class="input-container">
-                    <label>Title (current: <?php $playlist->playlist_name ?>)</label>
-                    <input required name="title" type="text" placeholder="Enter your title here" value="<?php $playlist->playlist_name ?>">
+                    <label>Title (current: <?= $playlist->playlist_name ?>)</label>
+                    <input required name="title" type="text" placeholder="Enter your title here" value="<?= $playlist->playlist_name ?>">
                 </div>
                 <div class="input-container">
-                    <label>User (current: <?php $playlistOwnerName ?>)</label>
+                    <label>User (current: <?= $playlistOwnerName ?>)</label>
                     <select required name="user-id">
                         <?php
                         echo implode(" ", $options);
@@ -105,7 +105,7 @@ foreach ($users as $user) {
     <script src="/public/javascript/adios.js"></script>
     <script src="/public/javascript/admin/playlist/update.js"></script>
     <script>
-        initUpdatePage(<?php $playlist_id ?>)
+        initUpdatePage(<?= $playlist_id ?>)
     </script>
 </body>
 

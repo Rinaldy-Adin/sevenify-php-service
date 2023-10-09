@@ -36,37 +36,43 @@ $coverPath = $albumService->getCoverPathByAlbumId($album_id);
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
     <link rel="stylesheet" href="/public/styles/music-bar.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
     <link rel="stylesheet" href="/public/styles/album-music-list.css">
     <title>Sevenify : Album</title>
 </head>
 
 <body>
     <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
 
-    <section id="album-music">
-        <div class="album-cover">
-            <img src="/api/album-cover/<?php echo $album_id; ?>" alt="Playlist Cover">
-        </div>
-        <div class="album-name">
-            <?php $album[0]->album_name ?>
-        </div>    
-        <div class="album-owner">
-            <?php $album[0]->album_owner_name ?>
-        </div>
-        <a href="/album/update-album/<?php echo $album_id; ?>" class="update-album-link">Update Album</a>
-    </section>
+    <div class="container">
+        <section id="album-music">
+            <div class="album-cover">
+                <img src="/api/album-cover/<?php echo $album_id; ?>" alt="Playlist Cover">
+            </div>
+            <div class="album-name">
+                <?= $album[0]->album_name ?>
+            </div>
+            <div class="album-owner">
+                <?= $album[0]->album_owner_name ?>
+            </div>
+            <a href="/album/update-album/<?php echo $album_id; ?>" class="update-album-link">Update Album</a>
+        </section>
 
-    <section id="album-music-list">
-        <h2>Album's Music</h2>
-        <div id="album-music-item"></div>
-        <div id="pagination-album-music"></div>
-    </section>
+        <section id="album-music-list">
+            <h2>Album's Music</h2>
+            <div id="album-music-item"></div>
+            <div id="pagination-album-music"></div>
+        </section>
+    </div>
 
-    <script src="../../../public/javascript/adios.js"></script>
-    <script src="../../../public/javascript/music-bar.js"></script>
-    <script src="../../../public/javascript/album-music-list.js"></script>
+    <script src="/public/javascript/adios.js"></script>
+    <script src="/public/javascript/music-bar.js"></script>
+    <script src="/public/javascript/album-music-list.js"></script>
 
-    <script>displayAlbumMusic(<?php echo $album_id; ?>);</script>
+    <script>
+        displayAlbumMusic(<?php echo $album_id; ?>);
+    </script>
 
 </body>
 

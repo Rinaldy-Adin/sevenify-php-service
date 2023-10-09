@@ -74,4 +74,7 @@ class PlaylistService
     function getByPlaylistIdName(int $albumId) : array {
         return $this->playlistRepo->getByPlaylistIdName($albumId);
     }
+    function addMusicToPlaylist(int $playlist_id, int $music_id) {
+        $this->playlistRepo->addMusicToPlaylist($playlist_id, $music_id);
+    }
 }

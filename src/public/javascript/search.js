@@ -6,6 +6,7 @@ let currentGenre = document.getElementById('filter-by-genre-dropdown').value;
 let currentUploadPeriod = document.getElementById('filter-by-date-dropdown').value;
 let currentSort = '';
 let pageCount = 0;
+let currentUserId = 0;
 
 
 async function searchMusic(searchValue) {
@@ -93,7 +94,10 @@ async function updateMusicList(adios, searchResults) {
                             </div>
                         </div>
                     </div>
-                    <img onclick="playMusic('${music_id}')" class="play-button clickable" src="/public/assets/media/PlayButton.png">
+                    <div class="search-action">
+                        <img onclick="addMusicPopup('${music_id}')" class="clickable" src="/public/assets/icons/add.svg">
+                        <img onclick="playMusic('${music_id}')" class="play-button clickable" src="/public/assets/media/PlayButton.png">
+                    </div>
                 </div>
 `
     }));
@@ -101,6 +105,83 @@ async function updateMusicList(adios, searchResults) {
     const divider = '<div class="result-item-divider"></div>';
 
     document.getElementById('search-page-results').innerHTML = elements.join(divider);
+}
+
+async function addMusicPopup(musicId) {
+    const adios = new Adios();
+
+    const content = `
+        <div class="popup-content-container">
+            <select id="collection-type" name="type">
+                <option value="playlist">Playlist</option>
+                <option value="album">Album</option>
+            </select>
+
+            <select name="collection-id" id="collection-id"></select>
+
+            <button onclick="addMusic(${musicId})">Add Music</button>
+        </div>
+    `
+
+    titledPopup('Add Music', content);
+
+    let albums = [];
+    try {
+        const resp = await adios.get('/api/search-album-user', {"userId": currentUserId, "page": 1});
+        const data = JSON.parse(resp).data;
+        albums = data.result.map(({album_id, album_name}) => ({id: album_id, name: album_name}));
+    } catch (error) {
+        if (error.response) {
+            const data = JSON.parse(error.response);
+            alert(data.message);
+        } else {
+            console.log(error);
+        }
+    }
+
+    let playlists = [];
+    try {
+        const resp = await adios.get('/api/search-playlist-user', {"userId": currentUserId, "page": 1});
+        const data = JSON.parse(resp).data;
+        playlists = data.result.map(({playlist_id, playlist_name}) => ({id: playlist_id, name: playlist_name}));
+    } catch (error) {
+        if (error.response) {
+            const data = JSON.parse(error.response);
+            alert(data.message);
+        } else {
+            console.log(error);
+        }
+    }
+
+    const collectionTypeElement = document.getElementById('collection-type');
+    const collectionItemsElement = document.getElementById('collection-id');
+
+    collectionTypeElement.addEventListener('change', (e) => {
+        const value = e.target.value;
+        const collection = (value == 'album' ? albums : playlists);
+        let elements = collection.map(({id, name}) => `<option value="${id}">${name}</option>`);
+        collectionItemsElement.innerHTML = elements.join(' ');
+    })
+}
+
+async function addMusic(musicId) {
+    const adios = new Adios();
+    try {
+        const collectionType = document.getElementById('collection-type').value;
+        const collectionId = document.getElementById('collection-id').value;
+        const popupElement = document.getElementById('popup-overlay');
+
+        const resp = await adios.post(`/api/${collectionType}/add-music/${collectionId}`, `music_id=${musicId}`);
+        console.log(JSON.parse(resp));
+        document.body.removeChild(popupElement);
+    } catch (error) {
+        if (error.response) {
+            const data = JSON.parse(error.response);
+            alert(data.message);
+        } else {
+            console.log(error);
+        }
+    }
 }
 
 function updatePagination(pageCount) {

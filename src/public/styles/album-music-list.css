@@ -1,9 +1,22 @@
 body {
-    width: 1500px;
+    width: 100%;
     min-height: 100vh;
+    display: flex;
+    align-items: start;
+}
+
+.container {
+    margin-top: 64px;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 24px;
+    flex: 1;
+}
+
+.container > section {
+    max-width: 1000px;
 }
 
 #album-music {

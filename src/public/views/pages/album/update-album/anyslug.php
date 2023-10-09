@@ -49,7 +49,7 @@ foreach ($users as $user) {
 </head>
 
 <body>
-    <form onsubmit="uploadAlbum(event,  <?php $album_id ?>)">
+    <form onsubmit="uploadAlbum(event,  <?= $album_id ?>)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Update Album</h1>
             <div></div>
@@ -67,11 +67,11 @@ foreach ($users as $user) {
             </div>
             <div class="details-container">
                 <div class="input-container">
-                    <label>Title (current: <?php $album->album_name ?>)</label>
-                    <input required name="title" type="text" placeholder="Enter your title here" value="<?php $album->album_name ?>">
+                    <label>Title (current: <?= $album->album_name ?>)</label>
+                    <input required name="title" type="text" placeholder="Enter your title here" value="<?= $album->album_name ?>">
                 </div>
                 <div class="input-container">
-                    <label>User (current: <?php $albumOwnerName ?>)</label>
+                    <label>User (current: <?= $albumOwnerName ?>)</label>
                     <select required name="user-id">
                         <?php
                         echo implode(" ", $options);
@@ -100,7 +100,7 @@ foreach ($users as $user) {
     <script src="/public/javascript/adios.js"></script>
     <script src="/public/javascript/update-album.js"></script>
     <script>
-        initUpdatePage(<?php $album_id ?>)
+        initUpdatePage(<?= $album_id ?>)
     </script>
 </body>
 
