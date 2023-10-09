@@ -1,7 +1,14 @@
 <?php
 require_once ROOT_DIR . 'middlewares/authMiddleware.php';
+
 use middlewares\AuthMiddleware;
+use services\UserService;
+
 AuthMiddleware::getInstance()->authUser();
+
+$user_id = $_SESSION['user_id'];
+
+$currentUser = UserService::getInstance()->getByUserId($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +24,7 @@ AuthMiddleware::getInstance()->authUser();
 
 <body>
     <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
-    
+
     <div class="container">
         <div class="search-container hard-shadow">
             <h1>Search</h1>
@@ -86,6 +93,7 @@ AuthMiddleware::getInstance()->authUser();
     <script src="public/javascript/adios.js"></script>
     <script src="public/javascript/music-bar.js"></script>
     <script src="public/javascript/search.js"></script>
+    <script>userId = <?= $currentUser->user_id ?></script>
 </body>
 
 </html>

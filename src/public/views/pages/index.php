@@ -25,7 +25,9 @@ $playlistRepository = PlaylistRepository::getInstance();
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
+    <link rel="stylesheet" href="/public/styles/homepage.css">
     <link rel="stylesheet" href="/public/styles/music-bar.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
     <link rel="stylesheet" href="/public/styles/music-list.css">
     <link rel="stylesheet" href="public/styles/album-list.css">
     <link rel="stylesheet" href="public/styles/playlist-list.css">
@@ -33,19 +35,22 @@ $playlistRepository = PlaylistRepository::getInstance();
 </head>
 
 <body>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
     <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
 
-    <section id="section-music">
-        <?php require ROOT_DIR . '/public/views/components/musicList.php'; ?>
-    </section>
-
-    <section id="section-album">
-        <?php require ROOT_DIR . '/public/views/components/albumList.php'; ?>
-    </section>
-
-    <section id="section-playlist">
-        <?php require ROOT_DIR . '/public/views/components/playlistList.php'; ?>
-    </section>
+    <div class="container">
+        <section id="section-music">
+            <?php require ROOT_DIR . '/public/views/components/musicList.php'; ?>
+        </section>
+        
+        <section id="section-album">
+            <?php require ROOT_DIR . '/public/views/components/albumList.php'; ?>
+        </section>
+        
+        <section id="section-playlist">
+            <?php require ROOT_DIR . '/public/views/components/playlistList.php'; ?>
+        </section>
+    </div>
 
     <script src="public/javascript/adios.js"></script>
     <script src="public/javascript/music-bar.js"></script>
