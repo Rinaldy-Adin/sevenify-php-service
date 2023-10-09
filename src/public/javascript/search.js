@@ -127,7 +127,7 @@ async function addMusicPopup(userId, musicId) {
 
     let albums = [];
     try {
-        const resp = await adios.get('/api/search-album-user' + {"userId": userId});
+        const resp = await adios.get('/api/search-album-user', {"userId": userId, "page": 1});
         const data = JSON.parse(resp).data;
         albums = data.result.map(({album_id, album_name}) => ({id: album_id, name: album_name}));
     } catch (error) {
@@ -141,7 +141,7 @@ async function addMusicPopup(userId, musicId) {
 
     let playlists = [];
     try {
-        const resp = await adios.get('/api/search-playlist-user' + {"userId": userId});
+        const resp = await adios.get('/api/search-playlist-user', {"userId": userId, "page": 1});
         const data = JSON.parse(resp).data;
         playlists = data.result.map(({playlist_id, playlist_name}) => ({id: playlist_id, name: playlist_name}));
     } catch (error) {
@@ -164,16 +164,15 @@ async function addMusicPopup(userId, musicId) {
     })
 }
 
-async function addMusic() {
+async function addMusic(musicId) {
     try {
-        let resp;
-
         const collectionType = document.getElementById('collection-type').value;
         const collectionId = document.getElementById('collection-id').value;
+        const popupElement = document.getElementById('popup-overlay');
 
-        resp = await adios.post('/api/update-music/' + musicId, event.target);
+        const resp = await adios.post(`/api/${collectionType}/add-music/${collectionId}`, `music_id=${musicId}`);
         console.log(JSON.parse(resp));
-        window.location.href = '/';
+        document.body.removeChild(popupElement);
     } catch (error) {
         if (error.response) {
             const data = JSON.parse(error.response);

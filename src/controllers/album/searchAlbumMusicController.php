@@ -19,11 +19,12 @@ class SearchAlbumMusicController
         $albumId = isset($_GET['albumId']) ? urldecode($_GET['albumId']) : -1;
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        if (is_int($page))
+        $page = (int)$page;
+        if (!is_int($page))
             throw new BadRequestException("Page requested not an integer");
 
         [$musicDTOs, $pageCount] = (MusicService::getInstance())->getByAlbumId($albumId, $page);
-        $searchResult = array_map(fn(MusicWithArtistNameDTO $dto) => $dto->toDTOArray(), $musicDTOs);
+        $searchResult = array_map(fn (MusicWithArtistNameDTO $dto) => $dto->toDTOArray(), $musicDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }
 }

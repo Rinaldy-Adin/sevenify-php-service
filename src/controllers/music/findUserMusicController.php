@@ -19,11 +19,12 @@ class FindUserMusicController
         $userId = isset($_GET['userId']) ? urldecode($_GET['userId']) : $_SESSION["user_id"];
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        if (is_int($page))
+        $page = (int)$page;
+        if (!is_int($page))
             throw new BadRequestException("Page requested not an integer");
 
         [$musicDTOs, $pageCount] = MusicService::getInstance()->getByUserID($userId, $page);
-        $searchResult = array_map(fn(MusicWithArtistNameDTO $dto) => $dto->toDTOArray(), $musicDTOs);
+        $searchResult = array_map(fn (MusicWithArtistNameDTO $dto) => $dto->toDTOArray(), $musicDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }
 }

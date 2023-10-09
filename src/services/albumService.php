@@ -83,4 +83,8 @@ class AlbumService
     {
         return $this->albumRepo->getByAlbumIdName($albumId);
     }
+
+    function addMusicToAlbum(int $album_id, int $music_id) {
+        $this->albumRepo->addMusicToAlbum($album_id, $music_id);
+    }
 }

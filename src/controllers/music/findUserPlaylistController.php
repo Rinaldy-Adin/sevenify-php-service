@@ -19,11 +19,12 @@ class FindUserPlaylistController
         $userId = isset($_GET['userId']) ? urldecode($_GET['userId']) :  $_SESSION["user_id"];
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        if (is_int($page))
+        $page = (int)$page;
+        if (!is_int($page))
             throw new BadRequestException("Page requested not an integer");
 
         [$playlistDTOs, $pageCount] = PlaylistService::getInstance()->getByUserID($userId, $page);
-        $searchResult = array_map(fn(PlaylistWithArtistNameDTO $dto) => $dto->toDTOArray(), $playlistDTOs);
+        $searchResult = array_map(fn (PlaylistWithArtistNameDTO $dto) => $dto->toDTOArray(), $playlistDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }
 }

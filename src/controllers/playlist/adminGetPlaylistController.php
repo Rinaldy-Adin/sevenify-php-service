@@ -18,7 +18,8 @@ class AdminGetPlaylistController
     {
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        if (is_int($page))
+        $page = (int)$page;
+if (!is_int($page))
             throw new BadRequestException("Page requested not an integer");
 
         [$playlistDTOs, $pageCount] = PlaylistService::getInstance()->getAllPlaylists($page);

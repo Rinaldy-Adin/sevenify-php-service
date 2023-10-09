@@ -18,11 +18,12 @@ class AdminGetAlbumController
     {
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
-        if (is_int($page))
+        $page = (int)$page;
+        if (!is_int($page))
             throw new BadRequestException("Page requested not an integer");
 
         [$albumDTOs, $pageCount] = AlbumService::getInstance()->getAllAlbums($page);
-        $searchResult = array_map(fn(AlbumModel $model) => $model->toDTO(), $albumDTOs);
+        $searchResult = array_map(fn (AlbumModel $model) => $model->toDTO(), $albumDTOs);
         return (new Response(['result' => $searchResult, 'page-count' => $pageCount]))->httpResponse();
     }
 }

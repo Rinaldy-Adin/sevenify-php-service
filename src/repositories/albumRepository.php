@@ -319,4 +319,20 @@ class AlbumRepository extends Repository
             throw new AppException();
         }
     }
+
+    function addMusicToAlbum(int $album_id, int $music_id) {
+        $query = "INSERT INTO album_music (album_id, music_id)
+              VALUES (:album_id, :music_id)";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":album_id", $album_id);
+        $stmt->bindParam(":music_id", $music_id);
+
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Album music creation error: " . $e->getMessage());
+            throw new AppException();
+        }
+    }
 }
