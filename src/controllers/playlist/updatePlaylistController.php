@@ -25,7 +25,7 @@ class UpdatePlaylistController
             $coverFile = null;
         }
 
-        $musicModel = UserService::getInstance()->updatePlaylist($playlist_id, $title, $user_id, $deleteCover, $coverFile, $music_ids);
+        $musicModel = PlaylistService::getInstance()->updatePlaylist($playlist_id, $title, $user_id, $deleteCover, $coverFile, $music_ids);
         if ($musicModel !== null) {
             return (new Response($musicModel->toDTO()))->httpResponse();
         } else {
