@@ -4,6 +4,7 @@ namespace rest;
 
 require_once ROOT_DIR . 'controllers/auth/loginController.php';
 require_once ROOT_DIR . 'controllers/auth/registerController.php';
+require_once ROOT_DIR . 'controllers/auth/logoutController.php';
 require_once ROOT_DIR . 'controllers/music/createMusicController.php';
 require_once ROOT_DIR . 'controllers/music/getMusicController.php';
 require_once ROOT_DIR . 'controllers/music/getAudioController.php';
@@ -23,6 +24,7 @@ require_once ROOT_DIR . 'controllers/user/adminCreateUserController.php';
 require_once ROOT_DIR . 'controllers/user/adminDeleteUserController.php';
 require_once ROOT_DIR . 'controllers/user/adminUpdateUserController.php';
 require_once ROOT_DIR . 'controllers/user/updateUserController.php';
+require_once ROOT_DIR . 'controllers/user/deleteUserController.php';
 require_once ROOT_DIR . 'controllers/album/getAlbumCoverController.php';
 require_once ROOT_DIR . 'controllers/album/createAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/updateAlbumController.php';
@@ -55,6 +57,7 @@ use controllers\album\SearchAlbumMusicController;
 use controllers\album\CreateAlbumController;
 use controllers\album\UpdateAlbumController;
 use controllers\auth\LoginController;
+use controllers\auth\LogoutController;
 use controllers\auth\RegisterController;
 use controllers\music\AdminCreateMusicController;
 use controllers\music\AdminDeleteMusicController;
@@ -83,6 +86,7 @@ use controllers\user\AdminGetUserController;
 use controllers\user\AdminCreateUserController;
 use controllers\user\AdminDeleteUserController;
 use controllers\user\AdminUpdateUserController;
+use controllers\user\DeleteUserController;
 use controllers\user\UpdateUserController;
 
 // TODO: move this to /router
@@ -92,6 +96,7 @@ class APIRoutes
     public static array $apiroutes = [
         ['/api/login', 'post', LoginController::class, 'unauthenticated'],
         ['/api/register', 'post', RegisterController::class, 'unauthenticated'],
+        ['/api/logout', 'get', LogoutController::class],
         ['/api/music', 'post', CreateMusicController::class],
         ['/api/music/*', 'get', GetMusicController::class],
         ['/api/audio/*', 'get', GetAudioController::class],
@@ -99,6 +104,7 @@ class APIRoutes
         ['/api/album-cover/*', 'get', GetAlbumCoverController::class],
         ['/api/playlist-cover/*', 'get', GetPlaylistCoverController::class],
         ['/api/user', 'post', UpdateUserController::class],
+        ['/api/user', 'delete', DeleteUserController::class],
         ['/api/user/*', 'get', GetUserController::class],
         ['/api/search', 'get', SearchMusicController::class],
         ['/api/genres', 'get', GetGenresController::class],

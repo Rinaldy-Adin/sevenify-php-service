@@ -56,7 +56,7 @@ if ($currentUser == null) {
                 </div>
                 <div class="input-container">
                     <label>Delete Account</label>
-                    <button id="delete" onclick="deleteUser(<?= $currentUser->user_id ?>)">Delete Account</button>
+                    <div id="delete" onclick="deleteUser()">Delete Account</div>
                 </div>
                 <input id="submit" type="submit" value="Update User">
             </div>
@@ -66,7 +66,6 @@ if ($currentUser == null) {
     <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
 
     <script src="/public/javascript/adios.js"></script>
-    <script src="/public/javascript/popup.js"></script>
     <script src="/public/javascript/user-settings.js"></script>
     <script src="/public/javascript/music-bar.js"></script>
 </body>
