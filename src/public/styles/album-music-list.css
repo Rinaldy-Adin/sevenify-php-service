@@ -157,3 +157,10 @@ body {
 .pagination-album-music-active {
     background-color: #E69332;
 }
+
+.list-empty-msg {
+    font-size: 28px;
+    font-weight: 600;
+    color: #707070;
+    text-align: center;
+}

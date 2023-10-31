@@ -3,6 +3,17 @@ let currentPlaylistMusicSearch = '';
 let pagePMCount = 0;
 
 async function displayPlaylistMusic(playlistId) {
+    const adios = new Adios();
+    const playlistCoverImg = document.getElementById('playlist-cover-img');
+    
+    try {
+        const responseCover = await adios.get(`/api/playlist-cover/${playlistId}`, {}, true);
+        playlistCoverImg.src = URL.createObjectURL(responseCover);
+    } catch (error) {
+        playlistCoverImg.src = "/public/assets/placeholders/playlist-placeholder.png";
+        console.log('working');
+    }
+
     updateResult(playlistId, 1);
 }
 
@@ -73,7 +84,7 @@ async function updateMusicList(adios, searchResults) {
     }));
     const divider = '<div class="playlist-result-item-divider"></div>';
 
-    document.getElementById('playlist-music-list').innerHTML = elmt.join(divider);
+    document.getElementById('playlist-music-item').innerHTML = elmt.length > 0 ? elmt.join(divider) : '<h3 class="list-empty-msg">You have no music in your playlist</h3>';
 }
 
 function updatePagination(pagePMCount) {
