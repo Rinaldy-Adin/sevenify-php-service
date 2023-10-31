@@ -49,7 +49,7 @@ async function updateMusicList(adios, searchResults) {
             cover = "/public/assets/placeholders/music-placeholder.jpg";
         }
 
-        music_upload_date - new Date(music_upload_date).toLocaleDateString(undefined, {
+        music_upload_date = new Date(music_upload_date).toLocaleDateString(undefined, {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
@@ -103,5 +103,5 @@ function updatePagination(pageCount) {
     }
     elmt.push('<img onclick="changePage(pageCount)" src="/public/assets/icons/double-right.svg" id="pagination-last" class="clickable">');
 
-    document.getElementById('pagination').innerHTML = elmt.join(' ');
+    document.getElementById('pagination-music').innerHTML = elmt.join(' ');
 }

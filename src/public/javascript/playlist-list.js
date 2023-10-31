@@ -64,7 +64,7 @@ async function updatePlaylistList(adios, searchResults) {
             </div>
         `;
     }));
-    const divider = '<div class="result-item-divider-playlist"></div>';
+    const divider = '';
 
     document.getElementById('playlist-slider').innerHTML = elmt.join(divider);
 }

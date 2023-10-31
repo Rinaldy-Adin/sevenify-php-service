@@ -31,6 +31,7 @@ $playlistRepository = PlaylistRepository::getInstance();
     <link rel="stylesheet" href="/public/styles/music-list.css">
     <link rel="stylesheet" href="public/styles/album-list.css">
     <link rel="stylesheet" href="public/styles/playlist-list.css">
+    <link rel="stylesheet" href="public/styles/premium-users-list.css">
     <title>Sevenify</title>
 </head>
 
@@ -39,17 +40,82 @@ $playlistRepository = PlaylistRepository::getInstance();
     <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
 
     <div class="container">
-        <section id="section-music">
-            <?php require ROOT_DIR . '/public/views/components/musicList.php'; ?>
-        </section>
+        <div class="main-content">
+            <section id="section-music">
+                <h2>Your Musics</h2>
+                <div id="music-list"></div>
+                <div id="pagination-music"></div>
+
+                <script src="/public/javascript/music-list.js"></script>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        displayMusic(<?php echo $_SESSION["user_id"]; ?>);
+                    });
+                </script>
+            </section>
+
+            <section id="section-album">
+                <h2>Your Album</h2>
+                <a href="/create-album" class="create-album-link">Create Album</a>
+                <div id="album-slider"></div>
+                <div id="pagination-album"></div>
+
+                <script src="/public/javascript/album-list.js"></script>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        displayAlbums(<?php echo $_SESSION["user_id"]; ?>);
+                    });
+                </script>
+            </section>
+            
+            <section id="section-playlist">
+                <h2>Your Playlist</h2>
+                <a href="/create-playlist" class="create-playlist-link">Create Playlist</a>
+                <div class="playlist-slider" id="playlist-slider"></div>
+                <div id="pagination-playlist"></div>
+    
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        displayPlaylists(<?php echo $_SESSION["user_id"]; ?>);
+                    });
+                </script>
+            </section>
+        </div>
         
-        <section id="section-album">
-            <?php require ROOT_DIR . '/public/views/components/albumList.php'; ?>
-        </section>
-        
-        <section id="section-playlist">
-            <?php require ROOT_DIR . '/public/views/components/playlistList.php'; ?>
-        </section>
+        <div class="side-content">
+            <section id="section-premium-users">
+                <h2>Premium Users</h2>
+                <div class="premium-users" id="premium-users">
+                    <div class="premium-users-item">
+                        <div class="premium-users-detail">
+                            <div class="premium-users-img"></div>
+                            <div class="premium-users-name">Artist name</div>
+                        </div>
+                        <a class="see-artist-button" href="#">
+                            See Artist
+                        </a>
+                    </div>
+
+                    <div class="premium-users-item">
+                        <div class="premium-users-detail">
+                            <div class="premium-users-img"></div>
+                            <div class="premium-users-name">Artist name</div>
+                        </div>
+                        <a class="see-artist-button" href="#">
+                            See Artist
+                        </a>
+                    </div>
+                </div>
+    
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        displayPlaylists(<?php echo $_SESSION["user_id"]; ?>);
+                    });
+                </script>
+            </section>
+        </div>
     </div>
 
     <script src="public/javascript/adios.js"></script>
