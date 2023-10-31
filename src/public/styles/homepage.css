@@ -12,7 +12,7 @@ body {
 }
 
 .main-content {
-    margin-top: 64px;
+    padding-top: 64px;
     width: 700px;
     display: flex;
     flex-direction: column;
@@ -21,6 +21,7 @@ body {
 }
 
 .side-content {
+    padding: 64px 10px 0 10px;
     flex: 1;
 }
 
