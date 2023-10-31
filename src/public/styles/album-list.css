@@ -16,7 +16,7 @@
 #album-slider {
     display: flex;
     overflow-x: auto;
-    gap: 24px;
+    gap: 16px;
     align-items: flex-start;
     white-space: nowrap;
     padding-bottom: 20px;

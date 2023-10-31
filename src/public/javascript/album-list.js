@@ -68,7 +68,7 @@ async function updateAlbumList(adios, searchResults) {
             </div>
         `
     }));
-    const divider = '<div class="result-item-divider-album"></div>';
+    const divider = '';
 
     document.getElementById('album-slider').innerHTML = elmt.length > 0 ? elmt.join(divider) : '<h3 class="list-empty-msg">You have no albums</h3>';
 

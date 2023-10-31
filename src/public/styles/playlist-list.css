@@ -50,3 +50,23 @@
 .pagination-playlist-active {
     background-color: #E69332;
 }
+
+.playlist-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.playlist-info-text {
+    margin-top: 8px;
+}
+
+.playlist-owner {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.playlist-title {
+    font-size: 16px;
+}
