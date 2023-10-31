@@ -79,7 +79,7 @@ async function updateMusicList(adios, searchResults) {
     }));
     const divider = '<div class="result-item-divider"></div>';
 
-    document.getElementById('music-list').innerHTML = elmt.join(divider);
+    document.getElementById('music-list').innerHTML = elmt.length > 0 ? elmt.join(divider) : '<h3 class="list-empty-msg">You have no music</h3>';
 }
 
 function updatePagination(pageCount) {

@@ -66,7 +66,7 @@ async function updatePlaylistList(adios, searchResults) {
     }));
     const divider = '';
 
-    document.getElementById('playlist-slider').innerHTML = elmt.join(divider);
+    document.getElementById('playlist-slider').innerHTML = elmt.length > 0 ? elmt.join(divider) : '<h3 class="list-empty-msg">You have no playlists</h3>';
 }
 
 async function updatePaginationPlaylist() {

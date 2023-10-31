@@ -27,3 +27,9 @@ body {
 .container > div {
     max-width: 1000px;
 }
+
+.list-empty-msg {
+    font-size: 28px;
+    font-weight: 600;
+    color: #707070;
+}
