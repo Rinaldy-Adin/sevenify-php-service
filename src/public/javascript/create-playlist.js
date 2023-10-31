@@ -6,7 +6,6 @@ async function uploadPlaylist(event) {
     const adios = new Adios();
 
     if (event.target.elements['cover-file'].files[0] && !event.target.elements['cover-file'].files[0].type.startsWith('image/')) {
-        alert("Must upload an image file")
         return;
     }
 

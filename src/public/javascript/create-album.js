@@ -4,7 +4,6 @@ const musicListElement = document.getElementById('dynamic-list');
 async function uploadAlbum(event) {
     event.preventDefault();
     const adios = new Adios();
-    console.log("Masuk album");
 
     if (event.target.elements['cover-file'].files[0] && !event.target.elements['cover-file'].files[0].type.startsWith('image/')) {
         alert("Must upload an image file")
@@ -12,7 +11,6 @@ async function uploadAlbum(event) {
     }
 
     try {
-        console.log("Konfirmasi dulu");
         await confirmCancelPopup('Create Album', "Are you sure you want to create album?");
     } catch (error) {
         console.log(error);
