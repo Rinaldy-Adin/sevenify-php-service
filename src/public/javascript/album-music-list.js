@@ -48,7 +48,7 @@ async function updateMusicList(adios, searchResults) {
             cover = "/public/assets/placeholders/music-placeholder.jpg";
         }
 
-        music_upload_date - new Date(music_upload_date).toLocaleDateString(undefined, {
+        music_upload_date = new Date(music_upload_date).toLocaleDateString(undefined, {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
@@ -73,7 +73,7 @@ async function updateMusicList(adios, searchResults) {
     }));
     const divider = '<div class="album-result-item-divider"></div>';
 
-    document.getElementById('album-music-list').innerHTML = elmt.join(divider);
+    document.getElementById('album-music-item').innerHTML = elmt.join(divider);
 }
 
 function updatePagination(pageAMCount) {
@@ -99,3 +99,16 @@ function updatePagination(pageAMCount) {
 
     document.getElementById('pagination-album-music').innerHTML = elmt.join(' ');
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const adios = new Adios();
+    const albumCoverImg = document.getElementById('album-cover-img');
+    
+    try {
+        const responseCover = await adios.get(`/api/music-cover/${music_id}`, {}, true);
+        albumCoverImg.src = URL.createObjectURL(responseCover);
+    } catch (error) {
+        albumCoverImg.src = "/public/assets/placeholders/music-placeholder.jpg";
+        console.log('working');
+    }
+})

@@ -112,9 +112,6 @@ class MusicService
         if (!$user)
             throw new BadRequestException("User does not exist");
 
-        if ($music->music_owner != $user_id && $user->role != 'admin')
-            throw new ForbiddenException("Music not owned by user");
-
         return $this->musicRepo->updateMusic($musicId, $title, $user_id, $genre, $deleteCover, $coverFile);
     }
 }

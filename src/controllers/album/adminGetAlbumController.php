@@ -12,7 +12,7 @@ use exceptions\BadRequestException;
 use models\AlbumModel;
 use services\AlbumService;
 
-class AdminGetAlbumController
+class GetAlbumController
 {
     function get(): string
     {

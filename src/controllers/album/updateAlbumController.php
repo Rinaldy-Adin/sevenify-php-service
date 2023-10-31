@@ -18,10 +18,11 @@ class UpdateAlbumController
         $album_id = $pathEntries[count($pathEntries) - 1];
 
         $title = $_POST["title"];
-        $user_id = $_POST["user-id"];
+        $user_id = $_SESSION["user_id"];
         $coverFile = $_FILES["cover-file"];
         $deleteCover = isset($_POST["delete-cover"]) ? true : false;
         $music_ids = isset($_POST["music"]) ? array_map(fn ($id) => (int)$id, $_POST["music"]) : [];
+        error_log($user_id);
 
         if ($coverFile['error'] == 4) {
             $coverFile = null;

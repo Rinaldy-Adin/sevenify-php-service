@@ -77,7 +77,7 @@ async function initUpdatePage(albumId) {
         const coverResp = await adios.get('/api/album-cover/' + albumId, {}, true);
         image.src = URL.createObjectURL(coverResp);
 
-        const musicResp = await adios.get('/api/album-music/' + albumId);
+        const musicResp = await adios.get('/api/admin/album-music/' + albumId);
         const data = JSON.parse(musicResp).data;
 
         albumMusic = data.map((music) => ({
