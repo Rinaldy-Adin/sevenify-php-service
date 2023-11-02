@@ -5,6 +5,7 @@ namespace rest;
 require_once ROOT_DIR . 'controllers/auth/loginController.php';
 require_once ROOT_DIR . 'controllers/auth/registerController.php';
 require_once ROOT_DIR . 'controllers/auth/logoutController.php';
+require_once ROOT_DIR . 'controllers/auth/getCurrentUserController.php';
 require_once ROOT_DIR . 'controllers/music/createMusicController.php';
 require_once ROOT_DIR . 'controllers/music/getMusicController.php';
 require_once ROOT_DIR . 'controllers/music/getAudioController.php';
@@ -31,6 +32,7 @@ require_once ROOT_DIR . 'controllers/album/updateAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminCreateAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminDeleteAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminGetAlbumController.php';
+require_once ROOT_DIR . 'controllers/album/getAlbumController.php';
 require_once ROOT_DIR . 'controllers/album/adminGetAlbumMusicController.php';
 require_once ROOT_DIR . 'controllers/album/getAlbumMusicController.php';
 require_once ROOT_DIR . 'controllers/album/adminUpdateAlbumController.php';
@@ -39,6 +41,7 @@ require_once ROOT_DIR . 'controllers/album/searchAlbumMusicController.php';
 require_once ROOT_DIR . 'controllers/playlist/createPlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/updatePlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/getPlaylistMusicController.php';
+require_once ROOT_DIR . 'controllers/playlist/getPlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/adminCreatePlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/adminDeletePlaylistController.php';
 require_once ROOT_DIR . 'controllers/playlist/adminGetPlaylistController.php';
@@ -59,8 +62,10 @@ use controllers\album\GetAlbumCoverController;
 use controllers\album\FindUserAlbumController;
 use controllers\album\SearchAlbumMusicController;
 use controllers\album\CreateAlbumController;
+use controllers\album\GetAlbumController;
 use controllers\album\GetAlbumMusicController;
 use controllers\album\UpdateAlbumController;
+use controllers\auth\GetCurrentUserController;
 use controllers\auth\LoginController;
 use controllers\auth\LogoutController;
 use controllers\auth\RegisterController;
@@ -87,6 +92,7 @@ use controllers\playlist\AdminUpdatePlaylistController;
 use controllers\playlist\GetPlaylistCoverController;
 use controllers\playlist\SearchPlaylistMusicController;
 use controllers\playlist\CreatePlaylistController;
+use controllers\playlist\GetPlaylistController;
 use controllers\playlist\GetPlaylistMusicController;
 use controllers\playlist\UpdatePlaylistController;
 use controllers\user\AdminGetUserController;
@@ -96,13 +102,13 @@ use controllers\user\AdminUpdateUserController;
 use controllers\user\DeleteUserController;
 use controllers\user\UpdateUserController;
 
-// TODO: move this to /router
 
 class APIRoutes
 {
     public static array $apiroutes = [
         ['/api/login', 'post', LoginController::class, 'unauthenticated'],
         ['/api/register', 'post', RegisterController::class, 'unauthenticated'],
+        ['/api/whoami', 'get', GetCurrentUserController::class],
         ['/api/logout', 'get', LogoutController::class],
         ['/api/music', 'post', CreateMusicController::class],
         ['/api/music/*', 'get', GetMusicController::class],
@@ -116,12 +122,14 @@ class APIRoutes
         ['/api/search', 'get', SearchMusicController::class],
         ['/api/genres', 'get', GetGenresController::class],
         ['/api/search-user', 'get', FindUserMusicController::class],
-        ['/api/album-music/*', 'get', GetAlbumMusicController::class, 'admin'],
-        ['/api/playlist-music/*', 'get', GetPlaylistMusicController::class, 'admin'],
+        ['/api/album-music/*', 'get', GetAlbumMusicController::class],
+        ['/api/playlist-music/*', 'get', GetPlaylistMusicController::class],
         ['/api/search-album-user', 'get', FindUserAlbumController::class],
         ['/api/search-album-music', 'get', SearchAlbumMusicController::class],
         ['/api/search-playlist-music', 'get', SearchPlaylistMusicController::class],
+        ['/api/album/*', 'get', GetAlbumController::class],
         ['/api/create-album', 'post', CreateAlbumController::class],
+        ['/api/playlist/*', 'get', GetPlaylistController::class],
         ['/api/create-playlist', 'post', CreatePlaylistController::class],
         ['/api/update-music/*', 'post', UpdateMusicController::class],
         ['/api/update-album/*', 'post', UpdateAlbumController::class],

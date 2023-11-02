@@ -228,3 +228,56 @@ body {
     display: flex;
     gap: 10px;
 }
+
+.popup-content-container {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+}
+
+.popup-content-container select, .popup-content-container input {
+    display: block;
+    padding: 2px 8px;
+    min-width: 100px;
+    border-radius: 4px;
+    min-height: 100%;
+}
+
+.popup-content-container label {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.btn {
+    display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 0;
+    background: #E69332;
+    outline-color: #E69332;
+
+    color: #FFF;
+    text-align: center;
+    font-family: Open Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.2px;
+}
+
+.btn:hover {
+    background-color: #D98B2F;
+    cursor: pointer;
+}
+
+#collection-name {
+    text-align: center;
+    font-size: 16px;
+    color: #707070;
+    font-weight: 600;
+    margin-top: 20px;
+}

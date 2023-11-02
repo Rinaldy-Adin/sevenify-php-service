@@ -55,9 +55,16 @@ async function addListItem() {
     const id = addMusicInput.value.trim();
 
     try {
-        const resp = await adios.get('/api/music/' + id);
-        const data = JSON.parse(resp).data;
-        albumMusic.push({ id: data.music_id, title: data.music_name });
+        const musicResp = await adios.get('/api/music/' + id);
+        const musicData = JSON.parse(musicResp).data;
+
+        const userResp = await adios.get('/api/whoami');
+        const userData = JSON.parse(userResp).data;
+
+        if (parseInt(musicData.music_owner) == parseInt(userData.user_id)){
+            albumMusic.push({ id: musicData.music_id, title: musicData.music_name });
+        }
+
         addMusicInput.value = '';
         updateMusicList();
     } catch (error) {
