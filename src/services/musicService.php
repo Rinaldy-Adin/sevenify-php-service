@@ -5,8 +5,11 @@ namespace services;
 require_once ROOT_DIR . 'models/musicModel.php';
 require_once ROOT_DIR . 'repositories/musicRepository.php';
 require_once ROOT_DIR . 'repositories/userRepository.php';
+require_once ROOT_DIR . 'exceptions/BadRequestException.php';
+require_once ROOT_DIR . 'exceptions/ForbiddenException.php';
 
 use exceptions\BadRequestException;
+use exceptions\ForbiddenException;
 use models\MusicModel;
 use repositories\MusicRepository;
 use repositories\UserRepository;
@@ -14,6 +17,7 @@ use repositories\UserRepository;
 class MusicService
 {
     private MusicRepository $musicRepo;
+    private UserRepository $userRepo;
 
     private static $instance;
 
@@ -29,6 +33,7 @@ class MusicService
     protected function __construct()
     {
         $this->musicRepo = MusicRepository::getInstance();
+        $this->userRepo = UserRepository::getInstance();
     }
     
     function getByUserID(int $userId, int $page) : array
@@ -98,8 +103,14 @@ class MusicService
 
     function updateMusic(int $musicId, int $user_id, string $title, string $genre, bool $deleteCover, ?array $coverFile): MusicModel
     {
-        if ($this->getMusicById($musicId))
+        $music = $this->getMusicById(intval($musicId));
+        $user = $this->userRepo->getUserById($user_id);
+
+        if (!$music)
             throw new BadRequestException("Music id does not exist");
+
+        if (!$user)
+            throw new BadRequestException("User does not exist");
 
         return $this->musicRepo->updateMusic($musicId, $title, $user_id, $genre, $deleteCover, $coverFile);
     }

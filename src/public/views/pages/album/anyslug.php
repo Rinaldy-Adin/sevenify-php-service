@@ -48,13 +48,13 @@ $coverPath = $albumService->getCoverPathByAlbumId($album_id);
     <div class="container">
         <section id="album-music">
             <div class="album-cover">
-                <img src="/api/album-cover/<?php echo $album_id; ?>" alt="Playlist Cover">
+                <img id="album-cover-img" src="/api/album-cover/<?php echo $album_id; ?>" alt="Playlist Cover">
             </div>
             <div class="album-name">
                 <?= $album[0]->album_name ?>
             </div>
             <div class="album-owner">
-                <?= $album[0]->album_owner_name ?>
+                Owner: <?= $album[0]->album_owner_name ?>
             </div>
             <a href="/album/update-album/<?php echo $album_id; ?>" class="update-album-link">Update Album</a>
         </section>

@@ -76,14 +76,6 @@ foreach ($users as $user) {
                     <input required name="title" type="text" placeholder="Enter your title here" value="<?= $playlist->playlist_name ?>">
                 </div>
                 <div class="input-container">
-                    <label>User (current: <?= $playlistOwnerName ?>)</label>
-                    <select required name="user-id">
-                        <?php
-                        echo implode(" ", $options);
-                        ?>
-                    </select>
-                </div>
-                <div class="input-container">
                     <label>Music</label>
                     <div class="dynamic-list-container">
                         <div class="dynamic-list-input-container">

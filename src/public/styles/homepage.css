@@ -5,16 +5,32 @@ body {
     align-items: start;
 }
 
-.container {
-    margin-top: 64px;
-    width: 90%;
+.container { 
+    display: flex;
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.main-content {
+    padding-top: 64px;
+    width: 700px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
+}
+
+.side-content {
+    padding: 64px 10px 0 10px;
     flex: 1;
 }
 
 .container > div {
     max-width: 1000px;
+}
+
+.list-empty-msg {
+    font-size: 20px;
+    font-weight: 600;
+    color: #707070;
 }

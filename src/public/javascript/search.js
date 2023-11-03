@@ -66,7 +66,7 @@ async function updateResults(searchValue, page, genre, uploadPeriod, sort) {
 }
 
 async function updateMusicList(adios, searchResults) {
-    const elements = await Promise.all(searchResults.map(async ({ music_genre, music_id, music_name, music_owner_name, music_upload_date }) => {
+    const elements = await Promise.all(searchResults.map(async ({ music_genre, music_id, music_name, music_owner_name, music_upload_date, music_owner_id }) => {
         let coverSrc = '';
         try {
             const coverResp = await adios.get(`/api/music-cover/${music_id}`, {}, true);
@@ -79,7 +79,7 @@ async function updateMusicList(adios, searchResults) {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
-          });
+        });
 
         return `
                 <div class="result-item">
@@ -87,7 +87,7 @@ async function updateMusicList(adios, searchResults) {
                         <img class="result-music-cover soft-shadow" src="${coverSrc}">
                         <div class="result-info-text">
                             <div class="result-title">
-                                ${music_owner_name}: ${music_name}
+                                <a href="user/${music_owner_id}">${music_owner_name}</a>: ${music_name}
                             </div>
                             <div class="result-genre">
                                 ${music_genre} - ${music_upload_date}
@@ -111,15 +111,22 @@ async function addMusicPopup(musicId) {
     const adios = new Adios();
 
     const content = `
-        <div class="popup-content-container">
-            <select id="collection-type" name="type">
-                <option value="playlist">Playlist</option>
-                <option value="album">Album</option>
-            </select>
+        <div> 
+            <div class="popup-content-container">
+                <select id="collection-type" name="type">
+                    <option value="playlist">Playlist</option>
+                    <option value="album">Album</option>
+                </select>
 
-            <select name="collection-id" id="collection-id"></select>
+                <label>
+                    ID:
+                    <input name="collection-id" id="collection-id" />
+                </label>
 
-            <button onclick="addMusic(${musicId})">Add Music</button>
+                <button class="btn" onclick="addMusic(${musicId})">Add Music</button>
+                <button class="btn" id="close-popup">cancel</button>
+            </div>
+            <h4 id="collection-name">No Collection Selected</h4>
         </div>
     `
 
@@ -127,9 +134,9 @@ async function addMusicPopup(musicId) {
 
     let albums = [];
     try {
-        const resp = await adios.get('/api/search-album-user', {"userId": currentUserId, "page": 1});
+        const resp = await adios.get('/api/search-album-user', { "userId": currentUserId, "page": 1 });
         const data = JSON.parse(resp).data;
-        albums = data.result.map(({album_id, album_name}) => ({id: album_id, name: album_name}));
+        albums = data.result.map(({ album_id, album_name }) => ({ id: album_id, name: album_name }));
     } catch (error) {
         if (error.response) {
             const data = JSON.parse(error.response);
@@ -141,9 +148,9 @@ async function addMusicPopup(musicId) {
 
     let playlists = [];
     try {
-        const resp = await adios.get('/api/search-playlist-user', {"userId": currentUserId, "page": 1});
+        const resp = await adios.get('/api/search-playlist-user', { "userId": currentUserId, "page": 1 });
         const data = JSON.parse(resp).data;
-        playlists = data.result.map(({playlist_id, playlist_name}) => ({id: playlist_id, name: playlist_name}));
+        playlists = data.result.map(({ playlist_id, playlist_name }) => ({ id: playlist_id, name: playlist_name }));
     } catch (error) {
         if (error.response) {
             const data = JSON.parse(error.response);
@@ -154,13 +161,65 @@ async function addMusicPopup(musicId) {
     }
 
     const collectionTypeElement = document.getElementById('collection-type');
-    const collectionItemsElement = document.getElementById('collection-id');
+    const collectionIdElement = document.getElementById('collection-id');
+    const collectionNameElement = document.getElementById('collection-name');
+    const closeElement = document.getElementById('close-popup');
+
+    let collectionType = 'playlist';
+    let chosenId = null;
 
     collectionTypeElement.addEventListener('change', (e) => {
         const value = e.target.value;
-        const collection = (value == 'album' ? albums : playlists);
-        let elements = collection.map(({id, name}) => `<option value="${id}">${name}</option>`);
-        collectionItemsElement.innerHTML = elements.join(' ');
+        collectionType = (value == 'album' ? 'album' : 'playlist');
+        chosenId = null;
+        collectionNameElement.textContent = 'No Collection Selected';
+    })
+
+    collectionIdElement.addEventListener('keyup', debounce(async (e) => {
+        const value = e.target.value;
+        chosenId = null;
+        let chosenName = null;
+        console.log(collectionType);
+
+        if (collectionType == 'album') {
+            try {
+                const albumResp = await adios.get('/api/album/' + value);
+                const albumData = JSON.parse(albumResp).data;
+
+                const musicResp = await adios.get('/api/music/' + musicId);
+                const musicData = JSON.parse(musicResp).data;
+
+                const userResp = await adios.get('/api/whoami');
+                const userData = JSON.parse(userResp).data;
+
+                if (parseInt(albumData.album_owner) == parseInt(userData.user_id) && parseInt(musicData.music_owner) == parseInt(userData.user_id)) {
+                    chosenId = parseInt(value);
+                    chosenName = albumData.album_name;
+                }
+            } catch (error) { }
+        } else {
+            try {
+                const playlistResp = await adios.get('/api/playlist/' + value);
+                const playlistData = JSON.parse(playlistResp).data;
+
+                const userResp = await adios.get('/api/whoami');
+                const userData = JSON.parse(userResp).data;
+
+                if (parseInt(playlistData.playlist_owner) == parseInt(userData.user_id)) {
+                    chosenId = parseInt(value);
+                    chosenName = playlistData.playlist_name;
+                }
+            } catch (error) { }
+        }
+        if (chosenName) {
+            collectionNameElement.textContent = chosenName;
+        } else {
+            collectionNameElement.textContent = 'No Collection Selected';
+        }
+    }))
+
+    closeElement.addEventListener('click', () => {
+        document.body.removeChild(document.getElementById('popup-overlay'));
     })
 }
 
@@ -187,7 +246,7 @@ async function addMusic(musicId) {
 function updatePagination(pageCount) {
     let startNum = Math.max(currentPage - 1, 1);
     let endNum = Math.min(currentPage + 1, pageCount);
-    
+
     if (currentPage == 1)
         endNum = Math.min(currentPage + 2, pageCount)
 

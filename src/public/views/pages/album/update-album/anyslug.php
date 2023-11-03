@@ -45,10 +45,15 @@ foreach ($users as $user) {
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
     <link rel="stylesheet" href="/public/styles/create.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
+    <link rel="stylesheet" href="/public/styles/music-bar.css">
     <title>Sevenify</title>
 </head>
 
 <body>
+    <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
+
     <form onsubmit="uploadAlbum(event,  <?= $album_id ?>)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Update Album</h1>
@@ -71,14 +76,6 @@ foreach ($users as $user) {
                     <input required name="title" type="text" placeholder="Enter your title here" value="<?= $album->album_name ?>">
                 </div>
                 <div class="input-container">
-                    <label>User (current: <?= $albumOwnerName ?>)</label>
-                    <select required name="user-id">
-                        <?php
-                        echo implode(" ", $options);
-                        ?>
-                    </select>
-                </div>
-                <div class="input-container">
                     <label>Music</label>
                     <div class="dynamic-list-container">
                         <div class="dynamic-list-input-container">
@@ -98,6 +95,7 @@ foreach ($users as $user) {
     </form>
 
     <script src="/public/javascript/adios.js"></script>
+    <script src="/public/javascript/music-bar.js"></script>
     <script src="/public/javascript/update-album.js"></script>
     <script>
         initUpdatePage(<?= $album_id ?>)

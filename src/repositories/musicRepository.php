@@ -116,6 +116,7 @@ class MusicRepository extends Repository
             $music = new MusicWithArtistNameDTO(
                 $musicRecord['music_id'],
                 $musicRecord['music_name'],
+                $musicRecord['music_owner'],
                 $userIDName[$musicRecord['music_owner']],
                 $musicRecord['music_genre'],
                 $uploadDate
@@ -150,6 +151,7 @@ class MusicRepository extends Repository
             $music = new MusicWithArtistNameDTO(
                 $musicRecord['music_id'],
                 $musicRecord['music_name'],
+                $musicRecord['music_owner'],
                 $userIDName[$musicRecord['music_owner']],
                 $musicRecord['music_genre'],
                 $uploadDate
@@ -184,6 +186,7 @@ class MusicRepository extends Repository
             $music = new MusicWithArtistNameDTO(
                 $musicRecord['music_id'],
                 $musicRecord['music_name'],
+                $musicRecord['music_owner'],
                 $userIDName[$musicRecord['music_owner']],
                 $musicRecord['music_genre'],
                 $uploadDate
@@ -314,6 +317,7 @@ class MusicRepository extends Repository
             $music = new MusicWithArtistNameDTO(
                 $musicRecord['music_id'],
                 $musicRecord['music_name'],
+                $musicRecord['music_owner'],
                 $userNameMap[$musicRecord['music_owner']],
                 $musicRecord['music_genre'],
                 $uploadDate

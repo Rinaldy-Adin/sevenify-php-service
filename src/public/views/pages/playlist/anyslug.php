@@ -40,31 +40,35 @@ $coverPath = $playlistService->getCoverPathByPlaylistId($playlist_id);
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
     <link rel="stylesheet" href="/public/styles/music-bar.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
     <link rel="stylesheet" href="/public/styles/playlist-music-list.css">
     <title>Sevenify : Playlist</title>
 </head>
 
 <body>
     <?php require ROOT_DIR . 'public/views/components/music-bar.php'; ?>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
 
-    <section id="playlist-music">
-        <div class="playlist-cover">
-            <img src="/api/playlist-cover/<?php echo $playlist_id; ?>" alt="Playlist Cover">
-        </div>
-        <div class="playlist-name">
-            <?= $playlist[0]->playlist_name ?>
-        </div>    
-        <div class="playlist-owner">
-            <?= $playlist[0]->playlist_owner_name ?>
-        </div>
-        <a href="/playlist/update-playlist/<?php echo $playlist_id; ?>" class="update-playlist-link">Update Playlist</a>
-    </section>
+    <div class="container">
+        <section id="playlist-music">
+            <div class="playlist-cover">
+                <img id="playlist-cover-img" src="/api/playlist-cover/<?php echo $playlist_id; ?>" alt="Playlist Cover">
+            </div>
+            <div class="playlist-name">
+                <?= $playlist[0]->playlist_name ?>
+            </div>    
+            <div class="playlist-owner">
+                Artist: <?= $playlist[0]->playlist_owner_name ?>
+            </div>
+            <a href="/playlist/update-playlist/<?php echo $playlist_id; ?>" class="update-playlist-link">Update Playlist</a>
+        </section>
 
-    <section id="playlist-music-list">
-        <h2>Playlist's Music</h2>
-        <div id="playlist-music-item"></div>
-        <div id="pagination-playlist-music"></div>
-    </section>
+        <section id="playlist-music-list">
+            <h2>Playlist's Music</h2>
+            <div id="playlist-music-item"></div>
+            <div id="pagination-playlist-music"></div>
+        </section>
+    </div>
 
     <script src="../../../public/javascript/adios.js"></script>
     <script src="../../../public/javascript/music-bar.js"></script>

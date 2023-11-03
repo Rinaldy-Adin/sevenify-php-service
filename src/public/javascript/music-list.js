@@ -27,7 +27,7 @@ async function updateResult(userId, page) {
         currentPage = page;
         pageCount = data.data['page-count'];
 
-        updateMusicList(adios, data.data.result);
+        updateMusicList(adios, data.data.result, userId);
         updatePagination(data.data['page-count']);
     } catch (error) {
         if (error.response) {
@@ -39,8 +39,8 @@ async function updateResult(userId, page) {
     }
 }
 
-async function updateMusicList(adios, searchResults) {
-    const elmt = await Promise.all(searchResults.map(async ({ music_genre, music_id, music_name, music_owner_name, music_upload_date }) => {
+async function updateMusicList(adios, searchResults, userId) {
+    const elmt = await Promise.all(searchResults.map(async ({ music_genre, music_id, music_name, music_owner_name, music_owner_id, music_upload_date }) => {
         let cover = '';
         try {
             const responseCover = await adios.get(`/api/music-cover/${music_id}`, {}, true);
@@ -49,12 +49,11 @@ async function updateMusicList(adios, searchResults) {
             cover = "/public/assets/placeholders/music-placeholder.jpg";
         }
 
-        music_upload_date - new Date(music_upload_date).toLocaleDateString(undefined, {
+        music_upload_date = new Date(music_upload_date).toLocaleDateString(undefined, {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
         });;
-
         return `
                 <div class="music-list-item">
                     <img onclick="playMusic('${music_id}')" class="play-button clickable" src="/public/assets/media/PlayButton.png">
@@ -62,7 +61,7 @@ async function updateMusicList(adios, searchResults) {
                         <img class="music-cover soft-shadow" src="${cover}">
                         <div class="music-info-text">
                             <div class="music-title">
-                                ${music_owner_name}: ${music_name}
+                                <a href="user/${music_owner_id}">${music_owner_name}</a>: ${music_name}
                             </div>
                             <div class="music-genre">
                                 ${music_genre} - ${music_upload_date}
@@ -70,16 +69,18 @@ async function updateMusicList(adios, searchResults) {
                         </div>
                     </div>
                     <div class="music-option">
+                        ${music_owner_id == userId ? `
                         <a href="/update-music/${music_id}">
                             <img src="/public/assets/media/EditButton.png" alt="Music Option">
                         </a>
+                        ` : ''}
                     </div>
                 </div>
         `
     }));
     const divider = '<div class="result-item-divider"></div>';
 
-    document.getElementById('music-list').innerHTML = elmt.join(divider);
+    document.getElementById('music-list').innerHTML = elmt.length > 0 ? elmt.join(divider) : '<h3 class="list-empty-msg">You have no music</h3>';
 }
 
 function updatePagination(pageCount) {
@@ -103,5 +104,5 @@ function updatePagination(pageCount) {
     }
     elmt.push('<img onclick="changePage(pageCount)" src="/public/assets/icons/double-right.svg" id="pagination-last" class="clickable">');
 
-    document.getElementById('pagination').innerHTML = elmt.join(' ');
+    document.getElementById('pagination-music').innerHTML = elmt.join(' ');
 }

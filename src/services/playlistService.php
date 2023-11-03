@@ -32,7 +32,7 @@ class PlaylistService
         return static::$instance;
     }
 
-    function getByPlaylistId(int $playlistId) : PlaylistModel {
+    function getByPlaylistId(int $playlistId) : ?PlaylistModel {
         return $this->playlistRepo->getByPlaylistId($playlistId);
     }
 

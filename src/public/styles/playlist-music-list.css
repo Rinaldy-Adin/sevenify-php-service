@@ -1,17 +1,35 @@
 body {
-    width: 1500px;
+    width: 100%;
     min-height: 100vh;
+    display: flex;
+    align-items: start;
+}
+
+.container {
+    margin-top: 64px;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 24px;
+    flex: 1;
+}
+
+.container > section {
+    width: 80%;
+    max-width: 1000px;
 }
 
 #playlist-music {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     text-align: center;
     margin-top: 30px;
+}
+
+.playlist-cover {
+    align-self: center;
 }
 
 .playlist-cover img {
@@ -33,6 +51,7 @@ body {
     font-size: 18px;
     color: #707070;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .update-playlist-link {
@@ -47,7 +66,6 @@ body {
     flex-direction: column;
     align-items: stretch;
     gap: 8px;
-    align-self: stretch;
     margin-top: 30px;
 }
 
@@ -119,6 +137,7 @@ body {
     align-items: center;
     gap: 10px;
     margin-bottom: 70px;
+    justify-content: center;
 }
 
 .pagination-playlist-music-item {
@@ -138,4 +157,11 @@ body {
 
 .pagination-playlist-music-active {
     background-color: #E69332;
+}
+
+.list-empty-msg {
+    font-size: 20px;
+    font-weight: 600;
+    color: #707070;
+    text-align: center;
 }

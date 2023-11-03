@@ -74,8 +74,10 @@ async function initUpdatePage(playlistId) {
     const adios = new Adios();
 
     try {
-        const coverResp = await adios.get('/api/playlist-cover/' + playlistId, {}, true);
-        image.src = URL.createObjectURL(coverResp);
+        try {
+            const coverResp = await adios.get('/api/playlist-cover/' + playlistId, {}, true);
+            image.src = URL.createObjectURL(coverResp);
+        } catch (error) {}
 
         const musicResp = await adios.get('/api/playlist-music/' + playlistId);
         const data = JSON.parse(musicResp).data;

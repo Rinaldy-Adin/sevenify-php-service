@@ -49,7 +49,7 @@ async function updateAlbumList(adios, searchResults) {
             cover = URL.createObjectURL(responseCover);
             console.log("COVER ALBUM ", cover);
         } catch (error) {
-            cover = "public/assets/placeholders/album-placeholder.png"
+            cover = "/public/assets/placeholders/album-placeholder.png"
         }
 
         return `
@@ -68,9 +68,9 @@ async function updateAlbumList(adios, searchResults) {
             </div>
         `
     }));
-    const divider = '<div class="result-item-divider-album"></div>';
+    const divider = '';
 
-    document.getElementById('album-slider').innerHTML = elmt.join(divider);
+    document.getElementById('album-slider').innerHTML = elmt.length > 0 ? elmt.join(divider) : '<h3 class="list-empty-msg">You have no albums</h3>';
 
 }
 

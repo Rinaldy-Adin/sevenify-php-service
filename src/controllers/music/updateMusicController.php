@@ -22,7 +22,7 @@ class UpdateMusicController
         $musicId = (int)$pathEntries[count($pathEntries) - 1];
         $title = $_POST["title"];
         $genre = $_POST["genre"];
-        $user_id = $_POST["user-id"];
+        $user_id = $_SESSION['user_id'];
         $deleteCover = isset($_POST["delete-cover"]) ? true : false;
         $coverFile = $_FILES["cover-file"];
 

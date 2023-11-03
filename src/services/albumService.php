@@ -11,10 +11,12 @@ use exceptions\BadRequestException;
 use exceptions\UnsupportedMediaTypeException;
 use models\AlbumModel;
 use repositories\AlbumRepository;
+use repositories\UserRepository;
 
 class AlbumService
 {
     private AlbumRepository $albumRepo;
+    private UserRepository $userRepo;
 
     private static $instance;
 
@@ -30,6 +32,7 @@ class AlbumService
     protected function __construct()
     {
         $this->albumRepo = AlbumRepository::getInstance();
+        $this->userRepo = UserRepository::getInstance();
     }
 
     function getByAlbumId(int $albumId): ?AlbumModel
@@ -61,8 +64,14 @@ class AlbumService
 
     function updateAlbum(int $album_id, string $title, int $user_id, bool $deleteCover, ?array $coverFile, array $music_ids): ?AlbumModel
     {
-        if (!$this->getByAlbumId($album_id))
-            throw new BadRequestException("Album id does not exist");
+        $album = $this->getByAlbumId($album_id);
+        $user = $this->userRepo->getUserById($user_id);
+
+        if (!$album)
+            throw new BadRequestException("Album does not exist");
+
+        if(!$user)
+            throw new BadRequestException("User does not exist");
 
         return $this->albumRepo->updateAlbum($album_id, $title, $user_id, $deleteCover, $coverFile, $music_ids);
     }

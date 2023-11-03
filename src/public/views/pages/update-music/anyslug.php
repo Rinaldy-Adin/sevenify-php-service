@@ -47,10 +47,13 @@ $coverPath = $musicService->getCoverPathByMusicId($music->music_id);
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/styles/global.css">
     <link rel="stylesheet" href="/public/styles/create.css">
+    <link rel="stylesheet" href="/public/styles/nav-bar.css">
     <title>Sevenify</title>
 </head>
 
 <body>
+    <?php require ROOT_DIR . 'public/views/components/nav-bar.php'; ?>
+
     <form onsubmit="uploadMusic(event, <?= $music_id ?>)">
         <div class="upload-bar hard-shadow">
             <h1 id="page-title">Upload Music</h1>
@@ -75,14 +78,6 @@ $coverPath = $musicService->getCoverPathByMusicId($music->music_id);
                 <div class="input-container">
                     <label>Genre (current: <?= $music->music_genre ?>)</label>
                     <input required name="genre" type="text" placeholder="Enter your genre here" value="<?= $music->music_genre ?>">
-                </div>
-                <div class="input-container">
-                    <label>User (current: <?= $musicOwnerName ?>)</label>
-                    <select required name="user-id">
-                    <?php
-                        echo implode(" ", $options);
-                    ?>
-                    </select>
                 </div>
                 <input id="submit" type="submit" value="Save Music">
             </div>
