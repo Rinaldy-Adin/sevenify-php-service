@@ -49,7 +49,7 @@ async function updateAlbumList(adios, searchResults) {
             cover = URL.createObjectURL(responseCover);
             console.log("COVER ALBUM ", cover);
         } catch (error) {
-            cover = "public/assets/placeholders/album-placeholder.png"
+            cover = "/public/assets/placeholders/album-placeholder.png"
         }
 
         return `

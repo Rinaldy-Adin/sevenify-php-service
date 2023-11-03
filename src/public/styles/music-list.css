@@ -61,6 +61,10 @@
     text-overflow: ellipsis;
 }
 
+.music-title a {
+    color: black;
+}
+
 .music-genre {
     color: #707070;
     font-size: 14px;

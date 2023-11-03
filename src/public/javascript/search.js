@@ -66,7 +66,7 @@ async function updateResults(searchValue, page, genre, uploadPeriod, sort) {
 }
 
 async function updateMusicList(adios, searchResults) {
-    const elements = await Promise.all(searchResults.map(async ({ music_genre, music_id, music_name, music_owner_name, music_upload_date }) => {
+    const elements = await Promise.all(searchResults.map(async ({ music_genre, music_id, music_name, music_owner_name, music_upload_date, music_owner_id }) => {
         let coverSrc = '';
         try {
             const coverResp = await adios.get(`/api/music-cover/${music_id}`, {}, true);
@@ -87,7 +87,7 @@ async function updateMusicList(adios, searchResults) {
                         <img class="result-music-cover soft-shadow" src="${coverSrc}">
                         <div class="result-info-text">
                             <div class="result-title">
-                                ${music_owner_name}: ${music_name}
+                                <a href="user/${music_owner_id}">${music_owner_name}</a>: ${music_name}
                             </div>
                             <div class="result-genre">
                                 ${music_genre} - ${music_upload_date}

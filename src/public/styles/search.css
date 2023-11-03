@@ -187,6 +187,10 @@ body {
     text-overflow: ellipsis;
 }
 
+.result-title a {
+    color: black;
+}
+
 .result-genre {
     color: #707070;
     font-size: 14px;

@@ -89,21 +89,15 @@ $playlistRepository = PlaylistRepository::getInstance();
                 <h2>Premium Users</h2>
                 <div class="premium-users" id="premium-users">
                     <div class="premium-users-item">
-                        <div class="premium-users-detail">
-                            <div class="premium-users-img"></div>
-                            <div class="premium-users-name">Artist name</div>
-                        </div>
-                        <a class="see-artist-button" href="#">
+                        <div class="premium-users-name">Artist name</div>
+                        <a class="see-artist-button" href="user/11">
                             See Artist
                         </a>
                     </div>
 
                     <div class="premium-users-item">
-                        <div class="premium-users-detail">
-                            <div class="premium-users-img"></div>
-                            <div class="premium-users-name">Artist name</div>
-                        </div>
-                        <a class="see-artist-button" href="#">
+                        <div class="premium-users-name">Artist name</div>
+                        <a class="see-artist-button" href="user/11">
                             See Artist
                         </a>
                     </div>
@@ -118,8 +112,8 @@ $playlistRepository = PlaylistRepository::getInstance();
         </div>
     </div>
 
-    <script src="public/javascript/adios.js"></script>
-    <script src="public/javascript/music-bar.js"></script>
+    <script src="/public/javascript/adios.js"></script>
+    <script src="/public/javascript/music-bar.js"></script>
     <script src="/public/javascript/music-list.js"></script>
     <script src="/public/javascript/album-list.js"></script>
     <script src="/public/javascript/playlist-list.js"></script>
