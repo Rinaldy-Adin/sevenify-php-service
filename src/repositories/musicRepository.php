@@ -18,7 +18,7 @@ use repositories\UserRepository;
 class MusicRepository extends Repository
 {
     private static $instance;
-    
+
     public static function getInstance()
     {
         if (!isset(static::$instance)) {
@@ -26,7 +26,7 @@ class MusicRepository extends Repository
         }
         return static::$instance;
     }
-    
+
     public function getMusicById(int $musicId): ?MusicModel
     {
         $query = "SELECT * FROM music WHERE music_id = :musicId";
@@ -91,21 +91,18 @@ class MusicRepository extends Repository
 
     public function getByUserId(int $userId, int $page): array
     {
-        $conditions[] = "music_owner = :user_id"; 
-        $bindings[':user_id'] = $userId;
-        
         $query = "SELECT * FROM music JOIN users ON user_id = music_owner WHERE music_owner = :user_id"; // Ubah ":userownerId" menjadi ":user_id"
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":user_id", $userId); // Ubah ":userownerId" menjadi ":user_id"
         $stmt->execute();
-        
+
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $userRepo = UserRepository::getInstance(); 
+        $userRepo = UserRepository::getInstance();
         [$users] = $userRepo->getAllUsers();
         $userIDName = [];
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             $userIDName[$user->user_id] = $user->user_name;
         }
 
@@ -124,9 +121,12 @@ class MusicRepository extends Repository
             $musicObjects[] = $music;
         }
 
-        $pageOffset = ($page - 1) * 5;
-
-        return [array_slice($musicObjects, $pageOffset, 5), ceil(count($musicRecords) / 5)];
+        if ($page > 0) {
+            $pageOffset = ($page - 1) * 5;
+            return [array_slice($musicObjects, $pageOffset, 5), ceil(count($musicRecords) / 5)];
+        } else {
+            return [$musicObjects, ceil(count($musicRecords) / 5)];
+        }
     }
     public function getByAlbumId(int $albumId, int $page): array
     {
@@ -134,13 +134,13 @@ class MusicRepository extends Repository
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":album_id", $albumId);
         $stmt->execute();
-        
+
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        [$users] = (UserRepository::getInstance()) -> getAllUsers();
+        [$users] = (UserRepository::getInstance())->getAllUsers();
         $userIDName = [];
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             $userIDName[$user->user_id] = $user->user_name;
         }
 
@@ -169,13 +169,13 @@ class MusicRepository extends Repository
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":playlist_id", $playlistId);
         $stmt->execute();
-        
+
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        [$users] = (UserRepository::getInstance()) -> getAllUsers();
+        [$users] = (UserRepository::getInstance())->getAllUsers();
         $userIDName = [];
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             $userIDName[$user->user_id] = $user->user_name;
         }
 
@@ -198,14 +198,14 @@ class MusicRepository extends Repository
 
         return [array_slice($musicObjects, $pageOffset, 5), ceil(count($musicRecords) / 5)];
     }
-    public function countAllMusic() : int
+    public function countAllMusic(): int
     {
         $query = "SELECT COUNT(*) FROM music";
         $stmt = $this->db->query($query);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['COUNT(*)'];
     }
-    public function countMusicBy($where) : int
+    public function countMusicBy($where): int
     {
         $query = "SELECT COUNT(*) FROM music";
 
@@ -490,14 +490,15 @@ class MusicRepository extends Repository
         }
     }
 
-    public function getMusicByPage(int $page, int $itemPerPage, array $where) {
+    public function getMusicByPage(int $page, int $itemPerPage, array $where)
+    {
         // Pastikan bahwa $page selalu positif atau 1 jika negatif
         $page = max($page, 1);
-        
+
         $idxItem = ($page - 1) * $itemPerPage;
-    
+
         $query = "SELECT * FROM music";
-    
+
         if (!empty($where)) {
             $conditions = [];
             foreach ($where as $key => $value) {
@@ -509,9 +510,9 @@ class MusicRepository extends Repository
             }
             $query .= ' WHERE ' . implode(' AND ', $conditions);
         }
-    
+
         $query .= " LIMIT :offset, :itemPerPage";
-    
+
         $stmt = $this->db->prepare($query);
         foreach ($where as $key => $value) {
             if ($value[2] == 'LIKE') {
@@ -520,13 +521,13 @@ class MusicRepository extends Repository
                 $stmt->bindValue(":$key", $value[0], PDO::PARAM_STR);
             }
         }
-    
+
         // Bind the parameters for LIMIT
         $stmt->bindParam(":offset", $idxItem, PDO::PARAM_INT);
         $stmt->bindParam(":itemPerPage", $itemPerPage, PDO::PARAM_INT);
-    
+
         $stmt->execute();
-    
+
         $musicRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $musicObjects = [];
         foreach ($musicRecords as $musicRecord) {
@@ -541,5 +542,5 @@ class MusicRepository extends Repository
             $musicObjects[] = $music;
         }
         return $musicObjects;
-    }    
-}    
+    }
+}

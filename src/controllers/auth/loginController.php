@@ -18,6 +18,6 @@ class LoginController
 
         $user = UserService::getInstance()->login($username, $password);
         $_SESSION["user_id"] = $user->user_id;
-        return (new Response(['message' => "Successfully logged in"]))->httpResponse();
+        return (new Response($user->toDTOwithoutPass()))->httpResponse();
     }
 }
