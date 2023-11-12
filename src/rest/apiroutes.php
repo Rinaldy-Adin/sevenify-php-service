@@ -12,6 +12,7 @@ require_once ROOT_DIR . 'controllers/music/getAudioController.php';
 require_once ROOT_DIR . 'controllers/music/getGenresController.php';
 require_once ROOT_DIR . 'controllers/music/getMusicCoverController.php';
 require_once ROOT_DIR . 'controllers/music/searchMusicController.php';
+require_once ROOT_DIR . 'controllers/music/deleteMusicController.php';
 require_once ROOT_DIR . 'controllers/music/updateMusicController.php';
 require_once ROOT_DIR . 'controllers/music/adminGetMusicController.php';
 require_once ROOT_DIR . 'controllers/music/adminCreateMusicController.php';
@@ -74,6 +75,7 @@ use controllers\music\AdminDeleteMusicController;
 use controllers\music\AdminGetMusicController;
 use controllers\music\AdminUpdateMusicController;
 use controllers\music\CreateMusicController;
+use controllers\music\DeleteMusicController;
 use controllers\music\UpdateMusicController;
 use controllers\music\GetAudioController;
 use controllers\music\GetGenresController;
@@ -112,6 +114,7 @@ class APIRoutes
         ['/api/logout', 'get', LogoutController::class],
         ['/api/music', 'post', CreateMusicController::class],
         ['/api/music/*', 'get', GetMusicController::class],
+        ['/api/music/*', 'delete', DeleteMusicController::class],
         ['/api/audio/*', 'get', GetAudioController::class],
         ['/api/music-cover/*', 'get', GetMusicCoverController::class],
         ['/api/album-cover/*', 'get', GetAlbumCoverController::class],
