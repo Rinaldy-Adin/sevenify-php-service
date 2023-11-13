@@ -16,9 +16,9 @@ class CreateAlbumController
     {
         $title = $_POST["title"];
         $user_id = $_SESSION["user_id"];
-        $coverFile = $_FILES["cover-file"];
+        $coverFile = isset($_FILES["cover-file"]) ? $_FILES["cover-file"] : null;
 
-        if ($coverFile['error'] == UPLOAD_ERR_NO_FILE) {
+        if ($coverFile && $coverFile['error'] == UPLOAD_ERR_NO_FILE) {
             $coverFile = null;
         }
 

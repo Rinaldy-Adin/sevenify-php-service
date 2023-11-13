@@ -16,8 +16,8 @@ class CreateMusicController
     {
         $title = $_POST["title"];
         $genre = $_POST["genre"];
-        $musicFile = $_FILES["music-file"];
-        $coverFile = $_FILES["cover-file"];
+        $musicFile = isset($_FILES["music-file"]) ? $_FILES["music-file"] : null;
+        $coverFile = isset($_FILES["cover-file"]) ? $_FILES["cover-file"] : null;
 
         $user_id = $_SESSION["user_id"];
 
@@ -26,7 +26,7 @@ class CreateMusicController
         }
 
         if ($musicFile) {
-            $mime = $coverFile['type'];
+            $mime = $musicFile['type'];
             $pattern = '/^audio\/.*/';
 
             if (!preg_match($pattern, $mime))
