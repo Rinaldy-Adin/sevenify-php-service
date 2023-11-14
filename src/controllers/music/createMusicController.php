@@ -16,12 +16,12 @@ class CreateMusicController
     {
         $title = $_POST["title"];
         $genre = $_POST["genre"];
-        $musicFile = isset($_FILES["music-file"]) ? $_FILES["music-file"] : null;
+        $musicFile = $_FILES["music-file"];
         $coverFile = isset($_FILES["cover-file"]) ? $_FILES["cover-file"] : null;
 
         $user_id = $_SESSION["user_id"];
 
-        if ($coverFile['error'] == 4) {
+        if ($coverFile && $coverFile['error'] == 4) {
             $coverFile = null;
         }
 
