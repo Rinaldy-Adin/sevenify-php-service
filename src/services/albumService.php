@@ -57,8 +57,6 @@ class AlbumService
 
     function createAlbum(string $title, int $user_id, ?array $coverFile, array $music_ids = []): AlbumModel
     {
-        
-
         return $this->albumRepo->createAlbum($title, $user_id, $coverFile, $music_ids);
     }
 

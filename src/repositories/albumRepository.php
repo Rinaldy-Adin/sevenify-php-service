@@ -101,9 +101,6 @@ class AlbumRepository extends Repository
 
     public function getByUserId(int $userId, int $page): array
     {
-        $conditions[] = "album_owner = :user_id"; 
-        $bindings[':user_id'] = $userId;
-        
         $query = "SELECT * FROM albums JOIN users ON user_id = album_owner WHERE album_owner = :user_id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(":user_id", $userId);
@@ -128,9 +125,12 @@ class AlbumRepository extends Repository
             $albumObjects[] = $album;
         }
 
-        $pageOffset = ($page - 1) * 4;
-
-        return [array_slice($albumObjects, $pageOffset, 4), ceil(count($albumRecords) / 4)];
+        if ($page > 0) {
+            $pageOffset = ($page - 1) * 4;
+            return [array_slice($albumObjects, $pageOffset, 4), ceil(count($albumRecords) / 4)];
+        } else {
+            return [$albumObjects, ceil(count($albumRecords) / 4)];
+        }
     }
 
     public function getCoverPathByAlbumId(int $albumId): ?string
