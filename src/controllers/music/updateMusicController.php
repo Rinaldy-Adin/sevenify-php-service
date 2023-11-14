@@ -24,10 +24,9 @@ class UpdateMusicController
         $genre = $_POST["genre"];
         $user_id = $_SESSION['user_id'];
         $deleteCover = isset($_POST["delete-cover"]) ? true : false;
-        $coverFile = $_FILES["cover-file"];
+        $coverFile = isset($_FILES["cover-file"]) ? $_FILES["cover-file"] : null;
 
-
-        if ($coverFile['error'] == UPLOAD_ERR_NO_FILE) {
+        if ($coverFile && $coverFile['error'] == UPLOAD_ERR_NO_FILE) {
             $coverFile = null;
         }
 

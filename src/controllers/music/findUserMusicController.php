@@ -16,7 +16,7 @@ class FindUserMusicController
 {
     function get(): string
     {
-        $userId = isset($_GET['userId']) ? urldecode($_GET['userId']) : $_SESSION["user_id"];
+        $userId = $_SESSION["user_id"];
         $page = isset($_GET['page']) ? urldecode($_GET['page']) : 1;
 
         $page = (int)$page;

@@ -17,16 +17,16 @@ class CreateMusicController
         $title = $_POST["title"];
         $genre = $_POST["genre"];
         $musicFile = $_FILES["music-file"];
-        $coverFile = $_FILES["cover-file"];
+        $coverFile = isset($_FILES["cover-file"]) ? $_FILES["cover-file"] : null;
 
         $user_id = $_SESSION["user_id"];
 
-        if ($coverFile['error'] == 4) {
+        if ($coverFile && $coverFile['error'] == 4) {
             $coverFile = null;
         }
 
         if ($musicFile) {
-            $mime = $coverFile['type'];
+            $mime = $musicFile['type'];
             $pattern = '/^audio\/.*/';
 
             if (!preg_match($pattern, $mime))
