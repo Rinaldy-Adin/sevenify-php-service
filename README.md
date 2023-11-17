@@ -67,7 +67,8 @@ Masukkan port yang sesuai dengan post yang dipakai untuk menjalankan server
 
 
 ## Perubahan Implementasi
-- 
+- Perbaikan styling homepage
+- Perbaikan CRUD music, album, playlist
 
 ## Pembagian Tugas
 * Perubahan Implementasi: 13521134
