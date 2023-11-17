@@ -88,7 +88,8 @@ class AlbumRepository extends Repository
                 $album = new AlbumWithArtistNameDTO(
                     $albumRecord['album_id'],
                     $albumRecord['album_name'],
-                    $userIDName[$albumRecord['album_owner']]
+                    $userIDName[$albumRecord['album_owner']],
+                    $albumRecord['album_owner']
                 );
                 $albumObjects[] = $album;
             }
@@ -121,6 +122,7 @@ class AlbumRepository extends Repository
                 $albumRecord['album_id'],
                 $albumRecord['album_name'],
                 $userIDName[$albumRecord['album_owner']],
+                $albumRecord['album_owner']
             );
             $albumObjects[] = $album;
         }
