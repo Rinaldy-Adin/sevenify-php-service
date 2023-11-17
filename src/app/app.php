@@ -4,6 +4,7 @@ namespace app;
 
 require_once ROOT_DIR . 'routers/pageRouter.php';
 require_once ROOT_DIR . 'routers/apiRouter.php';
+require_once ROOT_DIR . 'routers/staticRouter.php';
 require_once ROOT_DIR . 'exceptions/ForbiddenException.php';
 require_once ROOT_DIR . 'exceptions/NotFoundException.php';
 require_once ROOT_DIR . 'exceptions/UnauthenticatedException.php';
@@ -17,6 +18,7 @@ use router\PageRouter;
 use exceptions\ForbiddenException;
 use exceptions\NotFoundException;
 use exceptions\UnauthenticatedException;
+use router\StaticRouter;
 
 class App
 {
@@ -48,6 +50,10 @@ class App
             } catch (Exception $e) {
                 echo (new Response(["message" => "Internal server error"], 500))->httpResponse();
             }
+        } else if(strlen($_SERVER['REQUEST_URI']) > 7 && substr($_SERVER['REQUEST_URI'], 0, 8) == '/static/') {
+            $router = StaticRouter::getInstance();
+
+            $router->resolve($_SERVER['REQUEST_URI']);
         } else {
             try {
                 $router = PageRouter::getInstance();
