@@ -29,8 +29,49 @@ Kemudian masukkan query yang ada di migrations\seed.sql
 Masukkan port yang sesuai dengan post yang dipakai untuk menjalankan server
 
 ## _Screenshot_ Tampilan Aplikasi
+- Halaman Register
+<img src="images/registerphp.png" width="450" align="center">
+
+- Halaman Login
+<img src="images/loginphp.png" width="450" align="center">
+
+- Halaman Admin
+<img src="images/adminphp.png" width="450" align="center">
+
+- Halaman HomePage
+<img src="images/homephp.png" width="450" align="center">
+
+- Halaman Tambah Musik
+<img src="images/addmusicphp.png" width="450" align="center">
+
+- Halaman Edit Musik
+<img src="images/editmusicphp.png" width="450" align="center">
+
+- Halaman Album
+<img src="images/albumphp.png" width="450" align="center">
+
+- Halaman Playlist
+<img src="images/playlistphp.png" width="450" align="center">
+
+- Halaman Tambah Album
+<img src="images/addalbumphp.png" width="450" align="center">
+
+- Halaman Edit Album
+<img src="images/editalbumphp.png" width="450" align="center">
+
+- Halaman User Setting
+<img src="images/userphp.png" width="450" align="center">
+
+- Halaman Search
+<img src="images/searchphp.png" width="450" align="center">
+
+
+## Perubahan Implementasi
+- 
 
 ## Pembagian Tugas
+* Perubahan Implementasi: 13521134
+
 * _Server Side_
     1. Login : 13521134
     2. Register : 13521134
