@@ -28,7 +28,7 @@ class App
             $connectionString = 'mysql:host=' . $_ENV['MYSQL_HOST'] . ';port=3306;dbname=' . $_ENV['MYSQL_DATABASE'];
             static::$db = new PDO($connectionString, $_ENV['MYSQL_USERNAME'], $_ENV['MYSQL_PASSWORD'], [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            ]);
+            ]); 
         }
 
         return static::$db;
@@ -63,10 +63,11 @@ class App
             } catch (UnauthenticatedException $e) {
                 http_response_code($e->getCode());
                 header('Location: /login');
-            } catch (Exception $e) {
-                http_response_code(500);
-                header('Location: /');
             }
+            // catch (Exception $e) {
+            //     http_response_code(500);
+            //     header('Location: /');
+            // }
         }
     }
 }
